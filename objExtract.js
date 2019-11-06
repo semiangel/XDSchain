@@ -581,80 +581,70 @@ var AttLoc = 'N/A';
 var subAttLoc = 'N/A';
 
 //Declare function for repeat process
-function assignValue (rimSlot, selectedAtt) {
-	var pickedAtt = selectedAtt;
+function assignValue (rimSlot, selectedAtt) { //assignValue into prepXDSAtt
 	if(rimSlot.attributes.name == selectedAtt){
-		//console.log(AttLoc.elements[0].elements[0].elements[0]);
 		subAttLoc = rimSlot.elements[0].elements[0].elements[0].text;
-		//subType[pickedAtt] = subAttLoc.text;
-		//subAttLoc.text = 'N/A';
+		subType[selectedAtt] = subAttLoc;
 		console.log(subAttLoc);
 	}
 }
 
+//How about assign attributes name to each iteration
+//and reduce assignValue to 'assignValue(rimSlot, selectedAttributed[i])'
+//declare selectedAttributed = ['author', 'availabilityStatus', ...]
+//this may require addional for loop
+
 //Main
 if('elements' in XDSAttribute) {
 	if('elements' in XDSAttribute.elements[0]){
-		//console.log(XDSAttribute.elements[0].elements[0]);
 		if('elements' in XDSAttribute.elements[0].elements[0]){
-			//console.log(XDSAttribute.elements[0].elements[0].elements[0]);
 			if('attributes' in XDSAttribute.elements[0].elements[0].elements[0]){
-				//console.log(XDSAttribute.elements[0].elements[0].elements[0].attributes);
 				currentLoc = XDSAttribute.elements[0].elements[0].elements[0];
-				if(currentLoc.attributes.id = 'Document01'){
-					//console.log(currentLoc.attributes.id);
-					subType = prepXDSAtt.DocumentEntry;
+				if(currentLoc.name = 'rim:ExtrinsicObject'){ //'rim:ExtrinsicObject' marked this section for DocumentEntry group
+					subType = prepXDSAtt.DocumentEntry; //Select Group for prepXDSAtt using 'subType' variable
 					if('elements' in currentLoc){
 						for (var i=0; i<currentLoc.elements.length;i++) {
 						const rimSlot = currentLoc.elements[i];
-						if (rimSlot.name !== 'rim:Slot') continue;
-						//console.log(currentLoc.elements[0]);
-						if('elements' in rimSlot){
-							//console.log(currentLoc.elements[0]);
-							/*
-							assignValue('author');
-							assignValue('availabilityStatus');
-							assignValue('classCode');
-							assignValue('comment');
-							assignValue('confidentialityCode');
-							*/
-							assignValue(rimSlot, 'creationTime');
-							/*
-							assignValue('entryUUID');
-							assignValue('eventCodeList');
-							assignValue('formatCode');
-							assignValue('hash');
-							assignValue('healthcareFacilityTypeCode');
-							assignValue('homeCommunityId');
-							*/
-							assignValue(rimSlot, 'languageCode');
-							/*
-							assignValue('legalAuthenticator');
-							assignValue('limitedMetadata');
-							assignValue('mimeType');
-							assignValue('objectType');
-							assignValue('patientId');
-							assignValue('practiceSettingCode');
-							assignValue('referenceIdList');
-							assignValue('repositoryUniqueId');
-							assignValue('serviceStartTime');
-							assignValue('serviceStopTime');
-							assignValue('size');
-							assignValue('sourcePatientId');
-							assignValue('sourcePatientInfo');
-							assignValue('title');
-							assignValue('typeCode');
-							assignValue('uniqueId');
-							assignValue('URI');
-							*/
-						}
+							if(rimSlot.name !== 'rim:Slot') continue; //condition check for loop by jump over to matched condition, any unmatch will be skipped
+							if('elements' in rimSlot){
+								assignValue(rimSlot, 'author');
+								assignValue(rimSlot, 'availabilityStatus');
+								assignValue(rimSlot, 'classCode');
+								assignValue(rimSlot, 'comment');
+								assignValue(rimSlot, 'confidentialityCode');
+								assignValue(rimSlot, 'creationTime');
+								assignValue(rimSlot, 'entryUUID');
+								assignValue(rimSlot, 'eventCodeList');
+								assignValue(rimSlot, 'formatCode');
+								assignValue(rimSlot, 'hash');
+								assignValue(rimSlot, 'healthcareFacilityTypeCode');
+								assignValue(rimSlot, 'homeCommunityId');
+								assignValue(rimSlot, 'languageCode');
+								assignValue(rimSlot, 'legalAuthenticator');
+								assignValue(rimSlot, 'limitedMetadata');
+								assignValue(rimSlot, 'mimeType');
+								assignValue(rimSlot, 'objectType');
+								assignValue(rimSlot, 'patientId');
+								assignValue(rimSlot, 'practiceSettingCode');
+								assignValue(rimSlot, 'referenceIdList');
+								assignValue(rimSlot, 'repositoryUniqueId');
+								assignValue(rimSlot, 'serviceStartTime');
+								assignValue(rimSlot, 'serviceStopTime');
+								assignValue(rimSlot, 'size');
+								assignValue(rimSlot, 'sourcePatientId');
+								assignValue(rimSlot, 'sourcePatientInfo');
+								assignValue(rimSlot, 'title');
+								assignValue(rimSlot, 'typeCode');
+								assignValue(rimSlot, 'uniqueId');
+								assignValue(rimSlot, 'URI');
+							}
 						}
 					}
 				}
-
-				console.log('-------------------------------------');
-				//console.log(prepXDSAtt.DocumentEntry);
 			}
 		}
 	}
 }
+
+console.log('---------------------------------');
+console.log(prepXDSAtt);

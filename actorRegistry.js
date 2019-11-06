@@ -35,7 +35,7 @@ net.createServer(function(sock) {
         console.log(util.inspect(result, {depth: null}));
         //var stringResult = result.toString();
 
-        fs.writeFile("objReceived.xml", util.inspect(result, {depth: null}), function(err, data) {
+        fs.writeFile("objReceived", util.inspect(result, {depth: null}), function(err, data) {
             if (err) console.log(err);
             console.log("Successfully Written to File.");
         });   

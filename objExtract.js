@@ -508,17 +508,34 @@ var XDSAttribute =
 
 var prepXDSAtt = {
 	DocumentEntry: {
-		author: 'N/A',
+		author: {
+      authorPerson: 'N/A',
+      authorInstitution: [],
+      authorRole: 'N/A',
+      authorSpecialty: 'N/A'
+    },
 		availabilityStatus: 'N/A',
-		classCode: 'N/A',
+		classCode: {
+      codingScheme: 'N/A',
+      displayName: 'N/A'
+    },
 		comment: 'N/A',
-		confidentialityCode: 'N/A',
+		confidentialityCode: {
+      codingScheme: 'N/A',
+      displayName: 'N/A'
+    },
 		creationTime: 'N/A',
 		entryUUID: 'N/A',
 		eventCodeList: 'N/A',
-		formatCode: 'N/A',
+		formatCode: {
+      codingScheme: 'N/A',
+      displayName: 'N/A'
+    },
 		hash: 'N/A',
-		healthcareFacilityTypeCode: 'N/A',
+		healthcareFacilityTypeCode: {
+      codingScheme: 'N/A',
+      displayName: 'N/A'
+    },
 		homeCommunityId: 'N/A',
 		languageCode: 'N/A',
 		legalAuthenticator: 'N/A',
@@ -526,7 +543,10 @@ var prepXDSAtt = {
 		mimeType: 'N/A',
 		objectType: 'N/A',
 		patientId: 'N/A',
-		practiceSettingCode: 'N/A',
+		practiceSettingCode: {
+      codingScheme: 'N/A',
+      displayName: 'N/A'
+    },
 		referenceIdList: 'N/A',
 		repositoryUniqueId: 'N/A',
 		serviceStartTime: 'N/A',
@@ -535,7 +555,10 @@ var prepXDSAtt = {
 		sourcePatientId: 'N/A',
 		sourcePatientInfo: [],
 		title: 'N/A',
-		typeCode: 'N/A',
+		typeCode: {
+      codingScheme: 'N/A',
+      displayName: 'N/A'
+    },
 		uniqueId: 'N/A',
 		URI: 'N/A'
 	},
@@ -579,7 +602,7 @@ var keyAttribute = 'N/A';
 var currentLoc = 'N/A';
 var AttLoc = 'N/A';
 var subAttLoc = 'N/A';
-var arrayAttLoc = [0];
+var arrayAttLoc = [];
 
 //Declare function for repeat process
 function assignSingleValue (rimSlot, selectedAtt) { //assignValue into prepXDSAtt
@@ -596,23 +619,110 @@ function assignValueList (rimSlot, selectedAtt) { //assignValue from rim:ValueLi
       arrayAttLoc[j] = rimSlot.elements[0].elements[j].elements[0].text;
     }
     subType[selectedAtt] = arrayAttLoc;
-    console.log(arrayAttLoc);
+    //console.log(arrayAttLoc);
     arrayAttLoc = [0];
   }
 }
 
+//Declare variable for some attributes that using UUID
+var authorUUID = 'urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d';
+var classCodeUUID = 'urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a';
+var confidentialityCodeUUID = 'urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f';
+var formatCodeUUID = 'urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d';
+var healthcareFacilityTypeCodeUUID = 'urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1';
+var practiceSettingCodeUUID = 'urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead';
+var typeCodeUUID = 'urn:uuid:f0306f51-975f-434e-a61c-c59651d33983';
+
+//Declare function which classificate attribute using its UUID and assign value to prepXDSAtt
+function assignClassification (rimClassification) {
+  if(rimClassification.attributes.classificationScheme == authorUUID) {
+    //Accept condition are author related -> subType.author
+    for (var k=0; k<rimClassification.elements.length;k++){
+      if(rimClassification.elements[k].attributes.name == 'authorPerson'){
+        subType.author.authorPerson = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+      else if(rimClassification.elements[k].attributes.name == 'authorInstitution'){
+        for(var l=0; l<rimClassification.elements[k].elements[0].elements.length;l++){
+          subType.author.authorInstitution[l] = rimClassification.elements[k].elements[0].elements[l].elements[0].text;
+        }
+      }
+      else if(rimClassification.elements[k].attributes.name == 'authorRole'){
+        subType.author.authorRole = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+      else if(rimClassification.elements[k].attributes.name == 'authorSpecialty'){
+        subType.author.authorSpecialty = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+    }
+  }
+  else if(rimClassification.attributes.classificationScheme == classCodeUUID) {
+    for (var k=0; k<rimClassification.elements.length;k++){
+      if(rimClassification.elements[k].name == 'rim:Slot' && rimClassification.elements[k].attributes.name == 'codingScheme'){
+        subType.classCode.codingScheme = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+      else{
+        subType.classCode.displayName = rimClassification.elements[k].elements[0].attributes.value;
+      }
+    }
+  }
+  else if(rimClassification.attributes.classificationScheme == confidentialityCodeUUID) {
+    for (var k=0; k<rimClassification.elements.length;k++){
+      if(rimClassification.elements[k].name == 'rim:Slot' && rimClassification.elements[k].attributes.name == 'codingScheme'){
+        subType.confidentialityCode.codingScheme = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+      else{
+        subType.confidentialityCode.displayName = rimClassification.elements[k].elements[0].attributes.value;
+      }
+    }
+  }
+  else if(rimClassification.attributes.classificationScheme == formatCodeUUID) {
+    for (var k=0; k<rimClassification.elements.length;k++){
+      if(rimClassification.elements[k].name == 'rim:Slot' && rimClassification.elements[k].attributes.name == 'codingScheme'){
+        subType.formatCode.codingScheme = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+      else{
+        subType.formatCode.displayName = rimClassification.elements[k].elements[0].attributes.value;
+      }
+    }
+  }
+  else if(rimClassification.attributes.classificationScheme == healthcareFacilityTypeCodeUUID) {
+    for (var k=0; k<rimClassification.elements.length;k++){
+      if(rimClassification.elements[k].name == 'rim:Slot' && rimClassification.elements[k].attributes.name == 'codingScheme'){
+        subType.healthcareFacilityTypeCode.codingScheme = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+      else{
+        subType.healthcareFacilityTypeCode.displayName = rimClassification.elements[k].elements[0].attributes.value;
+      }
+    }
+  }
+  else if(rimClassification.attributes.classificationScheme == practiceSettingCodeUUID) {
+    for (var k=0; k<rimClassification.elements.length;k++){
+      if(rimClassification.elements[k].name == 'rim:Slot' && rimClassification.elements[k].attributes.name == 'codingScheme'){
+        subType.practiceSettingCode.codingScheme = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+      else{
+        subType.practiceSettingCode.displayName = rimClassification.elements[k].elements[0].attributes.value;
+      }
+    }
+  }
+  else if(rimClassification.attributes.classificationScheme == typeCodeUUID) {
+    for (var k=0; k<rimClassification.elements.length;k++){
+      if(rimClassification.elements[k].name == 'rim:Slot' && rimClassification.elements[k].attributes.name == 'codingScheme'){
+        subType.typeCode.codingScheme = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+      else{
+        subType.typeCode.displayName = rimClassification.elements[k].elements[0].attributes.value;
+      }
+    }
+  }
+}
+
 function assignValue (rimSlot) { //assignValue to all possible attributes type
-  assignSingleValue(rimSlot, 'author'); //IHE_ITI_TF_vol3: 4.2.3.1.4 Creating Author Attributes
-  assignSingleValue(rimSlot, 'availabilityStatus'); //IHE_ITI_TF_vol3: 4.2.3.2.2 DocumentEntry.availabilityStatus
-  assignSingleValue(rimSlot, 'classCode'); //IHE_ITI_TF_vol3: 4.2.3.2.3 DocumentEntry.classCode
+  assignSingleValue(rimSlot, 'availabilityStatus'); 
   assignSingleValue(rimSlot, 'comment');
-  assignSingleValue(rimSlot, 'confidentialityCode');
   assignSingleValue(rimSlot, 'creationTime');
   assignSingleValue(rimSlot, 'entryUUID');
   assignSingleValue(rimSlot, 'eventCodeList');
-  assignSingleValue(rimSlot, 'formatCode');
   assignSingleValue(rimSlot, 'hash');
-  assignSingleValue(rimSlot, 'healthcareFacilityTypeCode');
   assignSingleValue(rimSlot, 'homeCommunityId');
   assignSingleValue(rimSlot, 'languageCode');
   assignSingleValue(rimSlot, 'legalAuthenticator');
@@ -620,7 +730,6 @@ function assignValue (rimSlot) { //assignValue to all possible attributes type
   assignSingleValue(rimSlot, 'mimeType');
   assignSingleValue(rimSlot, 'objectType');
   assignSingleValue(rimSlot, 'patientId');
-  assignSingleValue(rimSlot, 'practiceSettingCode');
   assignSingleValue(rimSlot, 'referenceIdList');
   assignSingleValue(rimSlot, 'repositoryUniqueId');
   assignSingleValue(rimSlot, 'serviceStartTime');
@@ -632,6 +741,7 @@ function assignValue (rimSlot) { //assignValue to all possible attributes type
   assignSingleValue(rimSlot, 'typeCode');
   assignSingleValue(rimSlot, 'uniqueId');
   assignSingleValue(rimSlot, 'URI');
+  assignClassification(rimSlot); 
 }
 
 //How about assign attributes name to each iteration
@@ -649,12 +759,19 @@ if('elements' in XDSAttribute) {
 					subType = prepXDSAtt.DocumentEntry; //Select Group for prepXDSAtt using 'subType' variable
 					if('elements' in currentLoc){
 						for (var i=0; i<currentLoc.elements.length;i++) {
-						const rimSlot = currentLoc.elements[i];
+						  const rimSlot = currentLoc.elements[i];
 							if(rimSlot.name != 'rim:Slot') continue; //condition check for loop by jump over to matched condition, any unmatch will be skipped
 							if('elements' in rimSlot){
 								assignValue(rimSlot);
 							}
 						}
+            for (i=0; i<currentLoc.elements.length;i++) {
+              const rimClassification = currentLoc.elements[i];
+              if(rimClassification.name != 'rim:Classification') continue;
+              if('elements' in rimClassification){
+                assignValue(rimClassification)
+              }
+            }
 					}
 				}
 			}

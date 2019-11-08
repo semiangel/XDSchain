@@ -533,7 +533,7 @@ var prepXDSAtt = {
 		serviceStopTime: 'N/A',
 		size: 'N/A',
 		sourcePatientId: 'N/A',
-		sourcePatientInfo: 'N/A',
+		sourcePatientInfo: [],
 		title: 'N/A',
 		typeCode: 'N/A',
 		uniqueId: 'N/A',
@@ -579,6 +579,7 @@ var keyAttribute = 'N/A';
 var currentLoc = 'N/A';
 var AttLoc = 'N/A';
 var subAttLoc = 'N/A';
+var arrayAttLoc = [0];
 
 //Declare function for repeat process
 function assignSingleValue (rimSlot, selectedAtt) { //assignValue into prepXDSAtt
@@ -589,7 +590,49 @@ function assignSingleValue (rimSlot, selectedAtt) { //assignValue into prepXDSAt
 	}
 }
 
-function assignValueList
+function assignValueList (rimSlot, selectedAtt) { //assignValue from rim:ValueList
+  if(rimSlot.attributes.name == selectedAtt){
+    for (var j=0; j<rimSlot.elements[0].elements.length;j++){
+      arrayAttLoc[j] = rimSlot.elements[0].elements[j].elements[0].text;
+    }
+    subType[selectedAtt] = arrayAttLoc;
+    console.log(arrayAttLoc);
+    arrayAttLoc = [0];
+  }
+}
+
+function assignValue (rimSlot) { //assignValue to all possible attributes type
+  assignSingleValue(rimSlot, 'author'); //IHE_ITI_TF_vol3: 4.2.3.1.4 Creating Author Attributes
+  assignSingleValue(rimSlot, 'availabilityStatus'); //IHE_ITI_TF_vol3: 4.2.3.2.2 DocumentEntry.availabilityStatus
+  assignSingleValue(rimSlot, 'classCode'); //IHE_ITI_TF_vol3: 4.2.3.2.3 DocumentEntry.classCode
+  assignSingleValue(rimSlot, 'comment');
+  assignSingleValue(rimSlot, 'confidentialityCode');
+  assignSingleValue(rimSlot, 'creationTime');
+  assignSingleValue(rimSlot, 'entryUUID');
+  assignSingleValue(rimSlot, 'eventCodeList');
+  assignSingleValue(rimSlot, 'formatCode');
+  assignSingleValue(rimSlot, 'hash');
+  assignSingleValue(rimSlot, 'healthcareFacilityTypeCode');
+  assignSingleValue(rimSlot, 'homeCommunityId');
+  assignSingleValue(rimSlot, 'languageCode');
+  assignSingleValue(rimSlot, 'legalAuthenticator');
+  assignSingleValue(rimSlot, 'limitedMetadata');
+  assignSingleValue(rimSlot, 'mimeType');
+  assignSingleValue(rimSlot, 'objectType');
+  assignSingleValue(rimSlot, 'patientId');
+  assignSingleValue(rimSlot, 'practiceSettingCode');
+  assignSingleValue(rimSlot, 'referenceIdList');
+  assignSingleValue(rimSlot, 'repositoryUniqueId');
+  assignSingleValue(rimSlot, 'serviceStartTime');
+  assignSingleValue(rimSlot, 'serviceStopTime');
+  assignSingleValue(rimSlot, 'size');
+  assignSingleValue(rimSlot, 'sourcePatientId');
+  assignValueList(rimSlot, 'sourcePatientInfo');
+  assignSingleValue(rimSlot, 'title');
+  assignSingleValue(rimSlot, 'typeCode');
+  assignSingleValue(rimSlot, 'uniqueId');
+  assignSingleValue(rimSlot, 'URI');
+}
 
 //How about assign attributes name to each iteration
 //and reduce assignValue to 'assignValue(rimSlot, selectedAttributed[i])'
@@ -607,38 +650,9 @@ if('elements' in XDSAttribute) {
 					if('elements' in currentLoc){
 						for (var i=0; i<currentLoc.elements.length;i++) {
 						const rimSlot = currentLoc.elements[i];
-							if(rimSlot.name !== 'rim:Slot') continue; //condition check for loop by jump over to matched condition, any unmatch will be skipped
+							if(rimSlot.name != 'rim:Slot') continue; //condition check for loop by jump over to matched condition, any unmatch will be skipped
 							if('elements' in rimSlot){
-								//assignSingleValue(rimSlot, 'author'); //IHE_ITI_TF_vol3: 4.2.3.1.4 Creating Author Attributes
-								assignSingleValue(rimSlot, 'availabilityStatus'); //IHE_ITI_TF_vol3: 4.2.3.2.2 DocumentEntry.availabilityStatus
-								assignSingleValue(rimSlot, 'classCode'); //IHE_ITI_TF_vol3: 4.2.3.2.3 DocumentEntry.classCode
-								assignSingleValue(rimSlot, 'comment');
-								assignSingleValue(rimSlot, 'confidentialityCode');
-								assignSingleValue(rimSlot, 'creationTime');
-								assignSingleValue(rimSlot, 'entryUUID');
-								assignSingleValue(rimSlot, 'eventCodeList');
-								assignSingleValue(rimSlot, 'formatCode');
-								assignSingleValue(rimSlot, 'hash');
-								assignSingleValue(rimSlot, 'healthcareFacilityTypeCode');
-								assignSingleValue(rimSlot, 'homeCommunityId');
-								assignSingleValue(rimSlot, 'languageCode');
-								assignSingleValue(rimSlot, 'legalAuthenticator');
-								assignSingleValue(rimSlot, 'limitedMetadata');
-								assignSingleValue(rimSlot, 'mimeType');
-								assignSingleValue(rimSlot, 'objectType');
-								assignSingleValue(rimSlot, 'patientId');
-								assignSingleValue(rimSlot, 'practiceSettingCode');
-								assignSingleValue(rimSlot, 'referenceIdList');
-								assignSingleValue(rimSlot, 'repositoryUniqueId');
-								assignSingleValue(rimSlot, 'serviceStartTime');
-								assignSingleValue(rimSlot, 'serviceStopTime');
-								assignSingleValue(rimSlot, 'size');
-								assignSingleValue(rimSlot, 'sourcePatientId');
-								assignSingleValue(rimSlot, 'sourcePatientInfo');
-								assignSingleValue(rimSlot, 'title');
-								assignSingleValue(rimSlot, 'typeCode');
-								assignSingleValue(rimSlot, 'uniqueId');
-								assignSingleValue(rimSlot, 'URI');
+								assignValue(rimSlot);
 							}
 						}
 					}

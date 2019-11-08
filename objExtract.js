@@ -632,6 +632,8 @@ var formatCodeUUID = 'urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d';
 var healthcareFacilityTypeCodeUUID = 'urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1';
 var practiceSettingCodeUUID = 'urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead';
 var typeCodeUUID = 'urn:uuid:f0306f51-975f-434e-a61c-c59651d33983';
+var patientIdUUID = 'urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427';
+var uniqueIdUUID = 'urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab';
 
 //Declare function which classificate attribute using its UUID and assign value to prepXDSAtt
 function assignClassification (rimClassification) {
@@ -716,32 +718,39 @@ function assignClassification (rimClassification) {
   }
 }
 
-function assignValue (rimSlot) { //assignValue to all possible attributes type
-  assignSingleValue(rimSlot, 'availabilityStatus'); 
-  assignSingleValue(rimSlot, 'comment');
-  assignSingleValue(rimSlot, 'creationTime');
-  assignSingleValue(rimSlot, 'entryUUID');
-  assignSingleValue(rimSlot, 'eventCodeList');
-  assignSingleValue(rimSlot, 'hash');
-  assignSingleValue(rimSlot, 'homeCommunityId');
-  assignSingleValue(rimSlot, 'languageCode');
-  assignSingleValue(rimSlot, 'legalAuthenticator');
-  assignSingleValue(rimSlot, 'limitedMetadata');
-  assignSingleValue(rimSlot, 'mimeType');
-  assignSingleValue(rimSlot, 'objectType');
-  assignSingleValue(rimSlot, 'patientId');
-  assignSingleValue(rimSlot, 'referenceIdList');
-  assignSingleValue(rimSlot, 'repositoryUniqueId');
-  assignSingleValue(rimSlot, 'serviceStartTime');
-  assignSingleValue(rimSlot, 'serviceStopTime');
-  assignSingleValue(rimSlot, 'size');
-  assignSingleValue(rimSlot, 'sourcePatientId');
-  assignValueList(rimSlot, 'sourcePatientInfo');
-  assignSingleValue(rimSlot, 'title');
-  assignSingleValue(rimSlot, 'typeCode');
-  assignSingleValue(rimSlot, 'uniqueId');
-  assignSingleValue(rimSlot, 'URI');
-  assignClassification(rimSlot); 
+function assignExternalId (rimExt) {
+  if(rimExt.attributes.identificationScheme == patientIdUUID) {
+    subType.patientId = rimExt.attributes.value;
+  }
+  else if(rimExt.attributes.identificationScheme == uniqueIdUUID) {
+    subType.uniqueId = rimExt.attributes.value;
+  }
+}
+
+function assignValue (rim) { //assignValue to all possible attributes type
+  assignSingleValue(rim, 'availabilityStatus'); 
+  assignSingleValue(rim, 'comment');
+  assignSingleValue(rim, 'creationTime');
+  assignSingleValue(rim, 'entryUUID');
+  assignSingleValue(rim, 'eventCodeList');
+  assignSingleValue(rim, 'hash');
+  assignSingleValue(rim, 'homeCommunityId');
+  assignSingleValue(rim, 'languageCode');
+  assignSingleValue(rim, 'legalAuthenticator');
+  assignSingleValue(rim, 'limitedMetadata');
+  assignSingleValue(rim, 'mimeType');
+  assignSingleValue(rim, 'objectType');
+  assignSingleValue(rim, 'referenceIdList');
+  assignSingleValue(rim, 'repositoryUniqueId');
+  assignSingleValue(rim, 'serviceStartTime');
+  assignSingleValue(rim, 'serviceStopTime');
+  assignSingleValue(rim, 'size');
+  assignSingleValue(rim, 'sourcePatientId');
+  assignValueList(rim, 'sourcePatientInfo');
+  assignSingleValue(rim, 'title');
+  assignSingleValue(rim, 'URI');
+  assignClassification(rim); 
+  assignExternalId(rim);
 }
 
 //How about assign attributes name to each iteration
@@ -759,21 +768,34 @@ if('elements' in XDSAttribute) {
 					subType = prepXDSAtt.DocumentEntry; //Select Group for prepXDSAtt using 'subType' variable
 					if('elements' in currentLoc){
 						for (var i=0; i<currentLoc.elements.length;i++) {
-						  const rimSlot = currentLoc.elements[i];
-							if(rimSlot.name != 'rim:Slot') continue; //condition check for loop by jump over to matched condition, any unmatch will be skipped
-							if('elements' in rimSlot){
-								assignValue(rimSlot);
+						  const rim = currentLoc.elements[i];
+							if(rim.name != 'rim:Slot') continue; //condition check for loop by jump over to matched condition, any unmatch will be skipped
+							if('elements' in rim){
+								console.log('.');
+                assignValue(rim);
 							}
 						}
             for (i=0; i<currentLoc.elements.length;i++) {
-              const rimClassification = currentLoc.elements[i];
-              if(rimClassification.name != 'rim:Classification') continue;
-              if('elements' in rimClassification){
-                assignValue(rimClassification)
+              const rim = currentLoc.elements[i];
+              if(rim.name != 'rim:Classification') continue;
+              if('elements' in rim){
+                console.log('*');
+                assignValue(rim)
+              }
+            }
+            for (i=0; i<currentLoc.elements.length;i++) {
+              const rim = currentLoc.elements[i];
+              if(rim.name != 'rim:ExternalIdentifier') continue;
+              if('elements' in rim){
+                console.log('%');
+                assignValue(rim)
               }
             }
 					}
 				}
+        else if(currentLoc.name = 'rim:RegistryPackage'){
+          //assign attribute of SubmissionSet or Folder
+        }
 			}
 		}
 	}

@@ -1,3 +1,4 @@
+//should import received object from XDSRegistry.js instead of declare it all here
 var XDSAttribute = 
 { elements: 
    [ { type: 'element',
@@ -509,33 +510,33 @@ var XDSAttribute =
 var prepXDSAtt = {
 	DocumentEntry: {
 		author: {
-      authorPerson: 'N/A',
-      authorInstitution: [],
-      authorRole: 'N/A',
-      authorSpecialty: 'N/A'
-    },
+			authorPerson: 'N/A',
+			authorInstitution: [],
+			authorRole: 'N/A',
+			authorSpecialty: 'N/A'
+		},
 		availabilityStatus: 'N/A',
 		classCode: {
-      codingScheme: 'N/A',
-      displayName: 'N/A'
-    },
+		  codingScheme: 'N/A',
+		  displayName: 'N/A'
+		},
 		comment: 'N/A',
 		confidentialityCode: {
-      codingScheme: 'N/A',
-      displayName: 'N/A'
-    },
+			codingScheme: 'N/A',
+			displayName: 'N/A'
+		},
 		creationTime: 'N/A',
 		entryUUID: 'N/A',
 		eventCodeList: 'N/A',
 		formatCode: {
-      codingScheme: 'N/A',
-      displayName: 'N/A'
-    },
+			codingScheme: 'N/A',
+			displayName: 'N/A'
+		},
 		hash: 'N/A',
 		healthcareFacilityTypeCode: {
-      codingScheme: 'N/A',
-      displayName: 'N/A'
-    },
+			codingScheme: 'N/A',
+			displayName: 'N/A'
+		},
 		homeCommunityId: 'N/A',
 		languageCode: 'N/A',
 		legalAuthenticator: 'N/A',
@@ -544,9 +545,9 @@ var prepXDSAtt = {
 		objectType: 'N/A',
 		patientId: 'N/A',
 		practiceSettingCode: {
-      codingScheme: 'N/A',
-      displayName: 'N/A'
-    },
+			codingScheme: 'N/A',
+			displayName: 'N/A'
+		},
 		referenceIdList: 'N/A',
 		repositoryUniqueId: 'N/A',
 		serviceStartTime: 'N/A',
@@ -556,22 +557,30 @@ var prepXDSAtt = {
 		sourcePatientInfo: [],
 		title: 'N/A',
 		typeCode: {
-      codingScheme: 'N/A',
-      displayName: 'N/A'
-    },
+	  		codingScheme: 'N/A',
+	  		displayName: 'N/A'
+		},
 		uniqueId: 'N/A',
 		URI: 'N/A'
 	},
 
 	SubmissionSet: {
-		author: 'N/A',
+		author: {
+	      authorPerson: 'N/A',
+	      authorInstitution: [],
+	      authorRole: 'N/A',
+	      authorSpecialty: 'N/A'
+	  	},
 		availabilityStatus: 'N/A',
 		comments: 'N/A',
-		contentTypeCode: 'N/A',
+		contentTypeCodes: {
+			codingScheme: 'N/A',
+			displayName: 'N/A'
+		},
 		entryUUID: 'N/A',
 		homeCommunityId: 'N/A',
 		intendedRecipient: 'N/A',
-		limitedMetadata: 'N/A',
+		limitedMetadata: 0,
 		patientId: 'N/A',
 		sourceId: 'N/A',
 		submissionTime: 'N/A',
@@ -590,6 +599,13 @@ var prepXDSAtt = {
 		patientId: 'N/A',
 		title: 'N/A',
 		uniqueId: 'N/A'
+	},
+
+	Association: {
+		associationType: 'N/A',
+		sourceObject: 'N/A',
+		targetObject: 'N/A',
+		SubmissionSetStatus: 'N/A'
 	}
 }
 
@@ -599,29 +615,25 @@ var prepXDSAtt = {
 //Declare variable for easy use
 var subType = 'N/A';
 var keyAttribute = 'N/A';
-var currentLoc = 'N/A';
 var AttLoc = 'N/A';
 var subAttLoc = 'N/A';
 var arrayAttLoc = [];
 
 //Declare function for repeat process
-function assignSingleValue (rimSlot, selectedAtt) { //assignValue into prepXDSAtt
-	if(rimSlot.attributes.name == selectedAtt){
-		subAttLoc = rimSlot.elements[0].elements[0].elements[0].text;
-		subType[selectedAtt] = subAttLoc;
-		console.log(subAttLoc);
-	}
-}
 
-function assignValueList (rimSlot, selectedAtt) { //assignValue from rim:ValueList
-  if(rimSlot.attributes.name == selectedAtt){
-    for (var j=0; j<rimSlot.elements[0].elements.length;j++){
-      arrayAttLoc[j] = rimSlot.elements[0].elements[j].elements[0].text;
-    }
-    subType[selectedAtt] = arrayAttLoc;
-    //console.log(arrayAttLoc);
-    arrayAttLoc = [0];
-  }
+function assignSimple (rimSlot) { //assignValue from rim:ValueList
+	var selectedAtt = rimSlot.attributes.name;
+	if(selectedAtt){
+		for (var j=0; j<rimSlot.elements[0].elements.length;j++){
+		  arrayAttLoc[j] = rimSlot.elements[0].elements[j].elements[0].text;
+		}
+		subType[selectedAtt] = arrayAttLoc;
+		var singleCheck = subType[selectedAtt];
+		if (!singleCheck[1]){
+			subType[selectedAtt] = singleCheck[0]; //simply convert ugly single array to 1 string
+		}
+		arrayAttLoc = [0];
+	}
 }
 
 //Declare variable for some attributes that using UUID
@@ -634,10 +646,16 @@ var practiceSettingCodeUUID = 'urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead';
 var typeCodeUUID = 'urn:uuid:f0306f51-975f-434e-a61c-c59651d33983';
 var patientIdUUID = 'urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427';
 var uniqueIdUUID = 'urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab';
+var subAuthorUUID = 'urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d';
+var contentTypeCodesUUID = 'urn:uuid:aa543740-bdda-424e-8c96-df4873be8500';
+var subUniqueIdUUID = 'urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8';
+var sourceIdUUID = 'urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832';
+var subPatientIdUUID = 'urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446';
+var limitedMetadataUUID = 'urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd';
 
 //Declare function which classificate attribute using its UUID and assign value to prepXDSAtt
 function assignClassification (rimClassification) {
-  if(rimClassification.attributes.classificationScheme == authorUUID) {
+  if(rimClassification.attributes.classificationScheme == authorUUID || rimClassification.attributes.classificationScheme == subAuthorUUID) {
     //Accept condition are author related -> subType.author
     for (var k=0; k<rimClassification.elements.length;k++){
       if(rimClassification.elements[k].attributes.name == 'authorPerson'){
@@ -716,39 +734,32 @@ function assignClassification (rimClassification) {
       }
     }
   }
+  else if(rimClassification.attributes.classificationScheme == contentTypeCodesUUID) {
+    for (var k=0; k<rimClassification.elements.length;k++){
+      if(rimClassification.elements[k].name == 'rim:Slot' && rimClassification.elements[k].attributes.name == 'codingScheme'){
+        subType.contentTypeCodes.codingScheme = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
+      }
+      else{
+        subType.contentTypeCodes.displayName = rimClassification.elements[k].elements[0].attributes.value;
+      }
+    }
+  }
 }
 
 function assignExternalId (rimExt) {
-  if(rimExt.attributes.identificationScheme == patientIdUUID) {
+  if(rimExt.attributes.identificationScheme == patientIdUUID || rimExt.attributes.identificationScheme == subPatientIdUUID) {
     subType.patientId = rimExt.attributes.value;
   }
-  else if(rimExt.attributes.identificationScheme == uniqueIdUUID) {
+  else if(rimExt.attributes.identificationScheme == uniqueIdUUID || rimExt.attributes.identificationScheme == subUniqueIdUUID) {
     subType.uniqueId = rimExt.attributes.value;
+  }
+  else if(rimExt.attributes.identificationScheme == sourceIdUUID) {
+    subType.sourceId = rimExt.attributes.value;
   }
 }
 
 function assignValue (rim) { //assignValue to all possible attributes type
-  assignSingleValue(rim, 'availabilityStatus'); 
-  assignSingleValue(rim, 'comment');
-  assignSingleValue(rim, 'creationTime');
-  assignSingleValue(rim, 'entryUUID');
-  assignSingleValue(rim, 'eventCodeList');
-  assignSingleValue(rim, 'hash');
-  assignSingleValue(rim, 'homeCommunityId');
-  assignSingleValue(rim, 'languageCode');
-  assignSingleValue(rim, 'legalAuthenticator');
-  assignSingleValue(rim, 'limitedMetadata');
-  assignSingleValue(rim, 'mimeType');
-  assignSingleValue(rim, 'objectType');
-  assignSingleValue(rim, 'referenceIdList');
-  assignSingleValue(rim, 'repositoryUniqueId');
-  assignSingleValue(rim, 'serviceStartTime');
-  assignSingleValue(rim, 'serviceStopTime');
-  assignSingleValue(rim, 'size');
-  assignSingleValue(rim, 'sourcePatientId');
-  assignValueList(rim, 'sourcePatientInfo');
-  assignSingleValue(rim, 'title');
-  assignSingleValue(rim, 'URI');
+  assignSimple(rim); 
   assignClassification(rim); 
   assignExternalId(rim);
 }
@@ -763,39 +774,54 @@ if('elements' in XDSAttribute) {
 	if('elements' in XDSAttribute.elements[0]){
 		if('elements' in XDSAttribute.elements[0].elements[0]){
 			if('attributes' in XDSAttribute.elements[0].elements[0].elements[0]){
-				currentLoc = XDSAttribute.elements[0].elements[0].elements[0];
-				if(currentLoc.name = 'rim:ExtrinsicObject'){ //'rim:ExtrinsicObject' marked this section for DocumentEntry group
-					subType = prepXDSAtt.DocumentEntry; //Select Group for prepXDSAtt using 'subType' variable
-					if('elements' in currentLoc){
-						for (var i=0; i<currentLoc.elements.length;i++) {
-						  const rim = currentLoc.elements[i];
-							if(rim.name != 'rim:Slot') continue; //condition check for loop by jump over to matched condition, any unmatch will be skipped
-							if('elements' in rim){
-								console.log('.');
-                assignValue(rim);
-							}
-						}
-            for (i=0; i<currentLoc.elements.length;i++) {
-              const rim = currentLoc.elements[i];
-              if(rim.name != 'rim:Classification') continue;
-              if('elements' in rim){
-                console.log('*');
-                assignValue(rim)
-              }
-            }
-            for (i=0; i<currentLoc.elements.length;i++) {
-              const rim = currentLoc.elements[i];
-              if(rim.name != 'rim:ExternalIdentifier') continue;
-              if('elements' in rim){
-                console.log('%');
-                assignValue(rim)
-              }
-            }
+				var prevLoc = XDSAttribute.elements[0].elements[0];
+		        for (var groupType=0; groupType<XDSAttribute.elements[0].elements[0].elements.length; groupType++){
+					var currentLoc = XDSAttribute.elements[0].elements[0].elements[groupType];
+					if(prevLoc.elements[groupType].name == 'rim:ExtrinsicObject'){ //'rim:ExtrinsicObject' marked this section for DocumentEntry group
+						subType = prepXDSAtt.DocumentEntry; //Select Group for prepXDSAtt using 'subType' variable
+						if('elements' in currentLoc){
+  							for (var i=0; i<currentLoc.elements.length; i++) {
+					  			const rim = currentLoc.elements[i];
+	  							if(rim.name != 'rim:Slot' && rim.name != 'rim:Classification' && rim.name != 'rim:ExternalIdentifier') continue; 
+		                		//condition check for loop by jump over to matched condition, any unmatch will be skipped
+	  							if('elements' in rim){
+									assignValue(rim);
+	  							}
+	  						}
+	  					}
+	  				}
+					else if(prevLoc.elements[groupType].name == 'rim:RegistryPackage'){
+		          		subType = prepXDSAtt.SubmissionSet;
+		            	//assign attribute of SubmissionSet or Folder
+		            	if('elements' in currentLoc){
+		              		for (var i=0; i<currentLoc.elements.length; i++) {
+		                		const rim = currentLoc.elements[i];
+	                			if(rim.name != 'rim:Slot' && rim.name != 'rim:Classification' && rim.name != 'rim:ExternalIdentifier') continue; 
+		                		//condition check for loop by jump over to matched condition, any unmatch will be skipped
+		                		if('elements' in rim){
+									assignValue(rim);
+		                		}
+		              		}
+		            	}
 					}
-				}
-        else if(currentLoc.name = 'rim:RegistryPackage'){
-          //assign attribute of SubmissionSet or Folder
-        }
+					else if(prevLoc.elements[groupType].name == 'rim:Classification'){
+						subType = prepXDSAtt.SubmissionSet;
+						if('attributes' in prevLoc.elements[groupType]){
+							if('classificationNode' in prevLoc.elements[groupType].attributes){
+								if(prevLoc.elements[groupType].attributes.classificationNode == limitedMetadataUUID){
+									subType.limitedMetadata = 1;
+								}
+							}
+		          		}
+					}
+					else if(prevLoc.elements[groupType].name == 'rim:Association'){
+						subType = prepXDSAtt.Association;
+						subType.associationType = prevLoc.elements[groupType].attributes.associationType;
+						subType.sourceObject = prevLoc.elements[groupType].attributes.sourceObject;
+						subType.targetObject = prevLoc.elements[groupType].attributes.targetObject;
+						subType.SubmissionSetStatus = prevLoc.elements[groupType].elements[0].elements[0].elements[0].elements[0].text;
+					}
+		        }
 			}
 		}
 	}

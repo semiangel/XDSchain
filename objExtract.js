@@ -623,20 +623,22 @@ var arrayAttLoc = [];
 
 function assignSimple (rimSlot) { //assignValue from rim:ValueList
 	var selectedAtt = rimSlot.attributes.name;
-	if(selectedAtt){
+	if(selectedAtt){ //assign value of element with specified name directly
 		for (var j=0; j<rimSlot.elements[0].elements.length;j++){
+		  //assign all found value into list of array
 		  arrayAttLoc[j] = rimSlot.elements[0].elements[j].elements[0].text;
 		}
 		subType[selectedAtt] = arrayAttLoc;
 		var singleCheck = subType[selectedAtt];
-		if (!singleCheck[1]){
-			subType[selectedAtt] = singleCheck[0]; //simply convert ugly single array to 1 string
+		if (!singleCheck[1]){ //simply convert ugly single array to 1 string
+			subType[selectedAtt] = singleCheck[0]; 
 		}
 		arrayAttLoc = [0];
 	}
 }
 
 //Declare variable for some attributes that using UUID
+//------DocumentEntry Attributes--------------------------------
 var authorUUID = 'urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d';
 var classCodeUUID = 'urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a';
 var confidentialityCodeUUID = 'urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f';
@@ -646,6 +648,7 @@ var practiceSettingCodeUUID = 'urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead';
 var typeCodeUUID = 'urn:uuid:f0306f51-975f-434e-a61c-c59651d33983';
 var patientIdUUID = 'urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427';
 var uniqueIdUUID = 'urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab';
+//------SubmissionSet Attributes---------------------------------
 var subAuthorUUID = 'urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d';
 var contentTypeCodesUUID = 'urn:uuid:aa543740-bdda-424e-8c96-df4873be8500';
 var subUniqueIdUUID = 'urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8';
@@ -657,6 +660,7 @@ var limitedMetadataUUID = 'urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd';
 function assignClassification (rimClassification) {
   if(rimClassification.attributes.classificationScheme == authorUUID || rimClassification.attributes.classificationScheme == subAuthorUUID) {
     //Accept condition are author related -> subType.author
+    //If element with rim:Classification passed in then element with matched UUID will be assign to the matched value
     for (var k=0; k<rimClassification.elements.length;k++){
       if(rimClassification.elements[k].attributes.name == 'authorPerson'){
         subType.author.authorPerson = rimClassification.elements[k].elements[0].elements[0].elements[0].text;
@@ -747,6 +751,7 @@ function assignClassification (rimClassification) {
 }
 
 function assignExternalId (rimExt) {
+	//If element with rim:ExternalId passed in then element with matched UUID assign to value
   if(rimExt.attributes.identificationScheme == patientIdUUID || rimExt.attributes.identificationScheme == subPatientIdUUID) {
     subType.patientId = rimExt.attributes.value;
   }
@@ -792,6 +797,9 @@ if('elements' in XDSAttribute) {
 	  				}
 					else if(prevLoc.elements[groupType].name == 'rim:RegistryPackage'){
 		          		subType = prepXDSAtt.SubmissionSet;
+		          		var Folder = prepXDSAtt.Folder; 
+		          		//A rim:Classification is used to distinguish between the SubmissionSet and Folder object Type
+		          		//So, attributes for folder will mainly identified with UUID in assignClassification
 		            	//assign attribute of SubmissionSet or Folder
 		            	if('elements' in currentLoc){
 		              		for (var i=0; i<currentLoc.elements.length; i++) {

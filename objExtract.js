@@ -1,3 +1,5 @@
+var fs = require("fs");
+var util = require("util");
 //should import received object from XDSRegistry.js instead of declare it all here
 var XDSAttribute = 
 { elements: 
@@ -837,3 +839,4 @@ if('elements' in XDSAttribute) {
 
 console.log('---------------------------------');
 console.log(prepXDSAtt);
+fs.writeFileSync("extractedObject", util.inspect(prepXDSAtt));

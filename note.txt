@@ -3,3 +3,14 @@ git remote add origin <link to repo>
 git pull origin master
 
 objExtract.js is the main file to extract XDS META-data attributes into JSON
+
+PetchVM
+4 vcpu, 16GB RAM, 40GB HDD
+OS: Ubuntu 18.04 LTS
+
+IP: 10.34.110.217
+username: ubuntu
+password: Y$&5z+vkWg
+
+enabled: SSH(port 22)
+only accessible via LAN cable, or VPN (Pulse Secure)

@@ -29,3 +29,17 @@ Next progress should finished PBFT and started on search and Hmag
 Docker
 ID:pcep
 pass: normal bio
+
+----------------------------------
+Discuss 12 Jan 2020
+- Let introduce yourself to Paper format
+- While working on search program let see on cryptography also!
+- All task included conference and paper must be done before June to attent this year graduation ceremony
+
+----------------------------------
+1.does sequence of tx affect hash value in IBFT? How IBFT deal with this?
+Next week, expect start on Search program!!!
+Main purpose is to be able to answer how the consensus technically work in Quorum
+
+2.Draft paper abstract from the template that Ajarn Sand sent.
+Should have intro, -> at least add titles for Ajarn Sand to review

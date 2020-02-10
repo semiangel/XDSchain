@@ -1,0 +1,235 @@
+Patient Identifier Cross-Referencing, 
+Audit Trail and Node Authentication, 
+Cross-Enterprise User Authentication, 
+and Retrieve Information for Display
+
+After take a looked on other section in IHE ITI Technical Framework and some other content in other profiles, I think it may require implementor to have expertise in healthcare information system.
+Maybe we start with ATNA as to induce the utilization of Blockchain into this field of work. Show those experts that Blockchain can be used together with IHE implementation profiles. After that, let them think an idea about which part of IHE profile should work better with Blockchain technology.
+
+attend thursday session and summarize to talk with ajarn
+
+slide
+- Case ATNA
+- Pharmacy
+- Share patient demography -> Cross-enterprise
+
+Draft a slide to clarify scenario
+
+multiple party + distribute + failsafe = need blockchain (?)
+smart contract give automate self-trigger contract
+business first then technology follow
+ico led by crownfunding < ico was made to solve trust problem in crownfunding < but ico got problem about swing in value compare to real money
+Stellar network
+
+search newly published health-record and Blockchain > should give some new clue
+possiblity of multi-party required scenario
+IHE profile + Blockchain Immutable + some additional benefit = New convincing benefit
+National ID > let see, it should give some clues
+About student ticket, ajarn will contact again later
+Next meeing, possibly next week
+
+How might we use Blockchain
+for Cross-Enterprise Document Sharing profile
+to provide immutable information trail and distributed accessibility of information between different enterprise?
+
+How might we reearch new method
+for Cross-Enterprise Document Sharing Profile
+to provide immutable information trail and distributed accessibility of information between different enterprise?
+
+How might we research new method
+for Healthcare industry
+to provide immutable information trail and distributed accessibility of information between different enterprise while compatible with everyday medical operation?
+
+the best for now: Document Registry exist upon Blockchain. The Document registry is where all Document Consumer will contact first when in need of Document. The blockchain will also record query history to provide trail to track back about "who accessed what".
+
+At least it provide some clue in case real data has been wiped.
+Distributed access to necessary information for medical operation.
+If success, when Blockchain become just a common tool in everyday life, the chain may extend its usage to store some amount of important data.
+
+Need to make sure that Document Registry intended to allow document sharing between different enterprise.
+
+From experienced person
+- does XDS.b have any limitation?
+- Document registry from all enterprise must be synced with each others in real time, yes or no?
+- Commonly, how many Document Registry exist in one hospital? Do they have different roles? e.g. for Orthopedic ward, for Pediatric ward, something like that.
+
+Demand we have
+- Individual person want their health information to interoperate between different hospital/healthcare provider, so they don't need to share it themselves and improve their experience from healthcare services.
+- As technology develope, healthcare system now jump from paper work to digital platform which will improve efficiency of operation. We are in need of improving security of healthcare information system. One of major incident that highly affect healthcare enterprise is attack on the data. Healthcare data must be made immutable without losing of confidentiality. At least we need a way to mitigate cyber-incident which reduce its damage as much as possible.
+
+implement it now
+2 papers
+1st paper > give concept of access control to data using smart contract > control access to healthcare information
+
+existing work that is a must to be included -> must be fully understand -> 1 full day need! per paper
+- NDID
+- smart contract + access control (enforcable contract paper)
+- EHR on Blockchain (paper)
+
++ detail of transaction in XDS.b -> must have answer -> 1-2 full day!
+! possible that there are someone doing this, may need to be faster -> if not -> our work may not valid
+
+if Ethereum not work, let try NDID -> at least should have working Blockchain platform already = 4-5 day!
+-> if Ethereum is too hard let do on NDID -> maybe consult with P'Chakan -> he know why choose this Blockchain platform
+
+next step after, consider about privacy/confidentiality of data -> may need to design
+
+next meeting in 2 weeks > must have these progress 2 PM 6 DEC -> online call
+
+1.what indormation will be upload to each block > see transaction (which transaction will bu published) + scenario (what information needed to be published)
+2.different patient ID > at 1st point, why we need to cover patient ID from the beginning > how to check different id from different hospital > let see how Patient Identifier Sources do this
+3.Dig in scenario in more detail?
+4.How to search for information on each Block > idea: 1st round scan from the beginning then save in local memory for faster use in future + lesser effort (like save point of scanning) next time system come to seek for new information will start from previous end point. System will remember all patient at once per round. > Draw diagram for ajarn to understand -> just like receptor react to antigen
+4(+). Let see how index mechanism should work. May need to dig into detail of transaction also.
+5.Security on document retrieval. > IHE should have this?
+
+Paper 1
+Paper 2
+Summarized concept
+Discuss with P'Chakan
+Need to settle scenario clearly
+Seeking for transaction
+
+Who will be these provider, requestor -> will it be doctor/hospital/nurse/registry/etc.
+Monday progress about transactions and Patient ID sources | online call
+Make it clear what contribution were made in other paper, what made open issue, what will be our main contribution
+Already have what, Do what -> What our Blockchain unique -> Draw block diagram
+
+MedRec blockchain -> Anonymized data for data mining as bounty for miner
+                  -> Blockchain record patient's trail along the healthcare domain (interaction between patient and healthcare provider aka patient-provider relation ship)
+                  -> Allow patient to have consent over their data
+                  +> Declared that participating node will be the one in need of healthcare data to be used for research
+                  +> Remain open about which case of scenario in healthcare operation that this concept will be useful
+
+Mayo Clinic blockchain -> Blockchain as patient's information access point, sew all healthcare provider together
+                       -> Proof of Interoperability
+                       -> Usage of FHIR URLs as transaction of Blockchain which allow accessed identity to visit the URLs and access related document.
+                       -> Mentioned about how Blockchain's components should be, which should allow compatibility with healthcare domain
+                       +> Which healthcare data will be put on stake to be accessible via FHIR URLs
+
+Enforcable Data Sharing -> Blockchain as access control for data and act as penalty enforcer
+                        +> What data and its use case will this concept help solve the problem (privacy/confidentiality required one but, which one)
+
+EHR using Blockchain -> Sum up the idea of Electronic Health Record Blockchain
+                     -> EHR Blockchain should allow: *> Create global healthcare data sharing network
+                                                     *> Should allow patient to have consent over their data using Blockchain Wallet
+                                                     *> Allow sharing of information within healthcare network
+                                                     *> Track care history of patient within healthcare network
+                     +> What consensus will be used, it should compatible with healthcare operation environment
+                     +> Who will be the one that maintain node
+                     +> How environment of network and its economic strategy should be, so that the network can maintain itself
+
+IHE -> Offer concept of Cross-Enterprise Document Sharing along with its component profiles
+    -> Defined actor/transaction involved in implementation which reduce complexity of process
+    -> Defined each essential components, its purpose, its role, and its use case
+    -> Defined what data will involved in each profile
+    +> Compatible technology and technical stuff that enable real implementation
+
+Our approach -> Use Blockchain to enable document sharing between healthcare enterprise, aka partially enable interoperability 
+             -> Pick the case that each consensus and main node are hospital/clinic/health service provider who require document sharing as to increase quality and efficiency of services
+             -> Wallet node are physician (as document consumer) and patient (for data accessbility consent)
+             -> Adopt Cross-Enterprise Document Sharing Profile from IHE as a backbone to allow the concept to be like a tool that allow interoperability between different enterprise
+             -> Document Registry will be the main healthcare data put on Blockchain to enable healthcare document sharing between different enterprise
+             -> Document Registry itself also act as keeper of patient-provider relationship history (much like both idea from MedRec and Mayo) | aka care history
+             -> Document Registry by its own purpose is to act as access point to discover data that Document Consumer looking for
+             -> As substitution for data discovery method, this concept may introduce data discovery smart contract which will search for transaction based on its indexes <these essentail indexes are defined within XDS.b profile and they work a lot like Blockchain already>
+             
+             -> May adopt concept from Enforcable Data Sharing Smart contract to give ability to control their data to patient
+             -> Addition from document entry, Blockchain may also capable of record document retrieval activities within the network and corresponding patient's consent over the action.
+
+             -> May introduce consensus method by adopt idea of Proof of Interoperability where this consensus will ensure interoperability of each transaction i.e. using accepted Patient Identifier
+             -> This work avoid concept that directly put all healthcare data to Blockchain. The idea is currently not viable and contain many major risk i.e. put data confidentiality and privacy on stake
+             -> In this work, each participating healthcare enterprise are driven by motivation of improving their services quality and efficiency by enable document sharing between enterprise.
+
+             -> This Document Registry Blockchain also help keep evidences of lost data, which can be used to seek for lost data substitution or damage mititgation process. (This addressed cyber-incidents in heal1thcare domain i.e. ransomware, wipe ware)
+
+Who will be Document consumer? -> see ITI-42
+What Patient Identifier Source do? -> see ITI-8
+Will smart contract create something like Patient Identifier Source?
+
+Make compare table between feature of Mayo and MedRec and other previous work then compare to our work
+Can we just search Blockchain with plain text?
+Make slide!
+Ask P'Chakan! How to do it!? What consensus/ which platform suit best****
+Document Registry Discover method <?
+What data will be uploaded <? Surely 1.Metadata transaction record 2.need Data discover algorithm 3.Private Blockchain between hospital 4.Solve patient identity 5.Data consent (Possibly use cryptography) 5.and etc.
+Should have concrete scenario and method before 25 dec. So, can focus on implementing at home. Make scope stable! 
+Sure existing work and known in detail what we gonna do! and how**** 
+Next meeting Friday afternoon 14-12-2018 at MARU
+
+Can both use Ethereum or NDID depend on you. but if choose NDID, better refer to its basement (Tendermint) not directly refer to NDID
+because NDID didn't published
+
+make table what already exist and what we need to create, what we need to choose -> mark it -> make it clear on overview and point out what we need to do, what left we need to complete this -> goal to breakdown implementation phase so, we can control time scope
+we can know our current status
+
+scanario -> exchange medical record, which types of information
+
+PoC evaluation? let search for example of implementation | maybe transaction time or compare with w/o Blockchain
+
+read whitepaper of NDID
+
+priority scanario table send to ajarn on Sat 5 Jan and talk with Aj. on Sun 6 Jan 10AM
+
+
+understand other parameter of Ethereum, so we can use it fluently like NAT, and anything specified in geth
+understand XML example to allow design of Document Registry Searcher -> get to known what they exchanging via Document Registry with each transaction
+get to detail how searcher work
+*must have* what parameter they specify to register document, registry search, registry query, retrieval -> and eventually in our design, do we need to apply cryptography (public-private key encryption) in any part.
+this will get you to whole scanario -> then you know what information they exchanging and what benefit of using your idea
+then back to Ethereum Blockchain -> What consensus we should use, How many smart contract we need then we implement
+then write proposal before publish (with result completed)
+
+for publication -> 1 paper for detail implementation while 1 introduce the whole system -> 1 paper, 1 journal (20%ofpaper)
+however, need proposal first. Defend can do after success in coference or paper or journal.
+
+Update to Aj.Patt -> Success Ethereum and have discussed with Aj.Sand about example of transaction -> going to inteprete and understand its content -> then can see the whole scenario and specify design of component of this system
+
+Search for transaction in chain with smart contract seem impossible
+we may come up with they need search contract published before local applicatin allow searching in Blockcchain
+but where our antigen-receptor exist, and how to control?
+
+maybe, we bind all transaction relate to single patient to single eth address or even contract address
+
+mention that all hospital need patient ID
+
+make it accurate about transaction from XDS Toolkit add it to ppt
+point it out that how existing document registry work and its limitation and how our work help them improve
+let see how On-Demand different from stable
+let change name of each actor like Document Registry to xxx node for better understanding
+
+struggle on xml parsing
+1.how to deal with 'rim:' and what is it?
+2.how to eliminate non-xml byte from message
+
+capture traffic using wireshark on Kali
+record IP address of 3 VM
+ubuntu <> Kali <> Windows
+ubuntu may need to be server
+syn flood
+ARP spoofing
+
+Does Ethereum allow direct search on contentof each transactions?
+Idea about using smartcontract to respond to search -> are there anyone done this? if not -> it can be our main contribution that can bedeclared -> also case different evaluation
+if have any idea done this -> did they try implemented? !!!!urgent find out on this0
+smart contract are being used in Ethereum Query Language
+
+scope for proposal
+1.idea
+2.implment -> possibility to continue the work
+
+ 27 April -> Document ready for comittee
+
+ 1.Motivation/problem
+ 2. existing solution (like IHE XDS Profile, Blockchain)
+ 3. Open issue -> open issue 
+ - there are no implementation
+ - no search solution implemented
+ - attach ...
+ 4.proposing solution
+ - XDS + Blockchain
+ - Search
+ - handle PHI
+ - Retrieval
+
+ Within today, send slide of topic structure for proposal , and pick template (with Mahidol brand) --> very important

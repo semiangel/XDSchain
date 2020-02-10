@@ -43,3 +43,9 @@ Main purpose is to be able to answer how the consensus technically work in Quoru
 
 2.Draft paper abstract from the template that Ajarn Sand sent.
 Should have intro, -> at least add titles for Ajarn Sand to review
+
+----------------------------------
+
+- Journal ต้อง re-write ทั้งหมด ก็อปวางไม่ได้
+- cut เนื้อหาตรงไหนของเนื้องานไปลง Conference ดี อยากให้เป็น Contribution ที่เคยลงใน ppt แล้ว extension นอกจากนี้ใส่ Journal ส่ง Email ให้อาจารย์พรุ่งนี้ 
+- ถ้าพิจารณาดูแล้ว Error ที่ติดอยู่ไม่มีส่วนเกี่ยวข้องกับที่ต้องลง ก็ไปทำ paper ก่อนได้

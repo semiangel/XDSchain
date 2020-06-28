@@ -1,0 +1,64 @@
+remixd -s smartcontract/ --remix-ide https://remix.ethereum.org
+(from XDSChain)
+
+Plugin:
+Compiler
+Run & Deploy
+Quorum?
+
+-----------------------------------------------------------
+
+Registry5.sol design
+<||||||||||||||>
+Known Bugs
+1.Didn't addressed META-data attributes with subset
+2.Should make the first transact return value of DocID, so this will allow following transact to follow the right DocID in sequence
+<||||||||||||||>
+Register META-data attributes set of newly generated document.
+1.Each time new document is generated, it will submit its META-data registry into smartcontract.
+2.This new contract will be named by DocID++ that allow iteration search on Blockchain. 
+And this DocID will be used only for that purpose.
+3.Each contract will store value of META-data attributes into 1 smartcontract at certain address.
+4.Each value of META-data attributes will be store in variable array inside smartcontract.
+
+Note*: Each patient can have many documents refer to them, as each of them can generate more than one event. 
+At the same time, each document mostly represent single event that happen on different times.
+
+(?)So, do we even need to update document registry? 
+It's not actually specified in IHE ITI-42 that it allow update.
+The purpose of ITI-42 transaction is just 'register' set of META-data belong to certain document at the specific event. 
+We may assume that update feature is not required.
+Then the feature that allow update on existing document registry in smartcontract will be removed.
+<||||||||||||||>
+Do we even need to use Quorum? Is PoW really that slow?
+<||||||||||||||>
+Discovering existing document in the network
+This can be done by look upon Document Registry
+1.Normally, health document user may look for document using one or more of these META-data attributes to identify the document 
+(assume that all documents are using english language):
+author				= Information about person and institution who generated the document << !
+creationTime			= Date Time on the creation of document
+classCode			= The code specifying the high-level use classification of the document type 
+				  (e.g., Report, Summary, Images, Treatment Plan, Patient Preferences, Workflow).
+eventCodeList			= This list of codes represents the main clinical acts, such as a colonoscopy or an appendectomy, being documented.
+healthcareFacility TypeCode	= This code represents the type of organizational setting of the clinical encounter during which the documented act occurred.
+hash				= Hash value that retrieved from document, It may not be common value but possible
+patientId			= Patient Identifier that shared amongst the network
+practiceSettingCode		= The code specifying the clinical specialty where the act that resulted in the document was performed 
+				  (e.g., Family Practice, Laboratory, Radiology).
+serviceStartTime and serviceStopTime = Date Time for the healthcare service provided
+sourcePatientId			= Patient Identifier used by the source of document
+sourcePatientInfo		= Patient information containd in HL7v2 format << !
+title				= The title of the document
+uniqueId			= Globally unique identifier assigned to the document by its creator
+
+! These attributes has its subset
+
+2.The search function will iterate on DocID to find for META-data attributes set with matching value
+
+3.When the document was found, health document user may want to know these META-data attributes value:
+availabilityStatus		= The lifecycle status of the DocumentEntry, represent state of document
+repositoryUniqueId		= The globally unique identifier of the repository where the document can be accessed.
+URI				= The URI for the document.
+
+4.The user then use information from (3.) to access actual document in its repository.

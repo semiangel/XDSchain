@@ -5,15 +5,16 @@
   "main": "TCPClient.js",
   "dependencies": {
     "fs": "0.0.1-security",
-    "ganache-cli": "^6.9.0",
+    "ganache-cli": "^6.12.1",
     "net": "^1.0.2",
-    "quorum-js": "^0.3.4",
+    "quorum-js": "^0.3.5",
+    "remixd": "^0.2.4-alpha.0",
     "sax": "^1.2.4",
     "soap": "^0.26.0",
-    "util": "^0.12.0",
-    "web3": "^1.2.4",
+    "util": "^0.12.3",
+    "web3": "^1.3.0",
     "xml-js": "^1.6.11",
-    "xml2js": "^0.4.19"
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {},
   "scripts": {

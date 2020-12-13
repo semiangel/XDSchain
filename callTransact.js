@@ -3,7 +3,7 @@ var Web3 =  require('web3');
 var net = require('net');
 var web3 = new Web3("qdata/dd1/geth.ipc", net);
 
-async function deployContract(){
+async function invokeContract(){
 	//web3.eth.defaultAccount = web3.eth.personal.getAccounts().then(console.log);
 	let acc = await web3.eth.personal.getAccounts();
 	  if (acc.err) {console.log(acc.err);}
@@ -47,28 +47,22 @@ async function deployContract(){
 
 	var bytecode = "0x608060405234801561001057600080fd5b5060c68061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c80636057361d146037578063b05784b8146062575b600080fd5b606060048036036020811015604b57600080fd5b8101908080359060200190929190505050607e565b005b60686088565b6040518082815260200191505060405180910390f35b8060008190555050565b6000805490509056fea265627a7a72315820f28000e5ff5baef54cdf92bda5d7954e0188bd89687e561f955be24fca7527e364736f6c634300050b0032";
 
-	var myContract = new web3.eth.Contract(abi);
+	var contractAddress = "0xb99d60bf70772c6bf9d2e6679a6b133dac38f973725bb7b5e2f3896c6551762c";
 
-	myContract.deploy({
-		data: bytecode
-	})
-	.send({
+	var myContract = new web3.eth.Contract(abi, contractAddress, {
 		from: deployerAccount,
 	    gas: 1500000
-	}, function(error, transactionHash){ 
-		console.log('Contract sent!!!'); 
-	}).on('error', function(error){ 
-		console.log('Error sending contract!');
-		console.log(error); 
-	}).on('transactionHash', function(transactionHash){ 
-		console.log('TransactionHash: ' + transactionHash);
-	}).on('receipt', function(receipt){
-		console.log('Receipt:' + receipt.contractAddress) // contains the new contract address
-	}).then(function(newContractInstance){
-	    console.log('newContractInstance:' + newContractInstance.options.address);
-	}).then(function(successfulMarker){
-		console.log('Contract successfully deployed!!');
-	}).then(process.exit);
+	});
+
+	myContract.methods.retreive().call({
+		from: deployerAccount
+	}, (err,res) => {
+		if (err) {
+			console.log(err);
+		}else{
+			console.log('Stored value:' + res);
+		}
+	});	
 }
 
-deployContract();
+invokeContract();

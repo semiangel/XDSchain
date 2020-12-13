@@ -82,13 +82,13 @@ contract Storage {
         docreg[DocID].METADataAttributes[23] = DocumentEntry_size;
     }
     
-    function storeDocumentEntryPart3(uint Docid,
+    function storeDocumentEntryPart3(uint Docid,//1150
                                     string memory DocumentEntry_sourcePatientId,
                                     string memory DocumentEntry_sourcePatientInfo,
                                     string memory DocumentEntry_title,
                                     string memory DocumentEntry_typeCode,
                                     string memory DocumentEntry_uniqueId,
-                                    string memory DocumentEntry_URI
+                                    string memory DocumentEntry_URI 
                                     ) public {
         if (Docid > 0){
             DocID = Docid;

@@ -63,7 +63,7 @@ async function deployContract(){
 	}).on('transactionHash', function(transactionHash){ 
 		console.log('TransactionHash: ' + transactionHash);
 	}).on('receipt', function(receipt){
-		console.log('Receipt:' + receipt.contractAddress) // contains the new contract address
+		console.log('Receipt:' + receipt.contractAddress) // contains the new contract address that being used for methods invoke
 	}).then(function(newContractInstance){
 	    console.log('newContractInstance:' + newContractInstance.options.address);
 	}).then(function(successfulMarker){

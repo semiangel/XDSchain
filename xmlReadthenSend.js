@@ -1,8 +1,10 @@
+//Simple program that read .xml file and send it via TCP socket
+
 var net = require('net');
 var fs = require("fs");
 
 var HOST = '127.0.0.1';
-var PORT = 6969;
+var PORT = 65519;
 //var HOST = '192.168.176.128';
 //var PORT = 8080;
 var client = new net.Socket();
@@ -11,6 +13,7 @@ client.connect(PORT, HOST, function() {
     console.log('CONNECTED TO: ' + HOST + ':' + PORT);
     // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client 
     fs.readFile("SingleDocumentEntry.xml", function(err, buf) {
+        if (err) console.log(err);
         var text = buf.toString();
         client.write(text);
         console.log('Sent: \n' + text + '\n');

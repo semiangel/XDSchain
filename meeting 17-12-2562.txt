@@ -1,5 +1,0 @@
-- when present, you need to provide useful reason/story that show usefulness of your work
-- like META-Data also peovide some useful information that help XDS Consumer discover their desire document
-- Micro-service
-- Let just use hash for sensitive META-Data attributes
-- The Dilemma to solve is key management -> Possible to create some plugin that allow other to implement better key management system

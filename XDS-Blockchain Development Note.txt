@@ -1,5 +1,0 @@
-===== XDS-Blockchain Development Note =====
-===== 17/11/2562 =====
-- ITI-42 Intepreter -> 70% Done
-- Record Smart Contract -> 0%
-- Search -> 0%

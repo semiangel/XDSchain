@@ -1,13 +1,16 @@
+//Simple program that received .xml via TCP socket then write it to temp.xml file
+//This program is also a test site for xml2js module
+
 var net = require('net');
 var fs = require("fs");
 
-//var xml2js = require('xml2js');
-//var parseString = xml2js.parseString;
+var xml2js = require('xml2js');
+var parseString = xml2js.parseString; //recent update (yr 2020) simplify resulting JSON object format
 
-var convert = require('xml-js');
+//var convert = require('xml-js'); //xml-js now deprecated
 
 var HOST = '127.0.0.1';
-var PORT = 6969;
+var PORT = 65519;
 //var HOST = '192.168.61.1';
 //var PORT = 8080;
 
@@ -22,7 +25,7 @@ net.createServer(function(sock) {
     // Add a 'data' event handler to this instance of socket
     sock.on('data', function(data) {
         
-        console.log('DATA ' + sock.remoteAddress + ': \n' + data);
+        console.log('DATA ' + sock.remoteAddress + ': \n' + data); //display received data in raw XML format
         fs.writeFile("temp.xml", data, function(err, data) {
             if (err) console.log(err);
             console.log("Successfully Written to File.");
@@ -31,22 +34,23 @@ net.createServer(function(sock) {
         // Write the data back to the socket, the client will receive it as data from the server
         sock.write('ACK from ' + sock.remoteAddress + '\n');
 
-//-----------------------------------------------------------------xml-js
-        //var result = convert.xml2js(data);
-        //console.log(result);
-
-//-----------------------------------------------------------------xml2js
+//-----------------------------------------------------------------xml-js (deprecated)
 /*
+        var result = convert.xml2js(data);
+        console.log(result);
+*/
+//-----------------------------------------------------------------xml2js
+
         parseString(data, function (err, result) {
-            //if (err) throw err;
+            if (err) throw err;
             console.log('\nConverted to object: ');
             console.log(result);
 
-            //var builder = new xml2js.Builder();
+            //var builder = new xml2js.Builder(); //rebuild JSON into XML format
             //var resp = builder.buildObject(result);
             //console.log('\n' + resp);
         });
-*/
+
 //-----------------------------------------------------------------
         
     });

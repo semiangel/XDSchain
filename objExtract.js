@@ -1,7 +1,10 @@
+//Original objectExtractor for old xml2js version
+//Now deprecated
+
 var fs = require("fs");
 var util = require("util");
 //should import received object from XDSRegistry.js instead of declare it all here
-var XDSAttribute = 
+var XDSAttrib = 
 { elements: 
    [ { type: 'element',
        name: 'lcm:SubmitObjectsRequest',
@@ -777,66 +780,69 @@ function assignValue (rim) { //assignValue to all possible attributes type
 //this may require addional for loop
 
 //Main
-if('elements' in XDSAttribute) {
-	if('elements' in XDSAttribute.elements[0]){
-		if('elements' in XDSAttribute.elements[0].elements[0]){
-			if('attributes' in XDSAttribute.elements[0].elements[0].elements[0]){
-				var prevLoc = XDSAttribute.elements[0].elements[0];
-		        for (var groupType=0; groupType<XDSAttribute.elements[0].elements[0].elements.length; groupType++){
-					var currentLoc = XDSAttribute.elements[0].elements[0].elements[groupType];
-					if(prevLoc.elements[groupType].name == 'rim:ExtrinsicObject'){ //'rim:ExtrinsicObject' marked this section for DocumentEntry group
-						subType = prepXDSAtt.DocumentEntry; //Select Group for prepXDSAtt using 'subType' variable
-						if('elements' in currentLoc){
-  							for (var i=0; i<currentLoc.elements.length; i++) {
-					  			const rim = currentLoc.elements[i];
-	  							if(rim.name != 'rim:Slot' && rim.name != 'rim:Classification' && rim.name != 'rim:ExternalIdentifier') continue; 
-		                		//condition check for loop by jump over to matched condition, any unmatch will be skipped
-	  							if('elements' in rim){
-									assignValue(rim);
-	  							}
-	  						}
-	  					}
-	  				}
-					else if(prevLoc.elements[groupType].name == 'rim:RegistryPackage'){
-		          		subType = prepXDSAtt.SubmissionSet;
-		          		var Folder = prepXDSAtt.Folder; 
-		          		//A rim:Classification is used to distinguish between the SubmissionSet and Folder object Type
-		          		//So, attributes for folder will mainly identified with UUID in assignClassification
-		            	//assign attribute of SubmissionSet or Folder
-		            	if('elements' in currentLoc){
-		              		for (var i=0; i<currentLoc.elements.length; i++) {
-		                		const rim = currentLoc.elements[i];
-	                			if(rim.name != 'rim:Slot' && rim.name != 'rim:Classification' && rim.name != 'rim:ExternalIdentifier') continue; 
-		                		//condition check for loop by jump over to matched condition, any unmatch will be skipped
-		                		if('elements' in rim){
-									assignValue(rim);
-		                		}
-		              		}
-		            	}
-					}
-					else if(prevLoc.elements[groupType].name == 'rim:Classification'){
-						subType = prepXDSAtt.SubmissionSet;
-						if('attributes' in prevLoc.elements[groupType]){
-							if('classificationNode' in prevLoc.elements[groupType].attributes){
-								if(prevLoc.elements[groupType].attributes.classificationNode == limitedMetadataUUID){
-									subType.limitedMetadata = 1;
-								}
-							}
-		          		}
-					}
-					else if(prevLoc.elements[groupType].name == 'rim:Association'){
-						subType = prepXDSAtt.Association;
-						subType.associationType = prevLoc.elements[groupType].attributes.associationType;
-						subType.sourceObject = prevLoc.elements[groupType].attributes.sourceObject;
-						subType.targetObject = prevLoc.elements[groupType].attributes.targetObject;
-						subType.SubmissionSetStatus = prevLoc.elements[groupType].elements[0].elements[0].elements[0].elements[0].text;
-					}
-		        }
-			}
-		}
-	}
+function assignAll (XDSAttribute) {
+  if('elements' in XDSAttribute) {
+  	if('elements' in XDSAttribute.elements[0]){
+  		if('elements' in XDSAttribute.elements[0].elements[0]){
+  			if('attributes' in XDSAttribute.elements[0].elements[0].elements[0]){
+  				var prevLoc = XDSAttribute.elements[0].elements[0];
+  		        for (var groupType=0; groupType<XDSAttribute.elements[0].elements[0].elements.length; groupType++){
+  					var currentLoc = XDSAttribute.elements[0].elements[0].elements[groupType];
+  					if(prevLoc.elements[groupType].name == 'rim:ExtrinsicObject'){ //'rim:ExtrinsicObject' marked this section for DocumentEntry group
+  						subType = prepXDSAtt.DocumentEntry; //Select Group for prepXDSAtt using 'subType' variable
+  						if('elements' in currentLoc){
+    							for (var i=0; i<currentLoc.elements.length; i++) {
+  					  			const rim = currentLoc.elements[i];
+  	  							if(rim.name != 'rim:Slot' && rim.name != 'rim:Classification' && rim.name != 'rim:ExternalIdentifier') continue; 
+  		                		//condition check for loop by jump over to matched condition, any unmatch will be skipped
+  	  							if('elements' in rim){
+  									assignValue(rim);
+  	  							}
+  	  						}
+  	  					}
+  	  				}
+  					else if(prevLoc.elements[groupType].name == 'rim:RegistryPackage'){
+  		          		subType = prepXDSAtt.SubmissionSet;
+  		          		var Folder = prepXDSAtt.Folder; 
+  		          		//A rim:Classification is used to distinguish between the SubmissionSet and Folder object Type
+  		          		//So, attributes for folder will mainly identified with UUID in assignClassification
+  		            	//assign attribute of SubmissionSet or Folder
+  		            	if('elements' in currentLoc){
+  		              		for (var i=0; i<currentLoc.elements.length; i++) {
+  		                		const rim = currentLoc.elements[i];
+  	                			if(rim.name != 'rim:Slot' && rim.name != 'rim:Classification' && rim.name != 'rim:ExternalIdentifier') continue; 
+  		                		//condition check for loop by jump over to matched condition, any unmatch will be skipped
+  		                		if('elements' in rim){
+  									assignValue(rim);
+  		                		}
+  		              		}
+  		            	}
+  					}
+  					else if(prevLoc.elements[groupType].name == 'rim:Classification'){
+  						subType = prepXDSAtt.SubmissionSet;
+  						if('attributes' in prevLoc.elements[groupType]){
+  							if('classificationNode' in prevLoc.elements[groupType].attributes){
+  								if(prevLoc.elements[groupType].attributes.classificationNode == limitedMetadataUUID){
+  									subType.limitedMetadata = 1;
+  								}
+  							}
+  		          		}
+  					}
+  					else if(prevLoc.elements[groupType].name == 'rim:Association'){
+  						subType = prepXDSAtt.Association;
+  						subType.associationType = prevLoc.elements[groupType].attributes.associationType;
+  						subType.sourceObject = prevLoc.elements[groupType].attributes.sourceObject;
+  						subType.targetObject = prevLoc.elements[groupType].attributes.targetObject;
+  						subType.SubmissionSetStatus = prevLoc.elements[groupType].elements[0].elements[0].elements[0].elements[0].text;
+  					}
+  		        }
+  			}
+  		}
+  	}
+  }
+  console.log('---------------------------------');
+  console.log(prepXDSAtt);
+  fs.writeFileSync("extractedObject", util.inspect(prepXDSAtt));
 }
 
-console.log('---------------------------------');
-console.log(prepXDSAtt);
-fs.writeFileSync("extractedObject", util.inspect(prepXDSAtt));
+assignAll(XDSAttrib);

@@ -1,0 +1,1451 @@
+{
+  "declaration": {
+    "attributes": {
+      "encoding": "UTF-8",
+      "version": "1.0"
+    }
+  },
+  "elements": [
+    {
+      "attributes": {
+        "xmlns:soapenv": "http://www.w3.org/2003/05/soap-envelope"
+      },
+      "elements": [
+        {
+          "attributes": {
+            "xmlns:wsa": "http://www.w3.org/2005/08/addressing"
+          },
+          "elements": [
+            {
+              "attributes": {
+                "soapenv:mustUnderstand": "true"
+              },
+              "elements": [
+                {
+                  "text": "http://127.0.0.1:6969/",
+                  "type": "text"
+                }
+              ],
+              "name": "wsa:To",
+              "type": "element"
+            },
+            {
+              "attributes": {
+                "soapenv:mustUnderstand": "true"
+              },
+              "elements": [
+                {
+                  "text": "urn:uuid:2311B77C122650C7B91554413514373",
+                  "type": "text"
+                }
+              ],
+              "name": "wsa:MessageID",
+              "type": "element"
+            },
+            {
+              "attributes": {
+                "soapenv:mustUnderstand": "true"
+              },
+              "elements": [
+                {
+                  "text": "urn:ihe:iti:2007:RegisterDocumentSet-b",
+                  "type": "text"
+                }
+              ],
+              "name": "wsa:Action",
+              "type": "element"
+            }
+          ],
+          "name": "soapenv:Header",
+          "type": "element"
+        },
+        {
+          "elements": [
+            {
+              "attributes": {
+                "xmlns:lcm": "urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"
+              },
+              "elements": [
+                {
+                  "attributes": {
+                    "xmlns:rim": "urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"
+                  },
+                  "elements": [
+                    {
+                      "attributes": {
+                        "id": "Document01",
+                        "mimeType": "text/plain",
+                        "objectType": "urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1"
+                      },
+                      "elements": [
+                        {
+                          "attributes": {
+                            "name": "size"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "4",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "name": "repositoryUniqueId"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "1.19.6.24.109.42.1",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "name": "hash"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "e543712c0e10501972de13a5bfcbe826c49feb75",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "name": "creationTime"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "20061224",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "name": "languageCode"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "en-us",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "name": "serviceStartTime"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "200612230800",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "name": "serviceStopTime"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "200612230900",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "name": "sourcePatientId"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "89765a87b^^^&1.3.4.5&ISO",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "name": "sourcePatientInfo"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "PID-3|pid1^^^&1.2.3&ISO",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                },
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "PID-5|Doe^John^^^",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                },
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "PID-7|19560527",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                },
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "PID-8|M",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                },
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "PID-11|100 Main St^^Metropolis^Il^44130^USA",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "attributes": {
+                                "value": "DocA"
+                              },
+                              "name": "rim:LocalizedString",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Name",
+                          "type": "element"
+                        },
+                        {
+                          "name": "rim:Description",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d",
+                            "classifiedObject": "Document01",
+                            "id": "id_1",
+                            "nodeRepresentation": "",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "authorPerson"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "^Smitty^Gerald^^^",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "attributes": {
+                                "name": "authorInstitution"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Cleveland Clinic",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    },
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Parma Community",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "attributes": {
+                                "name": "authorRole"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Attending",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "attributes": {
+                                "name": "authorSpecialty"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Orthopedic",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d",
+                            "classifiedObject": "Document01",
+                            "id": "id_2",
+                            "nodeRepresentation": "",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "authorPerson"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "^Dopplemeyer^Sherry^^^",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "attributes": {
+                                "name": "authorInstitution"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Cleveland Clinic",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    },
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Berea Community",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "attributes": {
+                                "name": "authorRole"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Primary Surgon",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "attributes": {
+                                "name": "authorSpecialty"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Orthopedic",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a",
+                            "classifiedObject": "Document01",
+                            "id": "id_3",
+                            "nodeRepresentation": "PLANS",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "codingScheme"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "1.3.6.1.4.1.19376.1.2.6.1",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "Treatment Plan or Protocol"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f",
+                            "classifiedObject": "Document01",
+                            "id": "id_4",
+                            "nodeRepresentation": "R",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "codingScheme"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "2.16.840.1.113883.5.25",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "Restricted"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d",
+                            "classifiedObject": "Document01",
+                            "id": "id_5",
+                            "nodeRepresentation": "urn:ihe:iti:bppc:2007",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "codingScheme"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "1.3.6.1.4.1.19376.1.2.3",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "urn:ihe:iti:bppc:2007"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1",
+                            "classifiedObject": "Document01",
+                            "id": "id_6",
+                            "nodeRepresentation": "66280005",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "codingScheme"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "2.16.840.1.113883.6.96",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "Private home-based care"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead",
+                            "classifiedObject": "Document01",
+                            "id": "id_7",
+                            "nodeRepresentation": "Practice-D",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "codingScheme"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "1.3.6.1.4.1.21367.2017.3",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "Pathology"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:2c6b8cb7-8b2a-4051-b291-b1ae6a575ef4",
+                            "classifiedObject": "Document01",
+                            "id": "id_8",
+                            "nodeRepresentation": "urn:connectathon:bppc:foundational:policy",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "codingScheme"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "1.3.6.1.4.1.21367.2017.3",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "Foundational Connectathon Read-Access Policy"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:2c6b8cb7-8b2a-4051-b291-b1ae6a575ef4",
+                            "classifiedObject": "Document01",
+                            "id": "id_9",
+                            "nodeRepresentation": "urn:connectathon:policy:full-access",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "codingScheme"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "1.3.6.1.4.1.21367.2017.3",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "FULL ACCESS TO ALL POLICY"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:f0306f51-975f-434e-a61c-c59651d33983",
+                            "classifiedObject": "Document01",
+                            "id": "id_10",
+                            "nodeRepresentation": "11502-2",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "codingScheme"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "2.16.840.1.113883.6.1",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "LABORATORY REPORT.TOTAL"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "id": "id_11",
+                            "identificationScheme": "urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExternalIdentifier",
+                            "registryObject": "Document01",
+                            "value": "IHEBLUE-2736^^^&1.3.6.1.4.1.21367.13.20.3000&ISO"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "XDSDocumentEntry.patientId"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:ExternalIdentifier",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "id": "id_12",
+                            "identificationScheme": "urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExternalIdentifier",
+                            "registryObject": "Document01",
+                            "value": "1.2.42.20190405034511.30"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "XDSDocumentEntry.uniqueId"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:ExternalIdentifier",
+                          "type": "element"
+                        }
+                      ],
+                      "name": "rim:ExtrinsicObject",
+                      "type": "element"
+                    },
+                    {
+                      "attributes": {
+                        "id": "SubmissionSet01",
+                        "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:RegistryPackage"
+                      },
+                      "elements": [
+                        {
+                          "attributes": {
+                            "name": "submissionTime"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "20041225235050",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "attributes": {
+                                "value": "Physical"
+                              },
+                              "name": "rim:LocalizedString",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Name",
+                          "type": "element"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "attributes": {
+                                "value": "Annual physical"
+                              },
+                              "name": "rim:LocalizedString",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Description",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d",
+                            "classifiedObject": "SubmissionSet01",
+                            "id": "id_13",
+                            "nodeRepresentation": "",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "authorPerson"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "^Dopplemeyer^Sherry^^^",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "attributes": {
+                                "name": "authorInstitution"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Cleveland Clinic",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    },
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Berea Community",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "attributes": {
+                                "name": "authorRole"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Primary Surgon",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "attributes": {
+                                "name": "authorSpecialty"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "Orthopedic",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "classificationScheme": "urn:uuid:aa543740-bdda-424e-8c96-df4873be8500",
+                            "classifiedObject": "SubmissionSet01",
+                            "id": "id_14",
+                            "nodeRepresentation": "394747008",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                          },
+                          "elements": [
+                            {
+                              "attributes": {
+                                "name": "codingScheme"
+                              },
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "elements": [
+                                        {
+                                          "text": "2.16.840.1.113883.6.96",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "rim:Value",
+                                      "type": "element"
+                                    }
+                                  ],
+                                  "name": "rim:ValueList",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Slot",
+                              "type": "element"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "Health Authority"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Classification",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "id": "id_15",
+                            "identificationScheme": "urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExternalIdentifier",
+                            "registryObject": "SubmissionSet01",
+                            "value": "1.2.42.20190405034511.31"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "XDSSubmissionSet.uniqueId"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:ExternalIdentifier",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "id": "id_16",
+                            "identificationScheme": "urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExternalIdentifier",
+                            "registryObject": "SubmissionSet01",
+                            "value": "1.3.6.1.4.1.21367.4"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "XDSSubmissionSet.sourceId"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:ExternalIdentifier",
+                          "type": "element"
+                        },
+                        {
+                          "attributes": {
+                            "id": "id_17",
+                            "identificationScheme": "urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446",
+                            "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExternalIdentifier",
+                            "registryObject": "SubmissionSet01",
+                            "value": "IHEBLUE-2736^^^&1.3.6.1.4.1.21367.13.20.3000&ISO"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "attributes": {
+                                    "value": "XDSSubmissionSet.patientId"
+                                  },
+                                  "name": "rim:LocalizedString",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:Name",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:ExternalIdentifier",
+                          "type": "element"
+                        }
+                      ],
+                      "name": "rim:RegistryPackage",
+                      "type": "element"
+                    },
+                    {
+                      "attributes": {
+                        "classificationNode": "urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd",
+                        "classifiedObject": "SubmissionSet01",
+                        "id": "ID_1507585920_1",
+                        "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"
+                      },
+                      "name": "rim:Classification",
+                      "type": "element"
+                    },
+                    {
+                      "attributes": {
+                        "associationType": "urn:oasis:names:tc:ebxml-regrep:AssociationType:HasMember",
+                        "id": "ID_1507585920_2",
+                        "objectType": "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Association",
+                        "sourceObject": "SubmissionSet01",
+                        "targetObject": "Document01"
+                      },
+                      "elements": [
+                        {
+                          "attributes": {
+                            "name": "SubmissionSetStatus"
+                          },
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "text": "Original",
+                                      "type": "text"
+                                    }
+                                  ],
+                                  "name": "rim:Value",
+                                  "type": "element"
+                                }
+                              ],
+                              "name": "rim:ValueList",
+                              "type": "element"
+                            }
+                          ],
+                          "name": "rim:Slot",
+                          "type": "element"
+                        }
+                      ],
+                      "name": "rim:Association",
+                      "type": "element"
+                    }
+                  ],
+                  "name": "rim:RegistryObjectList",
+                  "type": "element"
+                }
+              ],
+              "name": "lcm:SubmitObjectsRequest",
+              "type": "element"
+            }
+          ],
+          "name": "soapenv:Body",
+          "type": "element"
+        }
+      ],
+      "name": "soapenv:Envelope",
+      "type": "element"
+    }
+  ]
+}

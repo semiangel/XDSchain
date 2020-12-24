@@ -352,9 +352,9 @@ function processData (dataIn) {
   parseString(dataIn, function (err, result) {
     if (err) throw err;
     console.log('\nConverted to object: ');
-    console.log('-----------------------\n' + result + '\n---------------------')
+    console.log('-----------------------\n' + result + '\n---------------------');
     var stringXDSAttrib = JSON.stringify(result);
-    console.log('-----------------------\n' + stringXDSAttrib + '\n---------------------')
+    console.log('-----------------------\n' + stringXDSAttrib + '\n---------------------');
     fs.writeFile("temp2.json", stringXDSAttrib, function(err, data) {
       if (err) console.log(err);
       console.log("Successfully Written to File. ");

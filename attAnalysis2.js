@@ -62,12 +62,12 @@ var prepXDSAtt = {
   },
 
   SubmissionSet: {
-    author: {
+    author: [{
         authorPerson: 'N/A',
         authorInstitution: [],
         authorRole: 'N/A',
         authorSpecialty: 'N/A'
-      },
+      }],
     availabilityStatus: 'N/A',
     comments: 'N/A',
     contentTypeCodes: {
@@ -107,7 +107,7 @@ var prepXDSAtt = {
 }
 
 //Define UUID number of each META-data attributes
-var numUUID = {
+var documentEntryUUID = {
     //-----Document Entry----------------------------------
     DocumentEntry: 'urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1',
     author: 'urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d',
@@ -119,13 +119,16 @@ var numUUID = {
     typeCode: 'urn:uuid:f0306f51-975f-434e-a61c-c59651d33983',
     patientId: 'urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427',
     uniqueId: 'urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab',
-    eventCodeList: 'urn:uuid:2c6b8cb7-8b2a-4051-b291-b1ae6a575ef4',
+    eventCodeList: 'urn:uuid:2c6b8cb7-8b2a-4051-b291-b1ae6a575ef4'
+}
+
+var submissionSetUUID = {
     //------SubmissionSet Attributes---------------------------------
-    subAuthor: 'urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d',
+    author: 'urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d',
     contentTypeCodes: 'urn:uuid:aa543740-bdda-424e-8c96-df4873be8500',
-    subUniqueId: 'urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8',
+    uniqueId: 'urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8',
     sourceId: 'urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832',
-    subPatientId: 'urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446',
+    patientId: 'urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446',
     limitedMetadata: 'urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd'
 }
 
@@ -163,11 +166,11 @@ fs.readFile("SingleDocumentEntry.xml", function(err, buf) {
 
         var eventCodeListCount = 0; //Document may have more than one eventCodeList, so it need counter
         //Detect DocumentEntry
-        if (bodyExtrinsicObject['$']['objectType'] == numUUID.DocumentEntry){
+        if (bodyExtrinsicObject['$']['objectType'] == documentEntryUUID.DocumentEntry){
             //Scanning object within DocumentEntry "Classification"
             for (var i = 0; i < bodyExtrinsicObject['rim:Classification'].length; i++){
                 //Detect DocumentEntry > author (Set)
-                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == numUUID.author){
+                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.author){
                     if (i != 0) { //If there are more than one author for the Doc, add more author object into array
                         prepXDSAtt.DocumentEntry.author.push({
                                                                 authorPerson: 'N/A',
@@ -193,42 +196,42 @@ fs.readFile("SingleDocumentEntry.xml", function(err, buf) {
                     }
                 }
                 //Detect DocumentEntry > classCode
-                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == numUUID.classCode){
+                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.classCode){
                     prepXDSAtt.DocumentEntry.classCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
                     if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
                         prepXDSAtt.DocumentEntry.classCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
                     }
                 }
                 //Detect DocumentEntry > confidentialityCode
-                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == numUUID.confidentialityCode){
+                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.confidentialityCode){
                     prepXDSAtt.DocumentEntry.confidentialityCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
                     if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
                         prepXDSAtt.DocumentEntry.confidentialityCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
                     }
                 }
                 //Detect DocumentEntry > formatCode
-                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == numUUID.formatCode){
+                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.formatCode){
                     prepXDSAtt.DocumentEntry.formatCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
                     if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
                         prepXDSAtt.DocumentEntry.formatCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
                     }
                 }
                 //Detect DocumentEntry > healthcareFacilityTypeCode
-                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == numUUID.healthcareFacilityTypeCode){
+                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.healthcareFacilityTypeCode){
                     prepXDSAtt.DocumentEntry.healthcareFacilityTypeCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
                     if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
                         prepXDSAtt.DocumentEntry.healthcareFacilityTypeCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
                     }
                 }
                 //Detect DocumentEntry > practiceSettingCode
-                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == numUUID.practiceSettingCode){
+                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.practiceSettingCode){
                     prepXDSAtt.DocumentEntry.practiceSettingCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
                     if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
                         prepXDSAtt.DocumentEntry.practiceSettingCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
                     }
                 }
                 //Detect DocumentEntry > eventCode
-                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == numUUID.eventCodeList){
+                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.eventCodeList){
                     prepXDSAtt.DocumentEntry.eventCodeList.push({
                                                                     codingScheme: 'N/A',
                                                                     displayName: 'N/A'
@@ -240,7 +243,7 @@ fs.readFile("SingleDocumentEntry.xml", function(err, buf) {
                     eventCodeListCount++;
                 }
                 //Detect DocumentEntry > TypeCode
-                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == numUUID.typeCode){
+                if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.typeCode){
                     prepXDSAtt.DocumentEntry.typeCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
                     if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
                         prepXDSAtt.DocumentEntry.typeCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
@@ -259,10 +262,10 @@ fs.readFile("SingleDocumentEntry.xml", function(err, buf) {
             //Scanning object within DocumentEntry "ExternalIdentifier"
             for (var i = 0; i < bodyExtrinsicObject['rim:ExternalIdentifier'].length; i++){
                 //Detect DocumentEntry > patientId
-                if (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == numUUID.patientId){
+                if (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == documentEntryUUID.patientId){
                     prepXDSAtt.DocumentEntry.patientId = (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['value']);
                 }
-                if (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == numUUID.uniqueId){
+                if (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == documentEntryUUID.uniqueId){
                     prepXDSAtt.DocumentEntry.uniqueId = (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['value']);
                 }
             }
@@ -303,8 +306,72 @@ fs.readFile("SingleDocumentEntry.xml", function(err, buf) {
         //Found these information on ITI 3 Pages 63
         //There are missing META-data atrributes in sample XML and it should be added
         //RegistryPackage seem to begin with SubmissionSet
-        console.log(bodyRegistryPackage);
+
+        if (bodyRegistryPackage){
+            for (var i = 0; i < bodyRegistryPackage['rim:Classification'].length; i++){
+                if (bodyRegistryPackage['rim:Classification'][i]['$']['classificationScheme'] == submissionSetUUID.author){
+                    if (i != 0) { //If there are more than one author for the Doc, add more author object into array
+                        prepXDSAtt.SubmissionSet.author.push({
+                                                                authorPerson: 'N/A',
+                                                                authorInstitution: [],
+                                                                authorRole: 'N/A',
+                                                                authorSpecialty: 'N/A'
+                                                            });
+                    }
+                    //Assign each element of the author
+                    for (var j = 0; j < bodyRegistryPackage['rim:Classification'][i]['rim:Slot'].length; j++){
+                        if (bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorPerson'){
+                            prepXDSAtt.SubmissionSet.author[i].authorPerson = bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'][0];
+                        }
+                        if (bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorInstitution'){
+                            prepXDSAtt.SubmissionSet.author[i].authorInstitution = bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'];
+                        }
+                        if (bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorRole'){
+                            prepXDSAtt.SubmissionSet.author[i].authorRole = bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'][0];
+                        }
+                        if (bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorSpecialty'){
+                            prepXDSAtt.SubmissionSet.author[i].authorSpecialty = bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'][0];
+                        }
+                    }
+                }
+
+                if (bodyRegistryPackage['rim:Classification'][i]['$']['classificationScheme'] == submissionSetUUID.contentTypeCodes){
+                    prepXDSAtt.SubmissionSet.contentTypeCodes.displayName = bodyRegistryPackage['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
+                    if (bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
+                        prepXDSAtt.SubmissionSet.contentTypeCodes.codingScheme = bodyRegistryPackage['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
+                    }
+                }
+            }
+
+            for (var i = 0; i < bodyRegistryPackage['rim:Description'].length; i++){
+                prepXDSAtt.SubmissionSet.comment = bodyRegistryPackage['rim:Description'][i]['rim:LocalizedString'][0]['$']['value'];
+            }
+
+            for (var i = 0; i < bodyRegistryPackage['rim:Name'].length; i++){
+                prepXDSAtt.SubmissionSet.title = bodyRegistryPackage['rim:Name'][i]['rim:LocalizedString'][0]['$']['value'];
+            }
+
+            for (var i = 0; i < bodyRegistryPackage['rim:ExternalIdentifier'].length; i++){
+                if (bodyRegistryPackage['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == submissionSetUUID.uniqueId){
+                    prepXDSAtt.SubmissionSet.uniqueId = bodyRegistryPackage['rim:ExternalIdentifier'][i]['$']['value'];
+                }
+                if (bodyRegistryPackage['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == submissionSetUUID.sourceId){
+                    prepXDSAtt.SubmissionSet.sourceId = bodyRegistryPackage['rim:ExternalIdentifier'][i]['$']['value'];
+                }
+                if (bodyRegistryPackage['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == submissionSetUUID.patientId){
+                    prepXDSAtt.SubmissionSet.patientId = bodyRegistryPackage['rim:ExternalIdentifier'][i]['$']['value'];
+                }
+            }
+
+            for (var i = 0; i < bodyRegistryPackage['rim:Slot'].length; i++){
+                if (bodyRegistryPackage['rim:Slot'][i]['$']['name'] == 'submissionTime'){
+                    prepXDSAtt.SubmissionSet.submissionTime = bodyRegistryPackage['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
+                }
+            }
+        }
+
+
         console.log('-----------------------');
-        console.log(prepXDSAtt.DocumentEntry);
+        console.log(prepXDSAtt);
     });
 });

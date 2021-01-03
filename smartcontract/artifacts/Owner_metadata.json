@@ -1,0 +1,113 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "oldOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnerSet",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "changeOwner",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "Set & change owner",
+			"kind": "dev",
+			"methods": {
+				"changeOwner(address)": {
+					"details": "Change owner",
+					"params": {
+						"newOwner": "address of new owner"
+					}
+				},
+				"constructor": {
+					"details": "Set contract deployer as owner"
+				},
+				"getOwner()": {
+					"details": "Return owner address ",
+					"returns": {
+						"_0": "address of owner"
+					}
+				}
+			},
+			"title": "Owner",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/Owner.sol": "Owner"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/Owner.sol": {
+			"keccak256": "0x14e3285709f314770a3b7efbb9728455e5aada642acb3f13702327dbf26f9652",
+			"urls": [
+				"bzz-raw://b89a796e180aad1a6801a2dcc0c62f734cfe7b86583a9b92df03153512c9579f",
+				"dweb:/ipfs/QmUxDLoCxdtgFFxe3yku2SCEJuFy9at1UCxGKVbbDKkvav"
+			]
+		}
+	},
+	"version": 1
+}

@@ -6,21 +6,17 @@ pragma solidity >=0.4.22 <0.7.0; //SPDX-License-Identifier: UNLICENSED
  */
 contract Storage {
 
-    uint256 number;
+    string storedJSON;
 
-    /**
-     * @dev Store value in variable
-     * @param num value to store
-     */
-    function store(uint256 num) public {
-        number = num;
+    function store(string memory receivedJSON) public {
+        storedJSON = receivedJSON;
     }
 
     /**
      * @dev Return value 
      * @return value of 'number'
      */
-    function retreive() public view returns (uint256){
-        return number;
+    function retreive() public view returns (string memory){
+        return storedJSON;
     }
 }

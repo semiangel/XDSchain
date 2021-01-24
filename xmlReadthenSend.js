@@ -23,11 +23,9 @@ client.connect(PORT, HOST, function() {
 // Add a 'data' event handler for the client socket
 // data is what the server sent to this socket
 client.on('data', function(data) {
-    
-    console.log('Respond received: ' + data);
     // Close the client socket completely
+    console.log('Respond received: ' + data);
     client.destroy();
-    
 });
 
 // Add a 'close' event handler for the client socket

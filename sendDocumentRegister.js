@@ -90,7 +90,7 @@ async function invokeContract(){
 		}
 	];
 
-	var contractAddress = '0x10ae69385C79eF3Eb815AC008A7013D6878f1d38';
+	var contractAddress = require('./contractAddress.js');
 	console.log('Contract Address: ' + contractAddress);
 
 	var myContract = new web3.eth.Contract(abi, contractAddress, {

@@ -1,3 +1,4 @@
+var fs = require("fs");
 var Web3 =  require('web3');
 
 var net = require('net');
@@ -99,7 +100,7 @@ async function deployContract(){
 	})
 	.send({
 		from: deployerAccount,
-	    gas: 10000000
+	    gas: 30000000
 	}, function(error, transactionHash){ 
 		console.log('Contract sent!!!'); 
 	}).on('error', function(error){ 
@@ -111,9 +112,12 @@ async function deployContract(){
 		console.log('Receipt:' + receipt.contractAddress) // contains the new contract address that being used for methods invoke
 	}).then(function(newContractInstance){
 	    console.log('newContractInstance:' + newContractInstance.options.address);
+	    var msg = 'module.exports = ' + JSON.stringify(newContractInstance.options.address) + ';';
+	    fs.writeFileSync("contractAddress.js", msg);
 	}).then(function(successfulMarker){
 		console.log('Contract successfully deployed!!');
 	}).then(process.exit);
 }
 
 deployContract();
+

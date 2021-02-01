@@ -95,7 +95,7 @@ async function checkLastID(){
 
 	var myContract = new web3.eth.Contract(abi, contractAddress, {
 		from: deployerAccount,
-	    gas: 10000000
+	    gas: 30000000
 	});
 
 	console.log('Calling Methods...');

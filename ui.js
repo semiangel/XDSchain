@@ -63,7 +63,33 @@ var requiredKeywords = [];
 var optionalKeywords = [];
 var inputKeywords = [];
 
-function getQueryType (myCallback) {
+var keywordCount = 0;
+
+var queryTypeList = ['', 'FindDocuments', 'FindSubmissionSets', 'FindFolders', 
+					'GetAll', 'GetDocuments', 'GetFolders', 'GetAssociations', 
+					'GetDocumentsAndAssociations', 'GetSubmissionSets', 
+					'GetSubmissionSetAndContents', 'GetFolderAndContents', 
+					'GetFoldersForDocument', 'GetRelatedDocuments', 'FindDocumentsByReferenceId'];
+var availableKeywords = {
+	FindDocuments: {
+		required: ['XDSDocumentEntryPatientId', 'XDSDocumentEntryStatus'],
+		optional: ['XDSDocumentEntryClassCode', 'XDSDocumentEntryTypeCode', 
+					'XDSDocumentEntryPracticeSettingCode', 'XDSDocumentEntryCreationTime', 
+					'XDSDocumentEntryServiceStartTime', 'XDSDocumentEntryServiceStopTime', 
+					'XDSDocumentEntryHealthcareFacilityTypeCode', 'XDSDocumentEntryEventCodeList', 
+					'XDSDocumentEntryConfidentialityCode', 'XDSDocumentEntryAuthorPerson', 
+					'XDSDocumentEntryFormatCode', 'XDSDocumentEntryType']
+	}
+}
+
+function Main () {
+	console.log('\n==================================');
+	console.log('|| XDS Consumer Actor Interface ||');
+	console.log('==================================');
+	getQueryType();
+}
+
+function getQueryType () {
 	console.log('Please select query type');
 	console.log('1) FindDocuments');
 	console.log('2) FindSubmissionSets');
@@ -81,63 +107,12 @@ function getQueryType (myCallback) {
 	console.log('14) FindDocumentsByReferenceId');
 	console.log('#) Quit');
 	rl.question("(Specify number): ", function(queryTypeInput) {
-		if (queryTypeInput == '1'){
-			queryType = 'FindDocuments';
+		var queryTypeInteger = parseInt(queryTypeInput, 10);
+		if (queryTypeInput && queryTypeInteger){
+			queryType = queryTypeList[queryTypeInteger];
 			console.log('Query Type: ' + queryType + '\n');
-			requiredKeywords = ['XDSDocumentEntryPatientId', 'XDSDocumentEntryStatus'];
-			optionalKeywords = ['XDSDocumentEntryClassCode', 'XDSDocumentEntryTypeCode', 'XDSDocumentEntryPracticeSettingCode', 'XDSDocumentEntryCreationTime', 'XDSDocumentEntryServiceStartTime', 'XDSDocumentEntryServiceStopTime', 'XDSDocumentEntryHealthcareFacilityTypeCode', 'XDSDocumentEntryEventCodeList', 'XDSDocumentEntryConfidentialityCode', 'XDSDocumentEntryAuthorPerson', 'XDSDocumentEntryFormatCode', 'XDSDocumentEntryType'];
-		}
-		else if (queryTypeInput == '2'){
-			queryType = 'FindSubmissionSets';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '3'){
-			queryType = 'FindFolders';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '4'){
-			queryType = 'GetAll';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '5'){
-			queryType = 'GetDocuments';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '6'){
-			queryType = 'GetFolders';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '7'){
-			queryType = 'GetAssociations';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '8'){
-			queryType = 'GetDocumentsAndAssociations';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '9'){
-			queryType = 'GetSubmissionSets';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '10'){
-			queryType = 'GetSubmissionSetAndContents';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '11'){
-			queryType = 'GetFolderAndContents';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '12'){
-			queryType = 'GetFoldersForDocument';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '13'){
-			queryType = 'GetRelatedDocuments';
-			console.log('Query Type: ' + queryType + '\n');
-		}
-		else if (queryTypeInput == '14'){
-			queryType = 'FindDocumentsByReferenceId';
-			console.log('Query Type: ' + queryType + '\n');
+			requiredKeywords = availableKeywords[queryType]['required'];
+			optionalKeywords = availableKeywords[queryType]['optional'];
 		}
 		else if (queryTypeInput == '#' || queryTypeInput == 'quit' || queryTypeInput == 'Quit'){
 			console.log('Quit...');
@@ -148,30 +123,101 @@ function getQueryType (myCallback) {
 			process.exit();
 		}
 		inputKeywords.push(queryType);
-		myCallback(queryType);
+		keywordCount = 0;
+		getRequiredKeywords();
 	});
 }
 
-function getRequiredKeywords (queryType){
-	console.log('Keywords require: ');
-	for (i = 0; i < requiredKeywords.length; i++){
-		console.log(requiredKeywords[i]);
-		var addedHeader = '$' + requiredKeywords[i];
-		rl.question("Value: ", function(requireKeyInput) {
-			inputKeywords.push([addedHeader, requireKeyInput]);
-			if (i == requiredKeywords.length){
-				console.log(inputKeywords);
-				rl.close();
-			}
-		});
+function getRequiredKeywords () {
+	console.log('Keywords require: ' + requiredKeywords[keywordCount]);
+	var addedHeader = '$' + requiredKeywords[keywordCount];
+	rl.question('Value: ', function(requireKeyInput) {
+		inputKeywords.push([addedHeader, requireKeyInput]);
+		keywordCount++;
+		if (keywordCount >= requiredKeywords.length){
+			showAllKeywords();
+			getOptionalKeywords(); 
+		}
+		else {
+			getRequiredKeywords();
+		}  
+	});
+};
+
+function getOptionalKeywords () {
+	console.log('Available optional keywords: ');
+	console.log('0) No more optional keywords');
+	for (i = 0; i < optionalKeywords.length; i++){ //Show all available optional keywords
+		var count = i+1;
+		console.log(count + ') ' + optionalKeywords[i]);
 	}
+	console.log('#) Quit')
+	rl.question('Select keywords (specify number): ', function(selectedOpt) { //Promt user for optional keyword by specifying number
+		if (selectedOpt == '#'){ //'#' Mark as program terminate
+			process.exit();
+		}
+		else if (selectedOpt == '0') { //'0' Mark as user approve that all known keywords included
+			console.log('==========================');
+			console.log('All keywords set...');
+			showAllKeywords();
+			return rl.close();
+		}
+		else { //Otherwise
+			var selectedOpt = parseInt(selectedOpt, 10);
+			var optionMarker = selectedOpt - 1;
+			console.log('Keyword: ' + optionalKeywords[optionMarker]);
+			if (selectedOpt && optionMarker >= 0 && optionMarker < optionalKeywords.length){ //Check if user input is a number and the number is in available range
+				var selectedOptKeywords = '$' + optionalKeywords[optionMarker];
+				var replicateCheck = null;
+				for (j = 1; j < inputKeywords.length; j++){ //Check for any replicated keyword specified
+					if (inputKeywords[j][0] == selectedOptKeywords){
+						replicateCheck = 1;
+						var replicatedKeywordPos = j;
+					}
+				}
+				if (replicateCheck){ //If found any relicated keyword then ask if user want to replace the value
+					console.log('Query keywords set already contain ' + selectedOptKeywords);
+					rl.question('Overwrite the keyword? (y/n): ', function(overwriteConfirm) {
+						if (overwriteConfirm == 'y' || overwriteConfirm == 'Y' || overwriteConfirm == 'yes' || overwriteConfirm == 'Yes'){ //Ask for user to specify yes or else
+							rl.question('Replace with value: ', function(optionalKeyInput) {
+								if (inputKeywords[replicatedKeywordPos][0] == selectedOptKeywords){ //Second check if the keyword really replicated
+									inputKeywords[replicatedKeywordPos][1] = optionalKeyInput;
+									showAllKeywords();
+									getOptionalKeywords();
+								}
+							});
+						}
+						else { //If user not confirm on overwrite the keyword, just skip overwriting
+							console.log('Overwrite cancelled...');
+							showAllKeywords();
+							getOptionalKeywords();
+						}
+					});
+				}
+				else { //If non of any replicated were found, then add more keyword into query set
+					rl.question('Value: ', function(optionalKeyInput) {
+						inputKeywords.push([selectedOptKeywords, optionalKeyInput]);
+						showAllKeywords();
+						getOptionalKeywords();
+					});
+				}
+			}
+			else { //If user try to input anything that not available, force to try again
+				console.log('Error, try again...');
+				getOptionalKeywords();
+			}
+		}
+	});
 }
 
-function Main () {
-	console.log('\n==================================');
-	console.log('|| XDS Consumer Actor Interface ||');
-	console.log('==================================');
-	getQueryType(getRequiredKeywords);
+function showAllKeywords () {
+	console.log('==========================');
+	console.log('Query type: ' + inputKeywords[0]);
+	console.log('Query keywords: ');
+	for (i = 1; i < inputKeywords.length; i++){
+		console.log(inputKeywords[i][0] + ' = ' + inputKeywords[i][1]);
+	}
+	console.log('==========================');
 }
 
 Main();

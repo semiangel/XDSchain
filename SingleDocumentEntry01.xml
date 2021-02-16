@@ -8,7 +8,7 @@
    <soapenv:Body>
       <lcm:SubmitObjectsRequest xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0">
          <rim:RegistryObjectList xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
-            <rim:ExtrinsicObject id="Document01" mimeType="text/plain" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1">
+            <rim:ExtrinsicObject id="Document01" mimeType="text/plain" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1" status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved">
                <rim:Slot name="size">
                   <rim:ValueList>
                      <rim:Value>4</rim:Value>
@@ -36,12 +36,12 @@
                </rim:Slot>
                <rim:Slot name="serviceStartTime">
                   <rim:ValueList>
-                     <rim:Value>201012300700</rim:Value>
+                     <rim:Value>200612230800</rim:Value>
                   </rim:ValueList>
                </rim:Slot>
                <rim:Slot name="serviceStopTime">
                   <rim:ValueList>
-                     <rim:Value>201012301000</rim:Value>
+                     <rim:Value>200612230900</rim:Value>
                   </rim:ValueList>
                </rim:Slot>
                <rim:Slot name="sourcePatientId">
@@ -65,13 +65,13 @@
                <rim:Classification classificationScheme="urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d" classifiedObject="Document01" nodeRepresentation="" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" id="id_1">
                   <rim:Slot name="authorPerson">
                      <rim:ValueList>
-                        <rim:Value>^John^Walker^^^</rim:Value>
+                        <rim:Value>^Smitty^Gerald^^^</rim:Value>
                      </rim:ValueList>
                   </rim:Slot>
                   <rim:Slot name="authorInstitution">
                      <rim:ValueList>
-                        <rim:Value>Texas Clinic</rim:Value>
-                        <rim:Value>Texas Community</rim:Value>
+                        <rim:Value>Cleveland Clinic</rim:Value>
+                        <rim:Value>Parma Community</rim:Value>
                      </rim:ValueList>
                   </rim:Slot>
                   <rim:Slot name="authorRole">
@@ -81,30 +81,30 @@
                   </rim:Slot>
                   <rim:Slot name="authorSpecialty">
                      <rim:ValueList>
-                        <rim:Value>Dental</rim:Value>
+                        <rim:Value>Orthopedic</rim:Value>
                      </rim:ValueList>
                   </rim:Slot>
                </rim:Classification>
                <rim:Classification classificationScheme="urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d" classifiedObject="Document01" nodeRepresentation="" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" id="id_2">
                   <rim:Slot name="authorPerson">
                      <rim:ValueList>
-                        <rim:Value>^Crystalfall^Rylai^^^</rim:Value>
+                        <rim:Value>^Dopplemeyer^Sherry^^^</rim:Value>
                      </rim:ValueList>
                   </rim:Slot>
                   <rim:Slot name="authorInstitution">
                      <rim:ValueList>
-                        <rim:Value>Texas Clinic</rim:Value>
-                        <rim:Value>Texas Community</rim:Value>
+                        <rim:Value>Cleveland Clinic</rim:Value>
+                        <rim:Value>Berea Community</rim:Value>
                      </rim:ValueList>
                   </rim:Slot>
                   <rim:Slot name="authorRole">
                      <rim:ValueList>
-                        <rim:Value>Primary Dentist</rim:Value>
+                        <rim:Value>Primary Surgon</rim:Value>
                      </rim:ValueList>
                   </rim:Slot>
                   <rim:Slot name="authorSpecialty">
                      <rim:ValueList>
-                        <rim:Value>Dental</rim:Value>
+                        <rim:Value>Orthopedic</rim:Value>
                      </rim:ValueList>
                   </rim:Slot>
                </rim:Classification>

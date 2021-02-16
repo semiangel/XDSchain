@@ -1,0 +1,52 @@
+Avg. Repository ACK = 0s 4.7966728ms
+Avg. Transact contract = 5s 174.6909477ms
+Avg. Search Time = 0s 221.8837282ms
+Avg. Consumer got response = 0s 260.4798592ms
+==================================================
+Repository ACK received
+0s 3.051782ms
+0s 3.040394ms
+0s 5.098664ms
+0s 7.168189ms
+0s 7.351867ms
+0s 6.496129ms
+0s 3.092327ms
+0s 3.827665ms
+0s 4.52817ms
+0s 4.311541ms
+
+Transact contract (Plublish Document Registry to BlockChain)
+4s 118.725397ms
+4s 466.748447ms
+2s 585.95226ms
+6s 386.787164ms
+6s 506.929399ms
+6s 987.496488ms
+6s 661.362304ms
+6s 474.864414ms
+5s 30.073465ms
+2s 527.970139ms
+===================================================
+Search Time with minimum keywords
+0s 222.266682ms
+0s 207.807648ms
+0s 225.902879ms
+0s 287.822305ms
+0s 227.641957ms
+0s 206.386655ms
+0s 212.412118ms
+0s 194.554662ms
+0s 210.913909ms
+0s 223.128467ms
+
+Consumer got response
+0s 266.823515ms
+0s 248.943289ms
+0s 253.549378ms
+0s 332.291007ms
+0s 275.946279ms
+0s 241.017857ms
+0s 246.923056ms
+0s 228.194863ms
+0s 253.714179ms
+0s 257.395169ms

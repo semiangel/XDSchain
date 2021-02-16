@@ -1,3 +1,5 @@
+var hrstart = null;
+var hrend = null;
 var fs = require("fs");
 var net = require('net');
 var util = require("util");
@@ -254,7 +256,10 @@ function registerDocumentSetb (inputAttributes) {
 	    from: deployerAccount
 	  }).then(function(receipt){
 	    console.log(receipt);
-	    console.log('====================\nTransaction success...\n====================');
+	    console.log('====================\nTransaction success...');
+	    hrend = process.hrtime(hrstart);
+		console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
+		console.log('====================');
 	  });
 	}
 
@@ -291,6 +296,9 @@ function registerDocumentSetb (inputAttributes) {
 	      }
 	      if (bodyExtrinsicObject['$']['objectType']){
 	      	prepXDSAtt.DocumentEntry.objectType = bodyExtrinsicObject['$']['objectType'];
+	      }
+	      if (bodyExtrinsicObject['$']['status']){
+	      	prepXDSAtt.DocumentEntry.availabilityStatus = bodyExtrinsicObject['$']['status'];
 	      }
 	      for (var i = 0; i < bodyExtrinsicObject['rim:Classification'].length; i++){
 	          //Detect DocumentEntry > author (Set)
@@ -1022,6 +1030,9 @@ function documentQuery (inputAttributes) {
 	        console.log(responseXML);			
 		}
 		console.log('========================================\nDone!');
+		hrend = process.hrtime(hrstart);
+		console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
+		console.log('========================================');
 	}
 
 	function specifyRequestType (requestedJSON, myCallback) {
@@ -1214,6 +1225,7 @@ netServer = net.createServer(function(sock) {
 	// Add a 'data' event handler to this instance of socket
 	sock.on('data', function(data) {
 		console.log('Received data....');
+		hrstart = process.hrtime();
 		sock.write('ACK from ' + sock.remoteAddress + '\n'); //Write ACK back to sender
 		processData(data); //converting XML to JSON based on Module "xml-js"
 		//console.log(result); // show the result of xml to js conversion

@@ -70,6 +70,9 @@ var queryTypeList = ['', 'FindDocuments', 'FindSubmissionSets', 'FindFolders',
 					'GetDocumentsAndAssociations', 'GetSubmissionSets', 
 					'GetSubmissionSetAndContents', 'GetFolderAndContents', 
 					'GetFoldersForDocument', 'GetRelatedDocuments', 'FindDocumentsByReferenceId'];
+var timeKeyList = ['$XDSDocumentEntryCreationTimeFrom', '$XDSDocumentEntryCreationTimeTo', 
+					'$XDSDocumentEntryServiceStartTimeFrom', '$XDSDocumentEntryServiceStartTimeTo', 
+					'$XDSDocumentEntryServiceStopTimeFrom', '$XDSDocumentEntryServiceStartTimeTo'];
 var availableKeywords = {
 	FindDocuments: {
 		required: ['XDSDocumentEntryPatientId', 'XDSDocumentEntryStatus'],
@@ -79,7 +82,8 @@ var availableKeywords = {
 					'XDSDocumentEntryHealthcareFacilityTypeCode', 'XDSDocumentEntryEventCodeList', 
 					'XDSDocumentEntryConfidentialityCode', 'XDSDocumentEntryAuthorPerson', 
 					'XDSDocumentEntryFormatCode', 'XDSDocumentEntryType']
-	}
+	},
+
 }
 
 function Main () {
@@ -160,6 +164,7 @@ function getOptionalKeywords () {
 			console.log('==========================');
 			console.log('All keywords set...');
 			showAllKeywords();
+			sendQuery();
 			return rl.close();
 		}
 		else { //Otherwise
@@ -169,13 +174,17 @@ function getOptionalKeywords () {
 			if (selectedOpt && optionMarker >= 0 && optionMarker < optionalKeywords.length){ //Check if user input is a number and the number is in available range
 				var selectedOptKeywords = '$' + optionalKeywords[optionMarker];
 				var replicateCheck = null;
+				var timeKeyCheck = null;
 				for (j = 1; j < inputKeywords.length; j++){ //Check for any replicated keyword specified
-					if (inputKeywords[j][0] == selectedOptKeywords){
+					if (inputKeywords[j][0] == selectedOptKeywords || inputKeywords[j][0] == selectedOptKeywords + 'From'){
 						replicateCheck = 1;
 						var replicatedKeywordPos = j;
 					}
+					if (timeKeyList.includes(selectedOptKeywords + 'From')){
+						timeKeyCheck = 1;
+					}
 				}
-				if (replicateCheck){ //If found any relicated keyword then ask if user want to replace the value
+				if (replicateCheck && !timeKeyCheck){ //If found any relicated keyword then ask if user want to replace the value && the keyword is not a time keyword
 					console.log('Query keywords set already contain ' + selectedOptKeywords);
 					rl.question('Overwrite the keyword? (y/n): ', function(overwriteConfirm) {
 						if (overwriteConfirm == 'y' || overwriteConfirm == 'Y' || overwriteConfirm == 'yes' || overwriteConfirm == 'Yes'){ //Ask for user to specify yes or else
@@ -192,6 +201,36 @@ function getOptionalKeywords () {
 							showAllKeywords();
 							getOptionalKeywords();
 						}
+					});
+				}
+				else if (replicateCheck && timeKeyCheck){ //If found any relicated keyword then ask if user want to replace the value && the keyword is a time keyword
+					console.log('Query keywords set already contain ' + selectedOptKeywords);
+					rl.question('Overwrite the keyword? (y/n): ', function(overwriteConfirm) {
+						if (overwriteConfirm == 'y' || overwriteConfirm == 'Y' || overwriteConfirm == 'yes' || overwriteConfirm == 'Yes'){ //Ask for user to specify yes or else
+							rl.question('Replace time value from: ', function(optionalKeyInputFrom) {
+								rl.question('Replace time value to: ', function(optionalKeyInputTo) {
+									inputKeywords[replicatedKeywordPos][1] = optionalKeyInputFrom;
+									inputKeywords[replicatedKeywordPos + 1][1] = optionalKeyInputTo;
+									showAllKeywords();
+									getOptionalKeywords();
+								});
+							});
+						}
+						else { //If user not confirm on overwrite the keyword, just skip overwriting
+							console.log('Overwrite cancelled...');
+							showAllKeywords();
+							getOptionalKeywords();
+						}
+					});
+				}
+				else if (!replicateCheck && timeKeyCheck){ //If non of any replicated were found, then add more keyword into query set && the keyword is a time keyword
+					rl.question('Time value from: ', function(optionalKeyInputFrom) {
+						rl.question('Time value to: ', function(optionalKeyInputTo) {
+							inputKeywords.push([selectedOptKeywords + 'From', optionalKeyInputFrom]);
+							inputKeywords.push([selectedOptKeywords + 'To', optionalKeyInputTo]);
+							showAllKeywords();
+							getOptionalKeywords();
+						});
 					});
 				}
 				else { //If non of any replicated were found, then add more keyword into query set
@@ -218,6 +257,10 @@ function showAllKeywords () {
 		console.log(inputKeywords[i][0] + ' = ' + inputKeywords[i][1]);
 	}
 	console.log('==========================');
+}
+
+function sendQuery () {
+	
 }
 
 Main();

@@ -1,5 +1,3 @@
-//Simple program that read .xml file and send it via TCP socket
-
 var net = require('net');
 var fs = require("fs");
 var util = require("util");

@@ -1,0 +1,31 @@
+<lcm:SubmitObjectsRequest xmlns:xsi="..XML schematic information..">
+	<rim:RegistryObjectList>
+
+		<rim:ExtrinsicObject id="..DocumentEntry identifier name or label.." 
+			mimeType="text/xml" 
+			objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1">
+			...
+			..DocumentEntry META-data attributes object list..
+			...
+		</rim:ExtrinsicObject>
+
+		<rim:RegistryPackage id="..SubmissionSet identifier name or label..">
+			...
+			..SubmissionSet or Folder META-data attributes object list..
+			...
+		</rim:RegistryPackage>
+
+		<rim:Classification id="..Classification identifier name or label.." 
+			classifiedObject="..SubmissionSet ID which it belonged to.." 
+			classificationNode="urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd"/>
+
+		<rim:Association id="..Association Type identifier name or label" 
+			associationType="HasMember" 
+			sourceObject="..SubmissionSet ID which it belonged to.." 
+			targetObject="..Target Document Entry ID..">
+			...
+			..Association META-data attributes objext list..
+			...
+		</rim:Association>
+	</rim:RegistryObjectList>
+</lcm:SubmitObjectsRequest>

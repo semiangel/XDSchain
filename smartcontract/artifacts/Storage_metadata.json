@@ -1,46 +1,36 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.4.26+commit.4563c3fc"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
-				"name": "checkLastID",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
+				"constant": false,
 				"inputs": [
 					{
-						"internalType": "uint256",
 						"name": "Docid",
 						"type": "uint256"
-					}
-				],
-				"name": "retreiveFull",
-				"outputs": [
+					},
 					{
-						"internalType": "string",
-						"name": "",
+						"name": "searchJSON",
+						"type": "string"
+					},
+					{
+						"name": "fullJSON",
 						"type": "string"
 					}
 				],
-				"stateMutability": "view",
+				"name": "store",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
+				"constant": true,
 				"inputs": [
 					{
-						"internalType": "uint256",
 						"name": "Docid",
 						"type": "uint256"
 					}
@@ -48,58 +38,61 @@
 				"name": "retreiveSearch",
 				"outputs": [
 					{
-						"internalType": "string",
 						"name": "",
 						"type": "string"
 					}
 				],
+				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
+				"constant": true,
 				"inputs": [
 					{
-						"internalType": "uint256",
 						"name": "Docid",
 						"type": "uint256"
-					},
+					}
+				],
+				"name": "retreiveFull",
+				"outputs": [
 					{
-						"internalType": "string",
-						"name": "searchJSON",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "fullJSON",
+						"name": "",
 						"type": "string"
 					}
 				],
-				"name": "store",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "checkLastID",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
 				"type": "function"
 			}
 		],
 		"devdoc": {
-			"kind": "dev",
-			"methods": {},
-			"version": 1
+			"methods": {}
 		},
 		"userdoc": {
-			"kind": "user",
-			"methods": {},
-			"version": 1
+			"methods": {}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/Registry.sol": "Storage"
+			"Registry.sol": "Storage"
 		},
-		"evmVersion": "istanbul",
+		"evmVersion": "byzantium",
 		"libraries": {},
-		"metadata": {
-			"bytecodeHash": "ipfs"
-		},
 		"optimizer": {
 			"enabled": false,
 			"runs": 200
@@ -107,12 +100,10 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/Registry.sol": {
+		"Registry.sol": {
 			"keccak256": "0x51b12b6a654dba3b51816f198a0c8e713ded03480c34af61fc2a1d5814622085",
-			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://f82558ac780908609f017fcd055f90437b61016b9c0d0a079c0b02b58872a0c8",
-				"dweb:/ipfs/QmQZPBa6PDt9PUfJfwjrBVwuTRBxbozWG6VAuFr7oACgGo"
+				"bzzr://99023cbf3dbaa431ddc5b9137362be782ddee37585ec07b19587c5c466a9b4d0"
 			]
 		}
 	},

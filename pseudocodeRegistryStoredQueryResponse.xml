@@ -1,0 +1,70 @@
+<query:AdhocQueryResponse xmlns:xsi="..XML information schematic..">
+	<rim:RegistryObjectList>
+		<rim:ExtrinsicObject xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" 
+			xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" 
+			id="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" 
+			isOpaque="false" 
+			mimeType="text/xml" 
+			objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1" 
+			status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved">
+			..
+			<rim:Slot name="..META-data attributes type name..">
+				<rim:ValueList>
+					<rim:Value>..META-data attributes value..</rim:Value>
+				</rim:ValueList>
+			</rim:Slot>
+			...
+			//This slot is for META-data attributes "title"
+			<rim:Name>
+				<rim:LocalizedString charset="UTF-8" value="..META-data attributes value.." xml:lang="en-us"/>
+			</rim:Name>
+			...
+			//This slot is for META-data attributes "comment"
+			<rim:Description/> 
+			...
+			//Communication protocol-based META-data attributes
+			<rim:Classification classificationScheme="..META-data attributes type UUID.." 
+				classifiedObject="..Classified Object UUID.." 
+				id="..Identification UUID.." 
+				nodeRepresentation="..Representing Node.." 
+				objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification">
+				<rim:Slot name="..META-data attributes type name..">
+					<rim:ValueList>
+						<rim:Value>..META-data attributes value..</rim:Value>
+					</rim:ValueList>
+				</rim:Slot>
+				<rim:Name>
+					<rim:LocalizedString charset="UTF-8" 
+						value="..Representing Node Detail.." 
+						xml:lang="en-us"/>
+				</rim:Name>
+				<rim:Description/>
+			</rim:Classification>
+			...
+			//External identifier-based META-data attributes
+			<rim:ExternalIdentifier id="..META-data attributes type UUID.." 
+				registryObject="..Registry Object UUID.." 
+				identificationScheme="..Identification scheme UUID.." 
+				objectType="ExternalIdentifier" 
+				value="..META-data attributes value..">
+				<rim:Name>
+					<rim:LocalizedString charset="UTF-8" 
+						value="..META-data attributes type name.." 
+						xml:lang="en-us"/>
+				</rim:Name>
+				<rim:Description/>
+			</rim:ExternalIdentifier>
+			...
+			..List of Document Entry META-data attributes of matched result..
+			...
+		</rim:ExtrinsicObject>
+		<rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a"/>
+		<rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f"/>
+		<rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d"/>
+		<rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1"/>
+		<rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead"/>
+		<rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:f0306f51-975f-434e-a61c-c59651d33983"/>
+		<rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427"/>
+		<rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab"/>
+	</rim:RegistryObjectList>
+</query:AdhocQueryResponse>

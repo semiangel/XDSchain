@@ -28,3 +28,9 @@ IHEBLUE-2736^^^&1.3.6.1.4.1.91167.13.20.3000&ISO
 
 Document 10
 IHEBLUE-2736^^^&1.3.6.1.4.1.00234.13.20.3000&ISO
+
+Document 11
+IHEBLUE-2736^^^&1.3.6.1.4.1.00250.13.20.3000&ISO
+urn:oasis:names:tc:ebxml-regrep:StatusType:Approved
+
+

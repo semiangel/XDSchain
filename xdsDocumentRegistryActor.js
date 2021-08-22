@@ -258,7 +258,12 @@ function registerDocumentSetb (inputAttributes) {
 	    console.log(receipt);
 	    console.log('====================\nTransaction success...');
 	    hrend = process.hrtime(hrstart);
-		console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
+		var testResult = '\nExecution time (hr): ' + hrend[0] + 's ' +  hrend[1] / 1000000 + 'ms';
+    	console.info(testResult);
+    	fs.writeFile("result.txt", testResult, {flag: "a"}, function(err) {
+            if (err) console.log(err);
+            console.log("Successfully Written to File.");
+        });
 		console.log('====================');
 	  });
 	}
@@ -510,7 +515,7 @@ function registerDocumentSetb (inputAttributes) {
 }
 
 //DocumentQuery=====================================================================================================
-function documentQuery (inputAttributes) {
+async function documentQuery (inputAttributes) {
 	var requestUUID = {
 	  FindDocuments: 'urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d',
 	  FindSubmissionSets: 'urn:uuid:f26abbcb-ac74-4422-8a30-edb644bbc1a9',
@@ -528,514 +533,12 @@ function documentQuery (inputAttributes) {
 	  FindDocumentsByReferenceId: 'urn:uuid:12941a89-e02e-4be5-967c-ce4bfc8fe492'
 	}
 
+	var terminateMark = 'No';
+	var requestedJSON = inputAttributes;
+	var searchKeyword = [];
+	var searchedEntryUUID = [];
 
-
-	async function checkLastID (sK, myCallback) {
-	  //web3.eth.defaultAccount = web3.eth.personal.getAccounts().then(console.log);
-	  console.log('Checking for latest ID...');
-	  let acc = await web3.eth.personal.getAccounts();
-	    if (acc.err) {console.log(acc.err);}
-	    else {console.log('Accounts available on this node:\n' + acc);}
-
-	  var deployerAccount = acc[0];
-	  console.log('Originally deployed with account:' + deployerAccount);
-	  var abi = 
-	  [
-	    {
-	      "inputs": [],
-	      "name": "checkLastID",
-	      "outputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "",
-	          "type": "uint256"
-	        }
-	      ],
-	      "stateMutability": "view",
-	      "type": "function"
-	    },
-	    {
-	      "inputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "Docid",
-	          "type": "uint256"
-	        }
-	      ],
-	      "name": "retreiveFull",
-	      "outputs": [
-	        {
-	          "internalType": "string",
-	          "name": "",
-	          "type": "string"
-	        }
-	      ],
-	      "stateMutability": "view",
-	      "type": "function"
-	    },
-	    {
-	      "inputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "Docid",
-	          "type": "uint256"
-	        }
-	      ],
-	      "name": "retreiveSearch",
-	      "outputs": [
-	        {
-	          "internalType": "string",
-	          "name": "",
-	          "type": "string"
-	        }
-	      ],
-	      "stateMutability": "view",
-	      "type": "function"
-	    },
-	    {
-	      "inputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "Docid",
-	          "type": "uint256"
-	        },
-	        {
-	          "internalType": "string",
-	          "name": "searchJSON",
-	          "type": "string"
-	        },
-	        {
-	          "internalType": "string",
-	          "name": "fullJSON",
-	          "type": "string"
-	        }
-	      ],
-	      "name": "store",
-	      "outputs": [],
-	      "stateMutability": "nonpayable",
-	      "type": "function"
-	    }
-	  ];
-
-	  var contractAddress = require('./contractAddress.js');
-	  console.log('Contract Address: ' + contractAddress);
-
-	  var myContract = new web3.eth.Contract(abi, contractAddress, {
-	    from: deployerAccount,
-	      gas: 30000000
-	  });
-
-	  console.log('Calling contract...');
-	  myContract.methods.checkLastID().call({
-	    from: deployerAccount
-	  }, (err,res) => {
-	    if (err) {
-	      console.log(err);
-	    }else{
-	      console.log('Found, the lastest document ID is ' + res);
-	      console.log('------------------------------------------');
-	      myCallback(sK, res, matchMaker);
-	    }
-	  });  
-	}
-
-	//Invoke each contract for keyword search
-	async function invokeContract(sK, maxDoc, myCallback){
-	  //web3.eth.defaultAccount = web3.eth.personal.getAccounts().then(console.log);
-	  console.log('Search keywords received...\nMoving on to search function...');
-	  let acc = await web3.eth.personal.getAccounts();
-	    if (acc.err) {console.log(acc.err);}
-	    else {console.log('Accounts available on this node:\n' + acc);}
-
-	  var deployerAccount = acc[0];
-	  console.log('Originally deployed with account:' + deployerAccount);
-	  var abi = 
-	  [
-	    {
-	      "inputs": [],
-	      "name": "checkLastID",
-	      "outputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "",
-	          "type": "uint256"
-	        }
-	      ],
-	      "stateMutability": "view",
-	      "type": "function"
-	    },
-	    {
-	      "inputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "Docid",
-	          "type": "uint256"
-	        }
-	      ],
-	      "name": "retreiveFull",
-	      "outputs": [
-	        {
-	          "internalType": "string",
-	          "name": "",
-	          "type": "string"
-	        }
-	      ],
-	      "stateMutability": "view",
-	      "type": "function"
-	    },
-	    {
-	      "inputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "Docid",
-	          "type": "uint256"
-	        }
-	      ],
-	      "name": "retreiveSearch",
-	      "outputs": [
-	        {
-	          "internalType": "string",
-	          "name": "",
-	          "type": "string"
-	        }
-	      ],
-	      "stateMutability": "view",
-	      "type": "function"
-	    },
-	    {
-	      "inputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "Docid",
-	          "type": "uint256"
-	        },
-	        {
-	          "internalType": "string",
-	          "name": "searchJSON",
-	          "type": "string"
-	        },
-	        {
-	          "internalType": "string",
-	          "name": "fullJSON",
-	          "type": "string"
-	        }
-	      ],
-	      "name": "store",
-	      "outputs": [],
-	      "stateMutability": "nonpayable",
-	      "type": "function"
-	    }
-	  ];
-
-	  var contractAddress = require('./contractAddress.js');
-	  console.log('Contract Address: ' + contractAddress);
-
-	  var myContract = new web3.eth.Contract(abi, contractAddress, {
-	    from: deployerAccount,
-	      gas: 30000000
-	  });
-
-	  console.log('The latest document ID is no.:' + maxDoc);
-	  //callRegSearch while run along Docid from 1 to latest (known using checkID)
-	  console.log('Begin contract search...');
-	  var traceDocid = 0;
-	  for (Docid = 1; Docid <= maxDoc; Docid++){
-	    traceDocid++;
-	    myContract.methods.retreiveSearch(Docid).call({
-	      from: deployerAccount
-	    }, (err,res) => {
-	      if (err) {
-	        console.log(err);
-	      }else{
-	        var XDSattributes = JSON.parse(res);
-	        myCallback(XDSattributes, sK, traceDocid, fullContract);
-	      }
-	    });
-	  }  
-	}
-
-	//Compare keyword with JSON called from smartcontract
-	function matchMaker (searchXDSAtt, sK, Docid, myCallback){ 
-	  //searchXDSAtt = XDS Object called from smartcontract
-	  //sK = search keyword received from ITI-18
-	  console.log('----------\nSmartcontract called...');
-
-	  var matchedCount = 0;
-	  var timeAttributes = {
-	    creationTime: {
-	      From: null,
-	      To: null
-	    },
-	    serviceStartTime: {
-	      From: null,
-	      To: null
-	    },
-	    serviceStopTime: {
-	      From: null,
-	      To: null
-	    }
-	  }
-
-	  for (i = 0; i < sK.length - 1; i++){
-	    var keyCount = i+1;
-	    if (Array.isArray(sK[i][1])){ //check if attributes have sub-attributes i.e. author, classCode, etc.
-	      if (sK[i][1][0] == 'author') { //author specific case
-	        if (searchXDSAtt[sK[i][0]][sK[i][1][0]][0][sK[i][1][1]] == sK[i][2]){
-	          matchedCount++;
-	          console.log('Keyword ' + keyCount + ' matched...');
-	        }
-	        else {
-	          console.log('Keyword ' + keyCount + ' unmatched...');
-	          break;
-	        }
-	      }
-	      else if (sK[i][1][0] == 'creationTime') {
-	        timeAttributes[sK[i][1][0]][sK[i][1][1]] = sK[i][2];
-	        if (timeAttributes[sK[i][1][0]]['From'] && timeAttributes[sK[i][1][0]]['To']){
-	          var dateTimeFrom = moment.utc(timeAttributes[sK[i][1][0]]['From'], 'YYYYMMDDHHmmss');
-	          var dateTimeTo = moment.utc(timeAttributes[sK[i][1][0]]['To'], 'YYYYMMDDHHmmss');
-	          var dateTimeTarget = moment.utc(searchXDSAtt[sK[i][0]][sK[i][1][0]], 'YYYYMMDDHHmmss');
-	          if (moment(dateTimeTarget).isBetween(dateTimeFrom, dateTimeTo, undefined, '[]')){
-	            matchedCount++; //match count 2 times due to the attributes require 2 search keywords
-	            matchedCount++;
-	            console.log(sK[i][1][0] + ' at Keyword ' + keyCount + ' matched...');
-	          }
-	        }
-	      }
-	      else if (sK[i][1][0] == 'serviceStartTime' || sK[i][1][0] == 'serviceStopTime') {
-	        if (searchXDSAtt[sK[i][0]][sK[i][1][0]] != 'N/A'){ //check if current Document have serviceTime attributes present
-	          timeAttributes[sK[i][1][0]][sK[i][1][1]] = sK[i][2];
-	          if (timeAttributes[sK[i][1][0]]['From'] && timeAttributes[sK[i][1][0]]['To']){
-	            var dateTimeFrom = moment.utc(timeAttributes[sK[i][1][0]]['From'], 'YYYYMMDDHHmmss');
-	            var dateTimeTo = moment.utc(timeAttributes[sK[i][1][0]]['To'], 'YYYYMMDDHHmmss');
-	            var dateTimeTarget = moment.utc(searchXDSAtt[sK[i][0]][sK[i][1][0]], 'YYYYMMDDHHmmss');
-	            if (moment(dateTimeTarget).isBetween(dateTimeFrom, dateTimeTo, undefined, '[]')){
-	              matchedCount++; //match count 2 times due to the attributes require 2 search keywords
-	              matchedCount++;
-	              console.log(sK[i][1][0] + ' at Keyword ' + keyCount + ' matched...');
-	            }
-	          }
-	        }
-	      }
-	      else {
-	        if (searchXDSAtt[sK[i][0]][sK[i][1][0]][sK[i][1][1]] == sK[i][2]){
-	          matchedCount++;
-	          console.log('Keyword ' + keyCount + ' matched...');
-	        }
-	        else {
-	          console.log('Keyword ' + keyCount + ' unmatched...');
-	          break;
-	        }
-	      }
-	    }
-	    else {
-	      if (Array.isArray(sK[i][2])){
-	        if (searchXDSAtt[sK[i][0]][sK[i][1]][0] == sK[i][2][0]){
-	          matchedCount++;
-	          console.log('Keyword ' + keyCount + ' matched...');
-	        }
-	        else if (searchXDSAtt[sK[i][0]][sK[i][1]][0] != sK[i][2][0]) {
-	          console.log('Keyword ' + keyCount + ' unmatched...');
-	          break;
-	        }
-	      }
-	      else {
-	        if (searchXDSAtt[sK[i][0]][sK[i][1]] == sK[i][2]){
-	          matchedCount++;
-	          console.log('Keyword ' + keyCount + ' matched...');
-	        }
-	        else {
-	          console.log('Keyword ' + keyCount + ' unmatched...');
-	          break;
-	        }
-	      }
-	    }
-	  }
-
-	  if (matchedCount == sK.length - 1){
-	    console.log('All matched, successfully... \nReturn document as search result:\n========================================');
-	    console.log(searchXDSAtt.DocumentEntry);
-	    console.log('========================================');
-	    myCallback(Docid, sK, responseToUser);
-	  }
-	  else {
-	    console.log('Unmatched...');
-	  }  
-	}	
-
-	async function fullContract (Docid, sK, myCallback){
-	  //web3.eth.defaultAccount = web3.eth.personal.getAccounts().then(console.log);
-	  console.log('Calling for full document...');
-	  let acc = await web3.eth.personal.getAccounts();
-	    if (acc.err) {console.log(acc.err);}
-	    else {console.log('Accounts available on this node:\n' + acc);}
-
-	  var deployerAccount = acc[0];
-	  console.log('Originally deployed with account:' + deployerAccount);
-	  var abi = 
-	  [
-	    {
-	      "inputs": [],
-	      "name": "checkLastID",
-	      "outputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "",
-	          "type": "uint256"
-	        }
-	      ],
-	      "stateMutability": "view",
-	      "type": "function"
-	    },
-	    {
-	      "inputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "Docid",
-	          "type": "uint256"
-	        }
-	      ],
-	      "name": "retreiveFull",
-	      "outputs": [
-	        {
-	          "internalType": "string",
-	          "name": "",
-	          "type": "string"
-	        }
-	      ],
-	      "stateMutability": "view",
-	      "type": "function"
-	    },
-	    {
-	      "inputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "Docid",
-	          "type": "uint256"
-	        }
-	      ],
-	      "name": "retreiveSearch",
-	      "outputs": [
-	        {
-	          "internalType": "string",
-	          "name": "",
-	          "type": "string"
-	        }
-	      ],
-	      "stateMutability": "view",
-	      "type": "function"
-	    },
-	    {
-	      "inputs": [
-	        {
-	          "internalType": "uint256",
-	          "name": "Docid",
-	          "type": "uint256"
-	        },
-	        {
-	          "internalType": "string",
-	          "name": "searchJSON",
-	          "type": "string"
-	        },
-	        {
-	          "internalType": "string",
-	          "name": "fullJSON",
-	          "type": "string"
-	        }
-	      ],
-	      "name": "store",
-	      "outputs": [],
-	      "stateMutability": "nonpayable",
-	      "type": "function"
-	    }
-	  ];
-
-	  var contractAddress = require('./contractAddress.js');
-	  console.log('Contract Address: ' + contractAddress);
-
-	  var myContract = new web3.eth.Contract(abi, contractAddress, {
-	    from: deployerAccount,
-	      gas: 30000000
-	  });
-
-	  console.log('Returning document: ' + Docid);
-		myContract.methods.retreiveFull(Docid).call({
-		from: deployerAccount
-		}, (err,res) => {
-			if (err) {
-				console.log(err);
-			} else {
-				var XDSattributes = JSON.parse(res);
-				myCallback(XDSattributes, sK);
-			}
-		}); 
-	}
-
-	function responseToUser (rXDSattribute, sK) {
-		//Define variable for shorter object accessing
-		var sEnvelope = rXDSattribute['soapenv:Envelope'];
-		//inside Enveope
-		var s$ = sEnvelope['$'];
-		var sBody = sEnvelope['soapenv:Body'][0];
-		var sHeader = sEnvelope['soapenv:Header'][0];
-		//inside Envelope>Header
-		var wsaTo = sHeader['wsa:To'];
-		var wsaMessageID = sHeader['wsaMessageID'];
-		var wsaAction = sHeader['wsaAction'];
-		//inside Envelope>Body
-		var lcmSubmitObjectsRequest = sBody['lcm:SubmitObjectsRequest'][0];
-		//inside Envelope>Body>lcm:SubmitObjectsRequest
-		var bodyRegistryObjectList = lcmSubmitObjectsRequest['rim:RegistryObjectList'][0];
-		//inside Envelope>Body>lcm:SubmitObjectsRequest>rim:RegistryObjectList
-		var bodyExtrinsicObject = bodyRegistryObjectList['rim:ExtrinsicObject'][0];
-		var bodyRegistryPackage = bodyRegistryObjectList['rim:RegistryPackage'][0];
-		var bodyClassification = bodyRegistryObjectList['rim:Classification'][0];
-		var bodyAssociation = bodyRegistryObjectList['rim:Association'][0];
-		//Decrypt sourcePatientInfo -> So encryption just prevent those who look directly into contract to read the attribute
-		//Alternatively, this can be left encrypted while require Document Consumer to decrypt by themselves
-		for (var i = 0; i < bodyExtrinsicObject['rim:Slot'].length; i++) {
-			if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'sourcePatientInfo') {
-				var encryptedString = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'];
-	          	var plaintext = cryptr.decrypt(encryptedString);
-              	//Also replace the attributes within full XDSAttributes object with encrypted attribute
-              	bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'] = plaintext.split(',');
-			}
-		}
-		console.log('========================================\nReturn type: ' + sK[sK.length-1] + '\n========================================');
-		var responseJSON = {
-			"query:AdhocQueryResponse": {
-				"$": {
-					"status": "Success",
-					"xmlns:query": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",
-					"xmlns:rim": "urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0",
-					"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-					"xsi:schemaLocation": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ../../schema/ebRS/query.xsd"
-				},
-				"rim:RegistryObjectList": [
-					{
-						"rim:ExtrinsicObject": [bodyExtrinsicObject]
-					}
-				]
-			}
-		}
-		console.log(util.inspect(responseJSON));
-
-		if (netServer && netSocket) {
-			console.log('Responsing query result: ');
-			var responseXML = builder.buildObject(responseJSON);
-	        //var regex = /\r?\n|\r/g;
-	        //var responseXML = responseXML.replace(regex,'');
-	        netSocket.write(responseXML);
-	        console.log('-----------------------');
-	        console.log(responseXML);			
-		}
-		console.log('========================================\nDone!');
-		hrend = process.hrtime(hrstart);
-		console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
-		console.log('========================================');
-	}
-
-	function specifyRequestType (requestedJSON, myCallback) {
+	function specifyRequestType (requestedJSON) {
 	  //Specify responseOption
 	  console.log('Specify responseOption');
 	  var responseOption = '';
@@ -1061,7 +564,6 @@ function documentQuery (inputAttributes) {
 	  }
 
 	  //Define search keyword array to meet specification of each request type
-	  var searchKeyword = [];
 	  if (requestType == 'FindDocuments'){
 	    var rimSlot = requestedJSON['query:AdhocQueryRequest']['rim:AdhocQuery'][0]['rim:Slot'];
 	    console.log(util.inspect(rimSlot));
@@ -1178,11 +680,675 @@ function documentQuery (inputAttributes) {
 	  		}
 	  	}
 	  }
+	  else if (requestType == 'GetDocuments'){
+		var rimSlot = requestedJSON['query:AdhocQueryRequest']['rim:AdhocQuery'][0]['rim:Slot'];
+	    console.log(util.inspect(rimSlot));
+	    for (i = 0; i < rimSlot.length; i++){ //Assign attributes in rim:Slot to search keyword array
+	      if (rimSlot[i]['$']['name'] == '$XDSDocumentEntryEntryUUID'){
+	        searchKeyword.push(['DocumentEntry', 'entryUUID', rimSlot[i]['rim:ValueList'][0]['rim:Value'][0]]);
+	      }
+	      else if (rimSlot[i]['$']['name'] == '$XDSDocumentEntryUniqueId'){
+	        searchKeyword.push(['DocumentEntry', 'uniqueId', rimSlot[i]['rim:ValueList'][0]['rim:Value'][0]]);
+	      }
+	      else if (rimSlot[i]['$']['name'] == '$XDSDocumentEntryHomeCommunityId'){
+	        searchKeyword.push(['DocumentEntry', 'homeCommunityId', rimSlot[i]['rim:ValueList'][0]['rim:Value'][0]]);
+	      }
+	    }
+	  }
+	  else {
+	  	queryTypeDeny();
+	  }
 	  searchKeyword.push([requestType, responseOption]);
 	  console.log(searchKeyword);
-	  myCallback(searchKeyword, invokeContract);
+	  return searchKeyword;
 	}
-	specifyRequestType(inputAttributes, checkLastID);
+
+	function queryTypeDeny () {
+		console.log('Query type is not implemented yet...');
+		terminateMark = 'Yes';
+	}
+
+	async function checkLastID () {
+	  //web3.eth.defaultAccount = web3.eth.personal.getAccounts().then(console.log);
+	  console.log('Checking for latest ID...');
+	  let acc = await web3.eth.personal.getAccounts();
+	    if (acc.err) {console.log(acc.err);}
+	    else {console.log('Accounts available on this node:\n' + acc);}
+
+	  var deployerAccount = acc[0];
+	  console.log('Originally deployed with account:' + deployerAccount);
+	  var abi = 
+	  [
+	    {
+	      "inputs": [],
+	      "name": "checkLastID",
+	      "outputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "",
+	          "type": "uint256"
+	        }
+	      ],
+	      "stateMutability": "view",
+	      "type": "function"
+	    },
+	    {
+	      "inputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "Docid",
+	          "type": "uint256"
+	        }
+	      ],
+	      "name": "retreiveFull",
+	      "outputs": [
+	        {
+	          "internalType": "string",
+	          "name": "",
+	          "type": "string"
+	        }
+	      ],
+	      "stateMutability": "view",
+	      "type": "function"
+	    },
+	    {
+	      "inputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "Docid",
+	          "type": "uint256"
+	        }
+	      ],
+	      "name": "retreiveSearch",
+	      "outputs": [
+	        {
+	          "internalType": "string",
+	          "name": "",
+	          "type": "string"
+	        }
+	      ],
+	      "stateMutability": "view",
+	      "type": "function"
+	    },
+	    {
+	      "inputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "Docid",
+	          "type": "uint256"
+	        },
+	        {
+	          "internalType": "string",
+	          "name": "searchJSON",
+	          "type": "string"
+	        },
+	        {
+	          "internalType": "string",
+	          "name": "fullJSON",
+	          "type": "string"
+	        }
+	      ],
+	      "name": "store",
+	      "outputs": [],
+	      "stateMutability": "nonpayable",
+	      "type": "function"
+	    }
+	  ];
+
+	  var contractAddress = require('./contractAddress.js');
+	  console.log('Contract Address: ' + contractAddress);
+
+	  var myContract = new web3.eth.Contract(abi, contractAddress, {
+	    from: deployerAccount,
+	      gas: 30000000
+	  });
+
+	  console.log('Calling contract...');
+	  latestDoc = await myContract.methods.checkLastID().call({
+	    from: deployerAccount
+	  }, (err,res) => {
+	    if (err) {
+	      console.log(err);
+	    }else{
+	      console.log('Found, the lastest document ID is ' + res);
+	      console.log('------------------------------------------');
+	      return res;
+	    }
+	  }); 
+	  return latestDoc; 
+	}
+
+	//Invoke each contract for keyword search
+	async function invokeContract(Docid){
+	  //web3.eth.defaultAccount = web3.eth.personal.getAccounts().then(console.log);
+	  console.log('==========\nCall for XDS Attributes in DocID: ' + Docid + '....');
+	  let acc = await web3.eth.personal.getAccounts();
+	    if (acc.err) {console.log(acc.err);}
+	    else {console.log('Accounts available on this node:\n' + acc);}
+
+	  var deployerAccount = acc[0];
+	  console.log('Originally deployed with account:' + deployerAccount);
+	  var abi = 
+	  [
+	    {
+	      "inputs": [],
+	      "name": "checkLastID",
+	      "outputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "",
+	          "type": "uint256"
+	        }
+	      ],
+	      "stateMutability": "view",
+	      "type": "function"
+	    },
+	    {
+	      "inputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "Docid",
+	          "type": "uint256"
+	        }
+	      ],
+	      "name": "retreiveFull",
+	      "outputs": [
+	        {
+	          "internalType": "string",
+	          "name": "",
+	          "type": "string"
+	        }
+	      ],
+	      "stateMutability": "view",
+	      "type": "function"
+	    },
+	    {
+	      "inputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "Docid",
+	          "type": "uint256"
+	        }
+	      ],
+	      "name": "retreiveSearch",
+	      "outputs": [
+	        {
+	          "internalType": "string",
+	          "name": "",
+	          "type": "string"
+	        }
+	      ],
+	      "stateMutability": "view",
+	      "type": "function"
+	    },
+	    {
+	      "inputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "Docid",
+	          "type": "uint256"
+	        },
+	        {
+	          "internalType": "string",
+	          "name": "searchJSON",
+	          "type": "string"
+	        },
+	        {
+	          "internalType": "string",
+	          "name": "fullJSON",
+	          "type": "string"
+	        }
+	      ],
+	      "name": "store",
+	      "outputs": [],
+	      "stateMutability": "nonpayable",
+	      "type": "function"
+	    }
+	  ];
+
+	  var contractAddress = require('./contractAddress.js');
+	  console.log('Contract Address: ' + contractAddress);
+
+	  var myContract = new web3.eth.Contract(abi, contractAddress, {
+	    from: deployerAccount,
+	      gas: 30000000
+	  });
+
+	  console.log('The latest document ID is no.:' + maxDoc);
+	  //callRegSearch while run along Docid from 1 to latest (known using checkID)
+	  console.log('Extracting XDS Attributes...');
+	  let readXDSAttributes = await myContract.methods.retreiveSearch(Docid).call({
+	      from: deployerAccount
+	  }, (err,res) => {
+	    if (err) {
+	        console.log(err);
+		}else{
+	        var XDSattributes = JSON.parse(res);
+	        searchedEntryUUID.push(XDSattributes.DocumentEntry.entryUUID);
+	        return XDSattributes;
+	  	}
+	  });
+	  return readXDSAttributes;
+	}
+
+	//Compare keyword with JSON called from smartcontract
+	function matchMaker (searchXDSAtt, Docid){ 
+	  //searchXDSAtt = XDS Object called from smartcontract
+	  //sK = search keyword received from ITI-18
+	  console.log('----------\nInitiate match maker program....');
+
+	  var matchedCount = 0;
+	  var timeAttributes = {
+	    creationTime: {
+	      From: null,
+	      To: null
+	    },
+	    serviceStartTime: {
+	      From: null,
+	      To: null
+	    },
+	    serviceStopTime: {
+	      From: null,
+	      To: null
+	    }
+	  }
+
+	  for (i = 0; i < sK.length - 1; i++){
+	    var keyCount = i+1;
+	    if (Array.isArray(sK[i][1])){ //check if attributes have sub-attributes i.e. author, classCode, etc.
+	      if (sK[i][1][0] == 'author') { //author specific case
+	        if (searchXDSAtt[sK[i][0]][sK[i][1][0]][0][sK[i][1][1]] == sK[i][2]){
+	          matchedCount++;
+	          console.log('Keyword ' + keyCount + ' matched...');
+	        }
+	        else {
+	          console.log('Keyword ' + keyCount + ' unmatched...');
+	          break;
+	        }
+	      }
+	      else if (sK[i][1][0] == 'creationTime') {
+	        timeAttributes[sK[i][1][0]][sK[i][1][1]] = sK[i][2];
+	        if (timeAttributes[sK[i][1][0]]['From'] && timeAttributes[sK[i][1][0]]['To']){
+	          var dateTimeFrom = moment.utc(timeAttributes[sK[i][1][0]]['From'], 'YYYYMMDDHHmmss');
+	          var dateTimeTo = moment.utc(timeAttributes[sK[i][1][0]]['To'], 'YYYYMMDDHHmmss');
+	          var dateTimeTarget = moment.utc(searchXDSAtt[sK[i][0]][sK[i][1][0]], 'YYYYMMDDHHmmss');
+	          if (moment(dateTimeTarget).isBetween(dateTimeFrom, dateTimeTo, undefined, '[]')){
+	            matchedCount++; //match count 2 times due to the attributes require 2 search keywords
+	            matchedCount++;
+	            console.log(sK[i][1][0] + ' at Keyword ' + keyCount + ' matched...');
+	          }
+	        }
+	      }
+	      else if (sK[i][1][0] == 'serviceStartTime') {
+	        if (searchXDSAtt[sK[i][0]][sK[i][1][0]] != 'N/A'){ //check if current Document have serviceTime attributes present
+	          timeAttributes[sK[i][1][0]][sK[i][1][1]] = sK[i][2];
+	          if (timeAttributes[sK[i][1][0]]['From'] && timeAttributes[sK[i][1][0]]['To']){
+	            var dateTimeFrom = moment.utc(timeAttributes[sK[i][1][0]]['From'], 'YYYYMMDDHHmmss');
+	            var dateTimeTo = moment.utc(timeAttributes[sK[i][1][0]]['To'], 'YYYYMMDDHHmmss');
+	            var dateTimeTarget = moment.utc(searchXDSAtt[sK[i][0]][sK[i][1][0]], 'YYYYMMDDHHmmss');
+	            if (moment(dateTimeTarget).isBetween(dateTimeFrom, dateTimeTo, undefined, '[]')){
+	              matchedCount++; //match count 2 times due to the attributes require 2 search keywords
+	              matchedCount++;
+	              console.log(sK[i][1][0] + ' at Keyword ' + keyCount + ' matched...');
+	            }
+	          }
+	        }
+	      }
+	      else if (sK[i][1][0] == 'serviceStopTime') {
+	        if (searchXDSAtt[sK[i][0]][sK[i][1][0]] != 'N/A'){ //check if current Document have serviceTime attributes present
+	          timeAttributes[sK[i][1][0]][sK[i][1][1]] = sK[i][2];
+	          if (timeAttributes[sK[i][1][0]]['From'] && timeAttributes[sK[i][1][0]]['To']){
+	            var dateTimeFrom = moment.utc(timeAttributes[sK[i][1][0]]['From'], 'YYYYMMDDHHmmss');
+	            var dateTimeTo = moment.utc(timeAttributes[sK[i][1][0]]['To'], 'YYYYMMDDHHmmss');
+	            var dateTimeTarget = moment.utc(searchXDSAtt[sK[i][0]][sK[i][1][0]], 'YYYYMMDDHHmmss');
+	            if (moment(dateTimeTarget).isBetween(dateTimeFrom, dateTimeTo, undefined, '[]')){
+	              matchedCount++; //match count 2 times due to the attributes require 2 search keywords
+	              matchedCount++;
+	              console.log(sK[i][1][0] + ' at Keyword ' + keyCount + ' matched...');
+	            }
+	          }
+	        }
+	      }
+	      else {
+	        if (searchXDSAtt[sK[i][0]][sK[i][1][0]][sK[i][1][1]] == sK[i][2]){
+	          matchedCount++;
+	          console.log('Keyword ' + keyCount + ' matched...');
+	        }
+	        else {
+	          console.log('Keyword ' + keyCount + ' unmatched...');
+	          break;
+	        }
+	      }
+	    }
+	    else {
+	      if (Array.isArray(sK[i][2])){
+	        if (searchXDSAtt[sK[i][0]][sK[i][1]][0] == sK[i][2][0]){
+	          matchedCount++;
+	          console.log('Keyword ' + keyCount + ' matched...');
+	        }
+	        else if (searchXDSAtt[sK[i][0]][sK[i][1]][0] != sK[i][2][0]) {
+	          console.log('Keyword ' + keyCount + ' unmatched...');
+	          break;
+	        }
+	      }
+	      else {
+	        if (searchXDSAtt[sK[i][0]][sK[i][1]] == sK[i][2]){
+	          matchedCount++;
+	          console.log('Keyword ' + keyCount + ' matched...');
+	        }
+	        else {
+	          console.log('Keyword ' + keyCount + ' unmatched...');
+	          break;
+	        }
+	      }
+	    }
+	  }
+
+	  var matchedFound = 'Not Found';
+	  if (matchedCount == sK.length - 1){
+	    console.log('All matched, successfully on DocID: ' + Docid + '....\nReturn document as search result:\n========================================');
+	    console.log(searchXDSAtt.DocumentEntry);
+	    console.log('========================================');
+	    matchedFound = 'Found';
+	  }
+	  else {
+	    console.log('Unmatched on DocID' + Docid + '....');
+
+	  }
+	  return matchedFound;  
+	}	
+
+	async function fullContract (Docid){
+	  //web3.eth.defaultAccount = web3.eth.personal.getAccounts().then(console.log);
+	  console.log('Calling for full document....');
+	  let acc = await web3.eth.personal.getAccounts();
+	    if (acc.err) {console.log(acc.err);}
+	    else {console.log('Accounts available on this node:\n' + acc);}
+
+	  var deployerAccount = acc[0];
+	  console.log('Originally deployed with account:' + deployerAccount);
+	  var abi = 
+	  [
+	    {
+	      "inputs": [],
+	      "name": "checkLastID",
+	      "outputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "",
+	          "type": "uint256"
+	        }
+	      ],
+	      "stateMutability": "view",
+	      "type": "function"
+	    },
+	    {
+	      "inputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "Docid",
+	          "type": "uint256"
+	        }
+	      ],
+	      "name": "retreiveFull",
+	      "outputs": [
+	        {
+	          "internalType": "string",
+	          "name": "",
+	          "type": "string"
+	        }
+	      ],
+	      "stateMutability": "view",
+	      "type": "function"
+	    },
+	    {
+	      "inputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "Docid",
+	          "type": "uint256"
+	        }
+	      ],
+	      "name": "retreiveSearch",
+	      "outputs": [
+	        {
+	          "internalType": "string",
+	          "name": "",
+	          "type": "string"
+	        }
+	      ],
+	      "stateMutability": "view",
+	      "type": "function"
+	    },
+	    {
+	      "inputs": [
+	        {
+	          "internalType": "uint256",
+	          "name": "Docid",
+	          "type": "uint256"
+	        },
+	        {
+	          "internalType": "string",
+	          "name": "searchJSON",
+	          "type": "string"
+	        },
+	        {
+	          "internalType": "string",
+	          "name": "fullJSON",
+	          "type": "string"
+	        }
+	      ],
+	      "name": "store",
+	      "outputs": [],
+	      "stateMutability": "nonpayable",
+	      "type": "function"
+	    }
+	  ];
+
+	  var contractAddress = require('./contractAddress.js');
+	  console.log('Contract Address: ' + contractAddress);
+
+	  var myContract = new web3.eth.Contract(abi, contractAddress, {
+	    from: deployerAccount,
+	      gas: 30000000
+	  });
+
+	  console.log('Returning document: ' + Docid);
+		var rXDSattribute = await myContract.methods.retreiveFull(Docid).call({
+		from: deployerAccount
+		}, (err,res) => {
+			if (err) {
+				console.log(err);
+			} else {
+				var XDSattributes = JSON.parse(res);
+				return XDSattributes;
+			}
+		});
+		return rXDSattribute; 
+	}
+
+	function responseAsLeafClass (rXDSattribute) {
+		console.log('Responsing as LeafClass');
+		//Define variable for shorter object accessing
+		var sEnvelope = rXDSattribute['soapenv:Envelope'];
+		//inside Enveope
+		var s$ = sEnvelope['$'];
+		var sBody = sEnvelope['soapenv:Body'][0];
+		var sHeader = sEnvelope['soapenv:Header'][0];
+		//inside Envelope>Header
+		var wsaTo = sHeader['wsa:To'];
+		var wsaMessageID = sHeader['wsaMessageID'];
+		var wsaAction = sHeader['wsaAction'];
+		//inside Envelope>Body
+		var lcmSubmitObjectsRequest = sBody['lcm:SubmitObjectsRequest'][0];
+		//inside Envelope>Body>lcm:SubmitObjectsRequest
+		var bodyRegistryObjectList = lcmSubmitObjectsRequest['rim:RegistryObjectList'][0];
+		//inside Envelope>Body>lcm:SubmitObjectsRequest>rim:RegistryObjectList
+		var bodyExtrinsicObject = bodyRegistryObjectList['rim:ExtrinsicObject'][0];
+		var bodyRegistryPackage = bodyRegistryObjectList['rim:RegistryPackage'][0];
+		var bodyClassification = bodyRegistryObjectList['rim:Classification'][0];
+		var bodyAssociation = bodyRegistryObjectList['rim:Association'][0];
+		//Decrypt sourcePatientInfo -> So encryption just prevent those who look directly into contract to read the attribute
+		//Alternatively, this can be left encrypted while require Document Consumer to decrypt by themselves
+		for (var i = 0; i < bodyExtrinsicObject['rim:Slot'].length; i++) {
+			if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'sourcePatientInfo') {
+				var encryptedString = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'];
+	          	var plaintext = cryptr.decrypt(encryptedString);
+              	//Also replace the attributes within full XDSAttributes object with encrypted attribute
+              	bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'] = plaintext.split(',');
+			}
+		}
+		console.log('========================================\nReturn type: ' + sK[sK.length-1] + '\n========================================');
+		var responseJSON = {
+			"query:AdhocQueryResponse": {
+				"$": {
+					"status": "Success",
+					"xmlns:query": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",
+					"xmlns:rim": "urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0",
+					"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+					"xsi:schemaLocation": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ../../schema/ebRS/query.xsd"
+				},
+				"rim:RegistryObjectList": [
+					{
+						"rim:ExtrinsicObject": [bodyExtrinsicObject]
+					}
+				]
+			}
+		}
+		console.log(util.inspect(responseJSON));
+
+		if (netServer && netSocket) {
+			console.log('Responsing query result: ');
+			var responseXML = builder.buildObject(responseJSON);
+	        //var regex = /\r?\n|\r/g;
+	        //var responseXML = responseXML.replace(regex,'');
+	        netSocket.write(responseXML);
+	        console.log('-----------------------');
+	        console.log(responseXML);			
+		}
+		console.log('========================================\nDone!');
+		hrend = process.hrtime(hrstart);
+		console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
+		console.log('========================================');
+	}
+
+	function responseAsObjectRef (matchEntryUUID) {
+		console.log('Responsing as ObjectRef');
+		
+		console.log('========================================\nReturn type: ' + sK[sK.length-1] + '\n========================================');
+		var resObjectRefArray = [];
+		var objectRef;
+		for (arrayCell = 0; arrayCell < matchEntryUUID.length; arrayCell++) {
+			objectRef = {
+				"rim:ObjectRef": {
+					"$": {
+						"xmlns:q": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",
+						"xmlns:rim": "urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0",
+						"id": matchEntryUUID[arrayCell]
+					}
+				}
+			}
+			resObjectRefArray.push(objectRef);
+		}
+		var responseJSON = {
+			"query:AdhocQueryResponse": {
+				"$": {
+					"status": "Success",
+					"xmlns:query": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",
+					"xmlns:rim": "urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0",
+					"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+					"xsi:schemaLocation": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ../../schema/ebRS/query.xsd"
+				},
+				"rim:RegistryObjectList": resObjectRefArray
+			}
+		}
+
+		console.log(util.inspect(responseJSON));
+
+		if (netServer && netSocket) {
+			console.log('Responsing query result: ');
+			var responseXML = builder.buildObject(responseJSON);
+	        //var regex = /\r?\n|\r/g;
+	        //var responseXML = responseXML.replace(regex,'');
+	        netSocket.write(responseXML);
+	        console.log('-----------------------');
+	        console.log(responseXML);			
+		}
+		console.log('========================================\nDone!');
+		hrend = process.hrtime(hrstart);
+		console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
+		console.log('========================================');
+	}
+
+	function responseAsFailed () {
+		console.log('Responsing as Failure');
+		var responseJSON = {
+			"query:AdhocQueryResponse": {
+				"$": {
+					"status": "Failure",
+					"xmlns:query": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",
+					"xmlns:rim": "urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0",
+					"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+					"xsi:schemaLocation": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ../../schema/ebRS/query.xsd"
+				}
+			}
+		}
+		console.log(util.inspect(responseJSON));
+
+		if (netServer && netSocket) {
+			console.log('Responsing query result: ');
+			var responseXML = builder.buildObject(responseJSON);
+	        //var regex = /\r?\n|\r/g;
+	        //var responseXML = responseXML.replace(regex,'');
+	        netSocket.write(responseXML);
+	        console.log('-----------------------');
+	        console.log(responseXML);			
+		}
+		console.log('========================================\nDone!');
+		hrend = process.hrtime(hrstart);
+		console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
+		console.log('========================================');
+	}
+
+	let sK = await specifyRequestType(requestedJSON);
+	if (terminateMark == 'Yes') {
+		return;
+	}
+	console.log('Search keywords received...\nMoving on to search function...');
+	let maxDoc = await checkLastID();
+	var allMatchedResult = []; //This variable used to contain the matched result
+	for (pickedDocid = 1; pickedDocid <= maxDoc; pickedDocid++){
+		let calledDoc = await invokeContract(pickedDocid);
+		let focusingDoc = await JSON.parse(calledDoc);
+		let searchMatched = await matchMaker(focusingDoc, pickedDocid);
+		if (searchMatched == 'Found') {
+			allMatchedResult.push(pickedDocid);
+			console.log(sK[sK.length - 1][1]);
+			if (sK[sK.length - 1][1] == 'LeafClass') {
+				break;
+			}
+		}
+	}
+	console.log(allMatchedResult.length + ' Documents matched....');
+	if (allMatchedResult.length > 0) {
+		console.log('Matched result included (Document ID):' + allMatchedResult);
+		if (sK[sK.length - 1][1] == 'LeafClass') {
+			var rightResult = allMatchedResult[0];
+			let fullContent = await fullContract(rightResult);
+			let rXDSattribute = await JSON.parse(fullContent);
+			responseAsLeafClass(rXDSattribute);
+		}
+		else {
+			var matchEntryUUID = [];
+			for (resultCell = 0; resultCell < allMatchedResult.length; resultCell++) {
+				matchEntryUUID.push(searchedEntryUUID[allMatchedResult[resultCell] - 1]);
+			}
+			responseAsObjectRef(matchEntryUUID);
+		}
+	}
+	else {
+		responseAsFailed();
+	}
 }
 
 //ProcessData interprete any xmlMessages came through Netsocket=====================================================

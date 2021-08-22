@@ -114,7 +114,8 @@ var queryTypeList = ['', 'FindDocuments', 'FindSubmissionSets', 'FindFolders',
 					'GetFoldersForDocument', 'GetRelatedDocuments', 'FindDocumentsByReferenceId'];
 var queryTypeUUID = {
 	FindDocuments: 'urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d',
-	FindSubmissionSets: 'urn:uuid:f26abbcb-ac74-4422-8a30-edb644bbc1a9'
+	FindSubmissionSets: 'urn:uuid:f26abbcb-ac74-4422-8a30-edb644bbc1a9',
+	GetDocuments: 'urn:uuid:5c4f972b-d56b-40ac-a5fc-c8ca9b40b9d4'
 }
 var timeKeyList = ['$XDSDocumentEntryCreationTimeFrom', '$XDSDocumentEntryCreationTimeTo', 
 					'$XDSDocumentEntryServiceStartTimeFrom', '$XDSDocumentEntryServiceStartTimeTo', 
@@ -129,11 +130,14 @@ var availableKeywords = {
 					'XDSDocumentEntryConfidentialityCode', 'XDSDocumentEntryAuthorPerson', 
 					'XDSDocumentEntryFormatCode', 'XDSDocumentEntryType']
 	},
-
+	GetDocuments: {
+		required: ['XDSDocumentEntryEntryUUID', 'XDSDocumentEntryUniqueId'],
+		optional: ['XDSDocumentEntryHomeCommunityId']
+	}
 }
 
 var queryXML = {
-	  "query:AdhocQueryRequest": {
+	"query:AdhocQueryRequest": {
 	    "$": {
 	      "xmlns:query": "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",
 	      "xmlns:rim": "urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0",
@@ -207,19 +211,45 @@ function getQueryType () {
 }
 
 function getRequiredKeywords () {
-	console.log('Keywords require: ' + requiredKeywords[keywordCount]);
-	var addedHeader = '$' + requiredKeywords[keywordCount];
-	rl.question('Value: ', function(requireKeyInput) {
-		inputKeywords.push([addedHeader, requireKeyInput]);
-		keywordCount++;
-		if (keywordCount >= requiredKeywords.length){
-			showAllKeywords();
-			getOptionalKeywords(); 
+	if (inputKeywords[0].indexOf('Find') > -1){
+		console.log('Keywords require: ' + requiredKeywords[keywordCount]);
+		var addedHeader = '$' + requiredKeywords[keywordCount];
+		rl.question('Value: ', function(requireKeyInput) {
+			inputKeywords.push([addedHeader, requireKeyInput]);
+			keywordCount++;
+			if (keywordCount >= requiredKeywords.length){
+				queryXML['query:AdhocQueryRequest']['query:ResponseOption'][0]['$']['returnType'] = 'ObjectRef';
+				showAllKeywords();
+				getOptionalKeywords(); 
+			}
+			else {
+				getRequiredKeywords();
+			}  
+		});
+	}
+	else if (inputKeywords[0].indexOf('Get') > -1) {
+		console.log('Please select the required keyword');
+		var addedHeader; 
+		for (i = 0; i < requiredKeywords.length; i++){ //Show all available required keywords
+			var count = i+1;
+			console.log(count + ') ' + requiredKeywords[i]);
 		}
-		else {
-			getRequiredKeywords();
-		}  
-	});
+		rl.question('Value: ', function(selectedReqKeyword) {
+			keywordCount = parseInt(selectedReqKeyword, 10);
+			keywordCount--;
+			addedHeader = '$' + requiredKeywords[keywordCount];
+			console.log('Keyword: ' + requiredKeywords[keywordCount]);
+			rl.question('Value: ', function(requireKeyInput) {
+				inputKeywords.push([addedHeader, requireKeyInput]);
+				queryXML['query:AdhocQueryRequest']['query:ResponseOption'][0]['$']['returnType'] = 'LeafClass';
+				showAllKeywords();
+				getOptionalKeywords();
+			}); 
+		}); 
+	}
+	else {
+		process.exit();
+	}
 };
 
 function getOptionalKeywords () {
@@ -384,153 +414,169 @@ function sendQuery () {
             parseString(dataIn, function (err, result) {
                 var eventCodeListCount = 0;
                 if (err) throw err;
-                var bodyExtrinsicObject = result['query:AdhocQueryResponse']['rim:RegistryObjectList'][0]['rim:ExtrinsicObject'][0];
-                if (bodyExtrinsicObject['$']['objectType'] == documentEntryUUID.DocumentEntry){
-                  //Scanning object within DocumentEntry "Classification"
-                  if (bodyExtrinsicObject['$']['id']){
-                    prepXDSAtt.DocumentEntry.entryUUID = bodyExtrinsicObject['$']['id'];
-                  }
-                  if (bodyExtrinsicObject['$']['mimeType']){
-                    prepXDSAtt.DocumentEntry.mimeType = bodyExtrinsicObject['$']['mimeType'];
-                  }
-                  if (bodyExtrinsicObject['$']['objectType']){
-                    prepXDSAtt.DocumentEntry.objectType = bodyExtrinsicObject['$']['objectType'];
-                  }
-                  if (bodyExtrinsicObject['$']['status']){
-			      	prepXDSAtt.DocumentEntry.availabilityStatus = bodyExtrinsicObject['$']['status'];
-			      }
-                  for (var i = 0; i < bodyExtrinsicObject['rim:Classification'].length; i++){
-                      //Detect DocumentEntry > author (Set)
-                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.author){
-                          if (i != 0) { //If there are more than one author for the Doc, add more author object into array
-                              prepXDSAtt.DocumentEntry.author.push({
-                                                                      authorPerson: 'N/A',
-                                                                      authorInstitution: [],
-                                                                      authorRole: 'N/A',
-                                                                      authorSpecialty: 'N/A'
-                                                                  });
-                          }
-                          //Assign each element of the author
-                          for (var j = 0; j < bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'].length; j++){
-                              if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorPerson'){
-                                  prepXDSAtt.DocumentEntry.author[i].authorPerson = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'][0];
-                              }
-                              if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorInstitution'){
-                                  prepXDSAtt.DocumentEntry.author[i].authorInstitution = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'];
-                              }
-                              if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorRole'){
-                                  prepXDSAtt.DocumentEntry.author[i].authorRole = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'][0];
-                              }
-                              if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorSpecialty'){
-                                  prepXDSAtt.DocumentEntry.author[i].authorSpecialty = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'][0];
-                              }
-                          }
-                      }
-                      //Detect DocumentEntry > classCode
-                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.classCode){
-                          prepXDSAtt.DocumentEntry.classCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
-                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
-                              prepXDSAtt.DocumentEntry.classCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
-                          }
-                      }
-                      //Detect DocumentEntry > confidentialityCode
-                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.confidentialityCode){
-                          prepXDSAtt.DocumentEntry.confidentialityCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
-                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
-                              prepXDSAtt.DocumentEntry.confidentialityCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
-                          }
-                      }
-                      //Detect DocumentEntry > formatCode
-                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.formatCode){
-                          prepXDSAtt.DocumentEntry.formatCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
-                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
-                              prepXDSAtt.DocumentEntry.formatCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
-                          }
-                      }
-                      //Detect DocumentEntry > healthcareFacilityTypeCode
-                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.healthcareFacilityTypeCode){
-                          prepXDSAtt.DocumentEntry.healthcareFacilityTypeCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
-                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
-                              prepXDSAtt.DocumentEntry.healthcareFacilityTypeCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
-                          }
-                      }
-                      //Detect DocumentEntry > practiceSettingCode
-                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.practiceSettingCode){
-                          prepXDSAtt.DocumentEntry.practiceSettingCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
-                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
-                              prepXDSAtt.DocumentEntry.practiceSettingCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
-                          }
-                      }
-                      //Detect DocumentEntry > eventCode
-                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.eventCodeList){
-                          prepXDSAtt.DocumentEntry.eventCodeList.push({
-                                                                          codingScheme: 'N/A',
-                                                                          displayName: 'N/A'
-                                                                      });
-                          prepXDSAtt.DocumentEntry.eventCodeList[eventCodeListCount].displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
-                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
-                              prepXDSAtt.DocumentEntry.eventCodeList[eventCodeListCount].codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
-                          }
-                          eventCodeListCount++;
-                      }
-                      //Detect DocumentEntry > TypeCode
-                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.typeCode){
-                          prepXDSAtt.DocumentEntry.typeCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
-                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
-                              prepXDSAtt.DocumentEntry.typeCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
-                          }
-                      }
-                  }
-                  //Scanning object within DocumentEntry "Descriptor" which usually be "comment"
-                  for (var i = 0; i < bodyExtrinsicObject['rim:Description'].length; i++){
-                      prepXDSAtt.DocumentEntry.comment = bodyExtrinsicObject['rim:Description'][i];
-                  }
-                  for (var i = 0; i < bodyExtrinsicObject['rim:Name'].length; i++){
-                      prepXDSAtt.DocumentEntry.title = bodyExtrinsicObject['rim:Name'][i]['rim:LocalizedString'][0]['$']['value'];
-                  }
-                  //Scanning object within DocumentEntry "ExternalIdentifier"
-                  for (var i = 0; i < bodyExtrinsicObject['rim:ExternalIdentifier'].length; i++){
-                      //Detect DocumentEntry > patientId
-                      if (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == documentEntryUUID.patientId){
-                          prepXDSAtt.DocumentEntry.patientId = (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['value']);
-                      }
-                      if (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == documentEntryUUID.uniqueId){
-                          prepXDSAtt.DocumentEntry.uniqueId = (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['value']);
-                      }
-                  }
-                  //Scannig object within DocumentEntry "Slot"
-                  for (var i = 0; i < bodyExtrinsicObject['rim:Slot'].length; i++){
-                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'size'){
-                          prepXDSAtt.DocumentEntry.size = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
-                      }
-                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'repositoryUniqueId'){
-                          prepXDSAtt.DocumentEntry.repositoryUniqueId = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
-                      }
-                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'hash'){
-                          prepXDSAtt.DocumentEntry.hash = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
-                      }
-                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'creationTime'){
-                          prepXDSAtt.DocumentEntry.creationTime = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
-                      }
-                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'languageCode'){
-                          prepXDSAtt.DocumentEntry.languageCode = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
-                      }
-                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'serviceStartTime'){
-                          prepXDSAtt.DocumentEntry.serviceStartTime = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
-                      }
-                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'serviceStopTime'){
-                          prepXDSAtt.DocumentEntry.serviceStopTime = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
-                      }
-                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'sourcePatientId'){
-                          prepXDSAtt.DocumentEntry.sourcePatientId = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
-                      }
-                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'sourcePatientInfo'){
-                        prepXDSAtt.DocumentEntry.sourcePatientInfo = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'];;
-                      }
-                  }
+                var responseState = result['query:AdhocQueryResponse']['$']['status'];
+                if (responseState == 'Failure') {
+                	console.log('Result not found...');
                 }
-                console.log(util.inspect(prepXDSAtt));
-                hrend = process.hrtime(hrstart);
+                else {
+                	//LeafClass
+                	if (result['query:AdhocQueryResponse']['rim:RegistryObjectList'][0]['rim:ExtrinsicObject']) {
+		                var bodyExtrinsicObject = result['query:AdhocQueryResponse']['rim:RegistryObjectList'][0]['rim:ExtrinsicObject'][0];
+		                if (bodyExtrinsicObject['$']['objectType'] == documentEntryUUID.DocumentEntry){
+		                  //Scanning object within DocumentEntry "Classification"
+		                  if (bodyExtrinsicObject['$']['id']){
+		                    prepXDSAtt.DocumentEntry.entryUUID = bodyExtrinsicObject['$']['id'];
+		                  }
+		                  if (bodyExtrinsicObject['$']['mimeType']){
+		                    prepXDSAtt.DocumentEntry.mimeType = bodyExtrinsicObject['$']['mimeType'];
+		                  }
+		                  if (bodyExtrinsicObject['$']['objectType']){
+		                    prepXDSAtt.DocumentEntry.objectType = bodyExtrinsicObject['$']['objectType'];
+		                  }
+		                  if (bodyExtrinsicObject['$']['status']){
+					      	prepXDSAtt.DocumentEntry.availabilityStatus = bodyExtrinsicObject['$']['status'];
+					      }
+		                  for (var i = 0; i < bodyExtrinsicObject['rim:Classification'].length; i++){
+		                      //Detect DocumentEntry > author (Set)
+		                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.author){
+		                          if (i != 0) { //If there are more than one author for the Doc, add more author object into array
+		                              prepXDSAtt.DocumentEntry.author.push({
+		                                                                      authorPerson: 'N/A',
+		                                                                      authorInstitution: [],
+		                                                                      authorRole: 'N/A',
+		                                                                      authorSpecialty: 'N/A'
+		                                                                  });
+		                          }
+		                          //Assign each element of the author
+		                          for (var j = 0; j < bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'].length; j++){
+		                              if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorPerson'){
+		                                  prepXDSAtt.DocumentEntry.author[i].authorPerson = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'][0];
+		                              }
+		                              if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorInstitution'){
+		                                  prepXDSAtt.DocumentEntry.author[i].authorInstitution = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'];
+		                              }
+		                              if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorRole'){
+		                                  prepXDSAtt.DocumentEntry.author[i].authorRole = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'][0];
+		                              }
+		                              if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['$']['name'] == 'authorSpecialty'){
+		                                  prepXDSAtt.DocumentEntry.author[i].authorSpecialty = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][j]['rim:ValueList'][0]['rim:Value'][0];
+		                              }
+		                          }
+		                      }
+		                      //Detect DocumentEntry > classCode
+		                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.classCode){
+		                          prepXDSAtt.DocumentEntry.classCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
+		                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
+		                              prepXDSAtt.DocumentEntry.classCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
+		                          }
+		                      }
+		                      //Detect DocumentEntry > confidentialityCode
+		                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.confidentialityCode){
+		                          prepXDSAtt.DocumentEntry.confidentialityCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
+		                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
+		                              prepXDSAtt.DocumentEntry.confidentialityCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
+		                          }
+		                      }
+		                      //Detect DocumentEntry > formatCode
+		                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.formatCode){
+		                          prepXDSAtt.DocumentEntry.formatCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
+		                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
+		                              prepXDSAtt.DocumentEntry.formatCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
+		                          }
+		                      }
+		                      //Detect DocumentEntry > healthcareFacilityTypeCode
+		                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.healthcareFacilityTypeCode){
+		                          prepXDSAtt.DocumentEntry.healthcareFacilityTypeCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
+		                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
+		                              prepXDSAtt.DocumentEntry.healthcareFacilityTypeCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
+		                          }
+		                      }
+		                      //Detect DocumentEntry > practiceSettingCode
+		                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.practiceSettingCode){
+		                          prepXDSAtt.DocumentEntry.practiceSettingCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
+		                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
+		                              prepXDSAtt.DocumentEntry.practiceSettingCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
+		                          }
+		                      }
+		                      //Detect DocumentEntry > eventCode
+		                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.eventCodeList){
+		                          prepXDSAtt.DocumentEntry.eventCodeList.push({
+		                                                                          codingScheme: 'N/A',
+		                                                                          displayName: 'N/A'
+		                                                                      });
+		                          prepXDSAtt.DocumentEntry.eventCodeList[eventCodeListCount].displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
+		                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
+		                              prepXDSAtt.DocumentEntry.eventCodeList[eventCodeListCount].codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
+		                          }
+		                          eventCodeListCount++;
+		                      }
+		                      //Detect DocumentEntry > TypeCode
+		                      if (bodyExtrinsicObject['rim:Classification'][i]['$']['classificationScheme'] == documentEntryUUID.typeCode){
+		                          prepXDSAtt.DocumentEntry.typeCode.displayName = bodyExtrinsicObject['rim:Classification'][i]['rim:Name'][0]['rim:LocalizedString'][0]['$']['value'];
+		                          if (bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['$']['name'] == 'codingScheme'){
+		                              prepXDSAtt.DocumentEntry.typeCode.codingScheme = bodyExtrinsicObject['rim:Classification'][i]['rim:Slot'][0]['rim:ValueList'][0]['rim:Value'][0];
+		                          }
+		                      }
+		                  }
+		                  //Scanning object within DocumentEntry "Descriptor" which usually be "comment"
+		                  for (var i = 0; i < bodyExtrinsicObject['rim:Description'].length; i++){
+		                      prepXDSAtt.DocumentEntry.comment = bodyExtrinsicObject['rim:Description'][i];
+		                  }
+		                  for (var i = 0; i < bodyExtrinsicObject['rim:Name'].length; i++){
+		                      prepXDSAtt.DocumentEntry.title = bodyExtrinsicObject['rim:Name'][i]['rim:LocalizedString'][0]['$']['value'];
+		                  }
+		                  //Scanning object within DocumentEntry "ExternalIdentifier"
+		                  for (var i = 0; i < bodyExtrinsicObject['rim:ExternalIdentifier'].length; i++){
+		                      //Detect DocumentEntry > patientId
+		                      if (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == documentEntryUUID.patientId){
+		                          prepXDSAtt.DocumentEntry.patientId = (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['value']);
+		                      }
+		                      if (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['identificationScheme'] == documentEntryUUID.uniqueId){
+		                          prepXDSAtt.DocumentEntry.uniqueId = (bodyExtrinsicObject['rim:ExternalIdentifier'][i]['$']['value']);
+		                      }
+		                  }
+		                  //Scannig object within DocumentEntry "Slot"
+		                  for (var i = 0; i < bodyExtrinsicObject['rim:Slot'].length; i++){
+		                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'size'){
+		                          prepXDSAtt.DocumentEntry.size = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
+		                      }
+		                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'repositoryUniqueId'){
+		                          prepXDSAtt.DocumentEntry.repositoryUniqueId = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
+		                      }
+		                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'hash'){
+		                          prepXDSAtt.DocumentEntry.hash = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
+		                      }
+		                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'creationTime'){
+		                          prepXDSAtt.DocumentEntry.creationTime = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
+		                      }
+		                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'languageCode'){
+		                          prepXDSAtt.DocumentEntry.languageCode = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
+		                      }
+		                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'serviceStartTime'){
+		                          prepXDSAtt.DocumentEntry.serviceStartTime = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
+		                      }
+		                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'serviceStopTime'){
+		                          prepXDSAtt.DocumentEntry.serviceStopTime = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
+		                      }
+		                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'sourcePatientId'){
+		                          prepXDSAtt.DocumentEntry.sourcePatientId = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'][0];
+		                      }
+		                      if (bodyExtrinsicObject['rim:Slot'][i]['$']['name'] == 'sourcePatientInfo'){
+		                        prepXDSAtt.DocumentEntry.sourcePatientInfo = bodyExtrinsicObject['rim:Slot'][i]['rim:ValueList'][0]['rim:Value'];;
+		                      }
+		                  }
+		                }
+		                console.log(util.inspect(prepXDSAtt));
+		            }
+		            else {
+		            	var listObjectRef = result['query:AdhocQueryResponse']['rim:RegistryObjectList'];
+		            	console.log('Result found:');
+		            	for (i = 0; i < listObjectRef.length; i++) {
+		            		console.log(util.inspect(listObjectRef[i]['rim:ObjectRef'][0]['$']['id']));
+		            	}
+		            }
+	            }
+	           	hrend = process.hrtime(hrstart);
                 console.log('==============================');
             	console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
             	console.log('==============================');

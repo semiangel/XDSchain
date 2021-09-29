@@ -1,0 +1,110 @@
+==========01
+Execution time (hr): 0s 347.080239ms
+Execution time (hr): 0s 445.280647ms
+Execution time (hr): 0s 298.448225ms
+Execution time (hr): 0s 272.594149ms
+Execution time (hr): 0s 250.067353ms
+Execution time (hr): 0s 278.804573ms
+Execution time (hr): 0s 318.713939ms
+Execution time (hr): 0s 244.125259ms
+Execution time (hr): 0s 255.478076ms
+Execution time (hr): 0s 258.997544ms
+==========02
+Execution time (hr): 0s 258.86771ms
+Execution time (hr): 0s 277.328801ms
+Execution time (hr): 0s 365.488078ms
+Execution time (hr): 0s 273.727971ms
+Execution time (hr): 0s 279.149246ms
+Execution time (hr): 0s 403.032565ms
+Execution time (hr): 0s 274.772209ms
+Execution time (hr): 0s 285.924958ms
+Execution time (hr): 0s 214.339483ms
+Execution time (hr): 0s 245.680443ms
+==========03
+Execution time (hr): 0s 283.101302ms
+Execution time (hr): 0s 274.133641ms
+Execution time (hr): 0s 286.066583ms
+Execution time (hr): 0s 263.398123ms
+Execution time (hr): 0s 247.871763ms
+Execution time (hr): 0s 234.652954ms
+Execution time (hr): 0s 247.03599ms
+Execution time (hr): 0s 236.435379ms
+Execution time (hr): 0s 245.03931ms
+Execution time (hr): 0s 253.649311ms
+==========04
+Execution time (hr): 0s 360.3562ms
+Execution time (hr): 0s 258.046715ms
+Execution time (hr): 0s 276.990519ms
+Execution time (hr): 0s 322.765626ms
+Execution time (hr): 0s 235.571089ms
+Execution time (hr): 0s 240.746564ms
+Execution time (hr): 0s 235.724821ms
+Execution time (hr): 0s 237.092645ms
+Execution time (hr): 0s 242.938251ms
+Execution time (hr): 0s 264.491912ms
+==========05
+Execution time (hr): 0s 263.154218ms
+Execution time (hr): 0s 257.22751ms
+Execution time (hr): 0s 273.789089ms
+Execution time (hr): 0s 353.675583ms
+Execution time (hr): 0s 220.76873ms
+Execution time (hr): 0s 226.264832ms
+Execution time (hr): 0s 215.118776ms
+Execution time (hr): 0s 240.833186ms
+Execution time (hr): 0s 318.06018ms
+Execution time (hr): 0s 348.550068ms
+==========06
+Execution time (hr): 0s 356.60728ms
+Execution time (hr): 0s 349.878501ms
+Execution time (hr): 0s 325.473699ms
+Execution time (hr): 0s 344.202384ms
+Execution time (hr): 0s 256.604123ms
+Execution time (hr): 0s 250.794628ms
+Execution time (hr): 0s 333.946205ms
+Execution time (hr): 0s 248.461618ms
+Execution time (hr): 0s 232.045348ms
+Execution time (hr): 0s 242.12793ms
+==========07
+Execution time (hr): 0s 380.98099ms
+Execution time (hr): 0s 297.617594ms
+Execution time (hr): 0s 318.302133ms
+Execution time (hr): 0s 326.850412ms
+Execution time (hr): 0s 253.837143ms
+Execution time (hr): 0s 239.274808ms
+Execution time (hr): 0s 246.417734ms
+Execution time (hr): 0s 236.079672ms
+Execution time (hr): 0s 240.045692ms
+Execution time (hr): 0s 232.607558ms
+==========08
+Execution time (hr): 0s 318.189043ms
+Execution time (hr): 0s 339.127277ms
+Execution time (hr): 0s 421.538792ms
+Execution time (hr): 0s 267.174431ms
+Execution time (hr): 0s 240.704064ms
+Execution time (hr): 0s 235.432228ms
+Execution time (hr): 0s 252.853075ms
+Execution time (hr): 0s 249.634277ms
+Execution time (hr): 0s 244.801933ms
+Execution time (hr): 0s 302.702ms
+==========09
+Execution time (hr): 0s 343.266464ms
+Execution time (hr): 0s 372.866705ms
+Execution time (hr): 0s 329.567613ms
+Execution time (hr): 0s 269.12064ms
+Execution time (hr): 0s 267.696318ms
+Execution time (hr): 0s 282.84493ms
+Execution time (hr): 0s 353.244615ms
+Execution time (hr): 0s 245.988358ms
+Execution time (hr): 0s 258.195446ms
+Execution time (hr): 0s 256.706244ms
+==========10
+Execution time (hr): 0s 374.151484ms
+Execution time (hr): 0s 310.059769ms
+Execution time (hr): 0s 267.41869ms
+Execution time (hr): 0s 239.27306ms
+Execution time (hr): 0s 245.051783ms
+Execution time (hr): 0s 248.904962ms
+Execution time (hr): 0s 251.448491ms
+Execution time (hr): 0s 248.649222ms
+Execution time (hr): 0s 232.236591ms
+Execution time (hr): 0s 353.944239ms

@@ -11,10 +11,12 @@ const Cryptr = require('cryptr');
 const cryptr = new Cryptr('XDSDomainSharedSecretKey');
 
 var Web3 =  require('web3');
-var web3 = new Web3("qdata/dd1/geth.ipc", net);
 
 var HOST = '127.0.0.1';
-var PORT = 65519;
+var Nodes = 1;
+var PORT = 65512 + Nodes; 
+
+var web3 = new Web3("qdata/dd" + Nodes + "/geth.ipc", net);
 
 var netServer = null;
 var netSocket = null;

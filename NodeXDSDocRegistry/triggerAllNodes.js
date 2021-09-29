@@ -55,6 +55,6 @@ rl.question("Choose documents: ", function(docNum) {
     docRegistBroadcast(docNum, 3);
     docRegistBroadcast(docNum, 4);
     docRegistBroadcast(docNum, 5);
-    //docRegistBroadcast(docNum, 6);
-    //docRegistBroadcast(docNum, 7);
+    docRegistBroadcast(docNum, 6);
+    docRegistBroadcast(docNum, 7);
 });

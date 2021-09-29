@@ -1,0 +1,63 @@
+{
+  "countID": 1,
+  "fullID": "000/000",
+  "info": {
+    "assetID": "เลขที่สินทรัพย์",
+    "name": "ครุภัณฑ์จำลอง",
+    "description": "รายละเอียด",
+    "pricePerUnit": "0.00",
+    "purchaseDate": "20210101", //YYYYMMDD
+    "lastEdited": {
+      "author": "จนท.นิรนาม",
+      "date": "20210101"
+    },
+    "properties": {
+      "brand": "แบรนด์จำลอง",
+      "type": "ขนิดทดลอง",
+      "design": "แบบทดลอง",
+      "size": "ขนาดทดลอง",
+      "shape": "ลักษณะทดลอง"
+    },
+    "registeredNumber": "ไม่ทราบหมายเลขและทะเบียน",
+    "budgetType": "งบประมาณ",
+    "receivingMethod": "e-Auction",
+    "distributor": "บริษัทนิรนาม",
+    "responsibilityProvider": "ส10",
+    "useLocation": {
+      "setLocation": "ใช้ประจำที่",
+      "lastUpdated": "20210102"
+    },
+    "durability": {
+      "priceBudget": "ราคาทุน ณ วันที่ซื้อ",
+      "durableTime": 2,
+      "wreckageValue": 1,
+      "creepPriceRate": 50.00
+    },
+    "lastUsage": [
+      {
+        "setUsage": "การใช้งาน",
+        "date": "20210102"
+      }
+    ],
+    "lastUser": [
+      {
+        "setUser": "ผู้ดูแล",
+        "date": "20210102"
+      }
+    ],
+    "brokenStatus": {
+      "updatedStatus": "คงอยู่",
+      "clearanceDate": "-",
+      "repairHistory": [
+        {
+          "date": "",
+          "price": "",
+          "repairProvider": "",
+          "symtom": ""
+        }
+      ],
+      "lastUpdated": "20210102"
+    },
+    "note": "หมายเหตุเพิ่มเติม ฯลฯ และอีกมากมาย"
+  }
+}

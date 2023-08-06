@@ -1,4 +1,0 @@
-Doc1
-IHEBLUE-2736^^^&1.3.6.1.4.1.21367.13.20.3000&ISO
-urn:oasis:names:tc:ebxml-regrep:StatusType:Approved
-

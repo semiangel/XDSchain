@@ -1,9 +1,0 @@
-<query:AdhocQueryResponse xmlns:xsi="..XML information schematic..">
-	<rim:RegistryObjectList>
-		...
-		<rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" 
-			xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" 
-			id="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a"/>
-		...
-	</rim:RegistryObjectList>
-</query:AdhocQueryResponse>

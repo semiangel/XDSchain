@@ -1,0 +1,84 @@
+Document 01
+IHEBLUE-2736^^^&1.3.6.1.4.1.21367.13.20.3000&ISO
+urn:oasis:names:tc:ebxml-regrep:StatusType:Approved
+
+Document 02
+IHEBLUE-2736^^^&1.3.6.1.4.1.27829.13.20.3000&ISO
+
+Document 03
+IHEBLUE-2736^^^&1.3.6.1.4.1.56658.13.20.3000&ISO
+
+Document 04
+IHEBLUE-2736^^^&1.3.6.1.4.1.50877.13.20.3000&ISO
+
+Document 05
+IHEBLUE-2736^^^&1.3.6.1.4.1.20232.13.20.3000&ISO
+
+Document 06
+IHEBLUE-2736^^^&1.3.6.1.4.1.28694.13.20.3000&ISO
+
+Document 07
+IHEBLUE-2736^^^&1.3.6.1.4.1.41480.13.20.3000&ISO
+
+Document 08
+IHEBLUE-2736^^^&1.3.6.1.4.1.88518.13.20.3000&ISO
+
+Document 09
+IHEBLUE-2736^^^&1.3.6.1.4.1.91167.13.20.3000&ISO
+
+Document 10
+IHEBLUE-2736^^^&1.3.6.1.4.1.00234.13.20.3000&ISO
+
+Document 11
+IHEBLUE-2736^^^&1.3.6.1.4.1.00250.13.20.3000&ISO
+urn:oasis:names:tc:ebxml-regrep:StatusType:Approved
+
+Doc01
+1) XDSDocumentEntryClassCode = "Treatment Plan or Protocol"
+2) XDSDocumentEntryTypeCode = "LABORATORY REPORT.TOTAL"
+3) XDSDocumentEntryPracticeSettingCode = "Pathology"
+4) XDSDocumentEntryCreationTime = 20061224
+5) XDSDocumentEntryServiceStartTime = 200612230800
+6) XDSDocumentEntryServiceStopTime = 200612230900
+7) XDSDocumentEntryHealthcareFacilityTypeCode = "Private home-based care"
+9) XDSDocumentEntryConfidentialityCode = "Restricted"
+10) XDSDocumentEntryAuthorPerson = ^Smitty^Gerald^^^
+11) XDSDocumentEntryFormatCode = "urn:ihe:iti:bppc:2007"
+12) XDSDocumentEntryType = "urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1"
+
+Doc10
+1) XDSDocumentEntryClassCode = "Treatment Plan or Protocol"
+2) XDSDocumentEntryTypeCode = "LABORATORY REPORT.TOTAL"
+3) XDSDocumentEntryPracticeSettingCode = "Surgery-Cardiac surgery"
+4) XDSDocumentEntryCreationTime = 20070510
+5) XDSDocumentEntryServiceStartTime = 200705100800
+6) XDSDocumentEntryServiceStopTime = 200705100900
+7) XDSDocumentEntryHealthcareFacilityTypeCode = "Hospital-Veterans' Administration"
+9) XDSDocumentEntryConfidentialityCode = "Restricted"
+10) XDSDocumentEntryAuthorPerson = ^Harriette^Whitworth^^^
+11) XDSDocumentEntryFormatCode = "urn:ihe:iti:bppc:2007"
+12) XDSDocumentEntryType = "urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1"
+
+
+---------------------
+Query requested...
+(node:76990) UnhandledPromiseRejectionWarning: ReferenceError: sock is not defined
+    at documentQuery (/home/pcep/IBFT-Network/Node1/XDSNode/TryxdsDocumentRegistryActor.js:1189:11)
+    at /home/pcep/IBFT-Network/Node1/XDSNode/TryxdsDocumentRegistryActor.js:1390:7
+    at Parser.<anonymous> (/home/pcep/IBFT-Network/Node1/XDSNode/node_modules/xml2js/lib/parser.js:304:18)
+    at Parser.emit (events.js:314:20)
+    at SAXParser.onclosetag (/home/pcep/IBFT-Network/Node1/XDSNode/node_modules/xml2js/lib/parser.js:262:26)
+    at emit (/home/pcep/IBFT-Network/Node1/XDSNode/node_modules/sax/lib/sax.js:624:35)
+    at emitNode (/home/pcep/IBFT-Network/Node1/XDSNode/node_modules/sax/lib/sax.js:629:5)
+    at closeTag (/home/pcep/IBFT-Network/Node1/XDSNode/node_modules/sax/lib/sax.js:889:7)
+    at SAXParser.write (/home/pcep/IBFT-Network/Node1/XDSNode/node_modules/sax/lib/sax.js:1436:13)
+    at Parser.exports.Parser.Parser.parseString (/home/pcep/IBFT-Network/Node1/XDSNode/node_modules/xml2js/lib/parser.js:323:31)
+    at Parser.parseString (/home/pcep/IBFT-Network/Node1/XDSNode/node_modules/xml2js/lib/parser.js:5:59)
+    at exports.parseString (/home/pcep/IBFT-Network/Node1/XDSNode/node_modules/xml2js/lib/parser.js:369:19)
+    at processData (/home/pcep/IBFT-Network/Node1/XDSNode/TryxdsDocumentRegistryActor.js:1378:3)
+    at Socket.<anonymous> (/home/pcep/IBFT-Network/Node1/XDSNode/TryxdsDocumentRegistryActor.js:1446:5)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+(node:76990) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:76990) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+

@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.4.26+commit.4563c3fc"
+		"version": "0.5.11+commit.c082d0b4"
 	},
 	"language": "Solidity",
 	"output": {
@@ -9,19 +9,227 @@
 				"constant": false,
 				"inputs": [
 					{
+						"internalType": "uint256",
 						"name": "Docid",
 						"type": "uint256"
 					},
 					{
-						"name": "searchJSON",
+						"internalType": "string",
+						"name": "Folder_availabilityStatus",
 						"type": "string"
 					},
 					{
-						"name": "fullJSON",
+						"internalType": "string",
+						"name": "Folder_codeList",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Folder_comments",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Folder_entryUUID",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Folder_homeCommunityId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Folder_lastUpdateTime",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Folder_limitedMetadata",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Folder_patientId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Folder_title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Folder_uniqueId",
 						"type": "string"
 					}
 				],
-				"name": "store",
+				"name": "storeFolder",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "Docid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_author",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_availabilityStatus",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_classCode",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_comment",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_confidentialityCode",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_creationTime",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_entryUUID",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_eventCodeList",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_formatCode",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_hash",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_healthcareFacilityTypeCode",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_homeCommunityId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_languageCode",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_legalAuthenticator",
+						"type": "string"
+					}
+				],
+				"name": "storeDocumentEntryPart1",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "Docid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_author",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_availabilityStatus",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_comments",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_contentTypeCode",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_entryUUID",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_homeCommunityId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_intendedRecipient",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_limitedMetadata",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_patientId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_sourceId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_submissionTime",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "SubmissionSet_uniqueId",
+						"type": "string"
+					}
+				],
+				"name": "storeSubmissionSet",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
@@ -31,13 +239,20 @@
 				"constant": true,
 				"inputs": [
 					{
-						"name": "Docid",
+						"internalType": "uint256",
+						"name": "DocId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "key",
 						"type": "uint256"
 					}
 				],
-				"name": "retreiveSearch",
+				"name": "readDocumentRegistry",
 				"outputs": [
 					{
+						"internalType": "string",
 						"name": "",
 						"type": "string"
 					}
@@ -47,36 +262,113 @@
 				"type": "function"
 			},
 			{
-				"constant": true,
+				"constant": false,
 				"inputs": [
 					{
+						"internalType": "uint256",
 						"name": "Docid",
 						"type": "uint256"
-					}
-				],
-				"name": "retreiveFull",
-				"outputs": [
+					},
 					{
-						"name": "",
+						"internalType": "string",
+						"name": "DocumentEntry_sourcePatientId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_sourcePatientInfo",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_typeCode",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_uniqueId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_URI",
 						"type": "string"
 					}
 				],
+				"name": "storeDocumentEntryPart3",
+				"outputs": [],
 				"payable": false,
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"constant": true,
-				"inputs": [],
-				"name": "checkLastID",
-				"outputs": [
+				"constant": false,
+				"inputs": [
 					{
-						"name": "",
+						"internalType": "uint256",
+						"name": "Docid",
 						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_limitedMetadata",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_mimeType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_objectType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_patientId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_practiceSettingCode",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_referenceIdList",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_repositoryUniqueId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_serviceStartTime",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_serviceStopTime",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "DocumentEntry_size",
+						"type": "string"
 					}
 				],
+				"name": "storeDocumentEntryPart2",
+				"outputs": [],
 				"payable": false,
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -89,9 +381,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Registry.sol": "Storage"
+			"Registry5.sol": "Storage"
 		},
-		"evmVersion": "byzantium",
+		"evmVersion": "petersburg",
 		"libraries": {},
 		"optimizer": {
 			"enabled": false,
@@ -100,10 +392,11 @@
 		"remappings": []
 	},
 	"sources": {
-		"Registry.sol": {
-			"keccak256": "0x51b12b6a654dba3b51816f198a0c8e713ded03480c34af61fc2a1d5814622085",
+		"Registry5.sol": {
+			"keccak256": "0x1f4c65c05a7e584a7fcce0dcc57c34f0581911a66f377912bfe60c27944aa576",
 			"urls": [
-				"bzzr://99023cbf3dbaa431ddc5b9137362be782ddee37585ec07b19587c5c466a9b4d0"
+				"bzz-raw://5190729a6a2ab8e394afe1e2a871b49808d8f7731333c983c850f8dcf50e428c",
+				"dweb:/ipfs/QmbmwnY1TVCZsf99j5YodPsWZY6jQfdGhxTYfCbnUzQkQ1"
 			]
 		}
 	},

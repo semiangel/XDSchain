@@ -1,0 +1,12 @@
+
+Execution time (hr): 5s 368.670481ms
+Execution time (hr): 2s 675.761392ms
+Execution time (hr): 2s 876.221211ms
+Execution time (hr): 3s 96.259111ms
+Execution time (hr): 2s 858.574108ms
+Execution time (hr): 7s 165.403814ms
+Execution time (hr): 2s 326.791197ms
+Execution time (hr): 2s 717.47483ms
+Execution time (hr): 2s 196.505746ms
+Execution time (hr): 2s 841.201187ms
+Execution time (hr): 3s 370.423337ms

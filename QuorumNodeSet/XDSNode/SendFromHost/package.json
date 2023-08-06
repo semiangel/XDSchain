@@ -1,0 +1,14 @@
+{
+  "name": "7nodes",
+  "version": "1.0.0",
+  "description": "Start the 7nodes sample network by following the instructions in [the quorum-examples README](../../README.md).",
+  "main": "private-contract.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}

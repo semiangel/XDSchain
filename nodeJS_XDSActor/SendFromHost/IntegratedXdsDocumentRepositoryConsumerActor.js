@@ -175,6 +175,7 @@ function Main () { //Standard program which provide command line UI for input
 	getQueryType();
 }
 
+var queryOrRetrieveMarker = 0;
 function getQueryType () {
 	console.log('Please select query type');
 	console.log('1) FindDocuments');
@@ -191,6 +192,8 @@ function getQueryType () {
 	console.log('12) GetFoldersForDocument');
 	console.log('13) GetRelatedDocuments');
 	console.log('14) FindDocumentsByReferenceId');
+	console.log('=================================');
+	console.log('15) DocumentRetrieve');
 	console.log('#) Quit');
 	rl.question("(Specify number): ", function(queryTypeInput) {
 		var queryTypeInteger = parseInt(queryTypeInput, 10);
@@ -204,13 +207,19 @@ function getQueryType () {
 			console.log('Quit...');
 			process.exit();
 		}
+		else if (queryTypeInput == '15') {
+			documentRetrieveITI43();
+			queryOrRetrieveMarker = 1;
+		}
 		else {
 			console.log('Error');
 			process.exit();
 		}
-		inputKeywords.push(queryType);
-		keywordCount = 0;
-		getRequiredKeywords();
+		if (queryOrRetrieveMarker == 0) {
+			inputKeywords.push(queryType);
+			keywordCount = 0;
+			getRequiredKeywords();
+		}
 	});
 }
 
@@ -803,7 +812,7 @@ forExpDocSearchKeywords['10'] = {
 var retrieveDoc = false;
 var elementForDocRetrieve = [];
 function documentRetrieveITI43 () {
-
+	
 }
 
 //================================================================================================

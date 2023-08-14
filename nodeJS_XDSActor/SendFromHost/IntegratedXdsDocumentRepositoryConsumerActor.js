@@ -4,6 +4,7 @@ var util = require("util");
 var xml2js = require('xml2js');
 var parseString = xml2js.parseString;
 var builder = new xml2js.Builder;
+var hrstart = null;
 const readline = require("readline");
 var rl = readline.createInterface({
 	input: process.stdin,
@@ -170,12 +171,31 @@ var queryXML = {
 
 function Main () { //Standard program which provide command line UI for input
 	console.log('\n==================================');
-	console.log('|| XDS Consumer Actor Interface ||');
+	console.log('|| Integrated XDS Consumer Actor & Repository Actor Interface ||');
 	console.log('==================================');
-	getQueryType();
+	console.log('Please select XDS Actor Role');
+	console.log('1) XDS Document Repository Actor');
+	console.log('2) XDS Document Consumer Actor');
+	console.log('#) Quit');
+	rl.question("(Specify number): ", function(selectActorInput) {
+		if (selectActorInput == '#' || selectActorInput == 'quit' || selectActorInput == 'Quit'){
+			console.log('Quit...');
+			process.exit();
+		}
+		else if (selectActorInput == '2') {
+			getQueryType();
+		}
+		else if (selectActorInput == '1') {
+			getRepositoryAct();
+		}
+		else {
+			console.log('Error...');
+			process.exit();
+		}
+	});
 }
 
-var queryOrRetrieveMarker = 0;
+//Document Consumer Actor++++++++++++++++++++++++++++++++++++++++++++
 function getQueryType () {
 	console.log('Please select query type');
 	console.log('1) FindDocuments');
@@ -192,8 +212,6 @@ function getQueryType () {
 	console.log('12) GetFoldersForDocument');
 	console.log('13) GetRelatedDocuments');
 	console.log('14) FindDocumentsByReferenceId');
-	console.log('=================================');
-	console.log('15) DocumentRetrieve');
 	console.log('#) Quit');
 	rl.question("(Specify number): ", function(queryTypeInput) {
 		var queryTypeInteger = parseInt(queryTypeInput, 10);
@@ -207,19 +225,13 @@ function getQueryType () {
 			console.log('Quit...');
 			process.exit();
 		}
-		else if (queryTypeInput == '15') {
-			documentRetrieveITI43();
-			queryOrRetrieveMarker = 1;
-		}
 		else {
-			console.log('Error');
+			console.log('Error...');
 			process.exit();
 		}
-		if (queryOrRetrieveMarker == 0) {
-			inputKeywords.push(queryType);
-			keywordCount = 0;
-			getRequiredKeywords();
-		}
+		inputKeywords.push(queryType);
+		keywordCount = 0;
+		getRequiredKeywords();
 	});
 }
 
@@ -653,7 +665,9 @@ function processQueryResult (fromServer) {
 				  }
 				}
 				console.log(util.inspect(prepXDSAtt));
+				proceedForRetrieve(prepXDSAtt);
 			}
+			//ObjRef
 			else {
 				var listObjectRef = result['query:AdhocQueryResponse']['rim:RegistryObjectList'];
 				console.log('Result found:');
@@ -809,16 +823,396 @@ forExpDocSearchKeywords['10'] = {
 	]
 };
 
-var retrieveDoc = false;
-var elementForDocRetrieve = [];
-function documentRetrieveITI43 () {
-	
+//Document Repository Actor++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+var elementForDocRetrieve = {};
+var registDocNum = null;
+var savedMetaAtt = 'savedForRetrieve.xml';
+function getRepositoryAct () {
+	console.log('Please select, what to do?');
+	console.log('1) Register Document Set-b [ITI-42]');
+	console.log('2) Retrieve Document Set [ITI-43]');
+	console.log('3) Standby as XDS Repository Actor');
+	console.log('#) Quit');
+	rl.question("(Specify number): ", function(selectActorInput) {
+		if (selectActorInput == '#' || selectActorInput == 'quit' || selectActorInput == 'Quit'){
+			console.log('Quit...');
+			process.exit();
+		}
+		else if (selectActorInput == '1') {
+			//Simple Register Document Set-b [ITI-42]
+			//input must specify pre-created sample metadata attributes set, i.e., 00, 01,...
+			rl.question("(Specify [sample] document number): ", function(selectedDocNum) {
+				registDocNum = selectedDocNum;
+				RegisterDocumentSetB();
+			});
+		}
+		else if (selectActorInput == '2') {
+			//Retrieve Document Set [ITI-43]
+			fs.readFile(savedMetaAtt, function(err, buf) {
+				if (err) console.log(err);
+				savedXmlMessage = buf.toString();
+
+				parseString(savedXmlMessage, function (err, result) {
+					if (err) throw err;
+					console.log('\nConverted to object: ');
+					console.log('-----------------------\n' + util.inspect(result) + '\n---------------------');
+
+					RetrieveDocumentSet(result);
+				});
+		
+			});
+		}
+		else if (selectActorInput == '3') {
+			//Change mode to XDS Repository Actor and wait for incoming retrieved document to register
+			standbyForRetrieval();
+		}
+		else {
+			console.log('Error...');
+			process.exit();
+		}
+	});
 }
 
-//================================================================================================
+//Simple ITI-42 Register Document Set-b=======================
+var registHost = require('./forRegistIp.js');
+var registPORT = require('./forRegistPORT.js');
+var registChunkSize = 1024;
+var registClient = new net.Socket();
+var registXmlMessage = null;
+var registXmlChunks = [];
+function RegisterDocumentSetB () {
+	registClient.connect(registPORT, registHost, function() {
+		console.log('CONNECTED TO: ' + registHost + ':' + registPORT);
+		var docChosen = 'SingleDocumentEntry' + registDocNum + '.xml';
+		fs.readFile(docChosen, function(err, buf) {
+			if (err) console.log(err);
+			registXmlMessage = buf.toString();
+	
+			// Split XML message into smaller packets
+			registXmlChunks = [];
+			var chunk = "";
+			for (var i = 0; i < registXmlMessage.length; i++) {
+				chunk += registXmlMessage[i];
+				if (chunk.length === registChunkSize || i === registXmlMessage.length - 1) {
+					registXmlChunks.push(chunk);
+					chunk = "";
+				}
+			}
+			registPrepareSendChunk(); //Prepare and enter packets sending loop
+		});
+	});
+	
+	registClient.on('data', function(data) {
+		var dataGot = data.toString();
+		if (dataGot == "ACK") {
+			registSendNextChunk();
+		}
+		else if (dataGot == "FIN") {
+			registClient.end();
+			var hrend = process.hrtime(hrstart);
+			console.log('==============================');
+			console.log('Respond received: ' + data);
+			var totalMillisec = hrend[0]*1000 + (hrend[1] / 1000000);
+			console.info('Execution time (hr): %dms', totalMillisec);
+			console.log('==============================');
+		}
+	});
+	
+	registClient.on('end', function() {
+		console.log('Connection ended');
+	});
+	
+	registClient.on('close', function() {
+		console.log('Connection closed');
+	});
+}
 
-var pseudoSingle = false;
-if (selectedMethod) { //For experiment only, input must also specified Doc Number like 00,01,..
+var registPrepareSendChunk = function() {
+    var chunkCount = registXmlChunks.length + 1; //+1 also count the chunkCount value
+    console.log("***************************");
+    console.log("Chunk pieces: " + chunkCount);
+    console.log("***************************");
+    if (chunkCount) {
+        console.log("sending chunkCount");
+        registClient.write(chunkCount.toString()); //.write send only string
+    }
+    hrstart = process.hrtime();
+    console.log('Sent: \n' + registXmlMessage + '\n');     
+}
+
+var l = 0;
+var registSendNextChunk = function() {
+    if (l < registXmlChunks.length) {
+        registClient.write(registXmlChunks[l], function() {
+            l++;
+        });
+    }
+};
+
+//Proceed from Document Consumer, make choice========================
+function proceedForRetrieve (prepXDSAtt) {
+	console.log('Proceed for retrieve with Retrieve Document Set [ITI-43]?');
+	console.log('1) Proceed');
+	console.log('2) Save metadata attributes set for later retrieval');
+	console.log('#) Quit');
+	rl.question("(Specify number): ", function(retrievalInput) {
+		if (retrievalInput == '#' || retrievalInput == 'quit' || retrievalInput == 'Quit'){
+			console.log('Quit...');
+			process.exit();
+		}
+		else if (retrievalInput == '1') {
+			console.log('Proceed to Retrieve Document Set [ITI-43]');
+			RetrieveDocumentSet(prepXDSAtt);
+		}
+		else if (retrievalInput == '2') {
+			var writingJSON = JSON.stringify(prepXDSAtt, null, 2);
+			fs.writeFile(savedMetaAtt, writingJSON, {flag: "w"}, function(err) {
+				if (err) console.log(err);
+				console.log("Successfully Written to File.");
+			});
+		}
+		else {
+			console.log('Error...');
+			process.exit();
+		}
+	});
+}
+
+//ITI-43 Retrieve Document Set========================
+var repoHost = require('./forRepoIp.js');
+var repoPORT = require('./forRepoPORT.js');
+var repoChunkSize = 1024;
+var repoClient = new net.Socket();
+var repoXmlMessage = null;
+var repoXmlChunks = [];
+function RetrieveDocumentSet (prepXDSAtt) {
+	console.log('Begin process, Retrieve Document Set [ITI-43]');
+	//Replace element with the selected Metadata attributes set values
+	var xsdbHomeCommunityId = 'urn:oid:1.3.6.1.4.1.21367.2017.2.6.19';
+	var xsdbRepositoryUniqueId = '1.3.6.1.4.1.21367.2017.2.3.54';
+	var xsdbDocumentUniqueId = '1.3.6.1.4.1.21367.2017.2.1.75.20200922130227623';
+	elementForDocRetrieve = {
+		"soapenv:Envelope": {
+			"$": {
+				"xmlns": " !-- namespaces omitted -- "
+			},
+			"soapenv:Header": [
+				{
+					"wsa:To": [
+						{
+							"_": "https://epd-test.com/Repository/services/RepositoryService",
+							"$": {
+								"soapenv:mustUnderstand": "1"
+							}
+						}
+					],
+					"wsa:MessageID": [
+						{
+							"_": "urn:uuid:1EB10F67-6562-46D5-9B6B-5DC42EB2B4A6",
+							"$": {
+								"soapenv:mustUnderstand": "1"
+							}
+						}
+					],
+					"wsa:Action": [
+						{
+							"_": "urn:ihe:iti:2007:RetrieveDocumentSet",
+							"$": {
+								"soapenv:mustUnderstand": "1"
+							}
+						}
+					],
+					"wsse:Security": [
+						{
+							"saml2:Assertion": [
+								" "
+							]
+						}
+					]
+				}
+			],
+			"soapenv:Body": [
+				{
+					"xsdb:RetrieveDocumentSetRequest": [
+						{
+							"xsdb:DocumentRequest": [
+								{
+									"xsdb:HomeCommunityId": [
+										xsdbHomeCommunityId
+									],
+									"xsdb:RepositoryUniqueId": [
+										xsdbRepositoryUniqueId
+									],
+									"xsdb:DocumentUniqueId": [
+										xsdbDocumentUniqueId
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	}
+
+	var retrieveXMLrebuilt = builder.buildObject(elementForDocRetrieve);
+
+	repoClient.connect(repoPORT, repoHost, function() {
+		console.log('CONNECTED TO: ' + registHost + ':' + registPORT);
+		repoXmlMessage = retrieveXMLrebuilt.toString();
+
+		// Split XML message into smaller packets
+		repoXmlChunks = [];
+		var chunk = "";
+		for (var i = 0; i < repoXmlMessage.length; i++) {
+			chunk += repoXmlMessage[i];
+			if (chunk.length === repoChunkSize || i === repoXmlMessage.length - 1) {
+				repoXmlChunks.push(chunk);
+				chunk = "";
+			}
+		}
+		repoPrepareSendChunk(); //Prepare and enter packets sending loop
+	});
+
+	repoClient.on('data', function(data) {
+		var dataGot = data.toString();
+		if (dataGot == "ACK") {
+			repoSendNextChunk();
+		}
+		else if (dataGot == "FIN") {
+			console.log('==============================');
+			console.log('Waiting for retrieval response...');
+			console.log('==============================');
+		}
+		else {
+			repoClient.end();
+			//Need more full function here!*******
+			fs.readFile("ITI43responseSample.xml", function(err, buf) {
+				if (err) console.log(err);
+				retrieveResponseXML = buf.toString();
+				console.log(retrieveResponseXML);
+				console.log('==============================');
+				console.log('Initiate Register retrieved document...');
+				console.log('==============================');
+				//Insert full function interact with XDS Document Registry here!
+				console.log('Registering retrieved document via ITI-42...');
+				console.log('==============================');
+				//This shall mark communication with XDS Document Registry Actor
+				console.log('Success!.....');
+				console.log('==============================');
+				console.log('End...');
+				console.log('==============================');
+				process.exit();
+			});
+		}
+	});
+	
+	repoClient.on('end', function() {
+		console.log('Connection ended');
+	});
+	
+	repoClient.on('close', function() {
+		console.log('Connection closed');
+	});
+}
+
+var repoPrepareSendChunk = function() {
+    var chunkCount = repoXmlChunks.length + 1; //+1 also count the chunkCount value
+    console.log("***************************");
+    console.log("Chunk pieces: " + chunkCount);
+    console.log("***************************");
+    if (chunkCount) {
+        console.log("sending chunkCount");
+        repoClient.write(chunkCount.toString()); //.write send only string
+    }
+    hrstart = process.hrtime();
+    console.log('Sent: \n' + repoXmlMessage + '\n');     
+}
+
+var l = 0;
+var repoSendNextChunk = function() {
+    if (l < repoXmlChunks.length) {
+        repoClient.write(repoXmlChunks[l], function() {
+            l++;
+        });
+    }
+};
+
+//Standby as XDS Document Repository========================
+var standbyServer = null;
+var standbyHost = require('./forStandbyIp.js');
+var standbyPORT = require('./forStandbyPORT.js');
+var repoChunkSize = 1024;
+var repoClient = new net.Socket();
+var repoXmlMessage = null;
+var repoXmlChunks = [];
+var clientIP = {};
+function standbyForRetrieval () {
+	console.log('Standing by for Retrieve Document Set [ITI-43]...');
+	standbyServer = net.createServer(function(sock) {
+		netSocket = sock;
+		// We have a connection - a socket object is assigned to the connection automatically
+		console.log('CONNECTED: ' + netSocket.remoteAddress +':'+ netSocket.remotePort);
+		clientIP[netSocket.remoteAddress] = { //Add sub-component for packet handling, bound to each client
+			receiveCounter: 0,
+			messageChunks: 2,
+			messageArray: [],
+			xmlMessage: null,
+			xmlChunks: [],
+			i: 0
+		};
+	
+		// Add a 'data' event handler to this instance of socket
+		netSocket.on('data', function(data) {
+			console.log('Received packet....');
+			hrstart = process.hrtime();
+			if (clientIP[netSocket.remoteAddress].receiveCounter == 0){
+				if (data == "ACK") {
+					console.log('ACK from ' + netSocket.remoteAddress);
+					sendNextQueryResultChunk();
+				}
+				else if (data == "FIN") {
+					console.log('FIN from ' + netSocket.remoteAddress);
+					delete clientIP[netSocket.remoteAddress];
+				}
+				else {
+					clientIP[netSocket.remoteAddress].messageChunks = data;
+					console.log("Total Chunk = " + clientIP[netSocket.remoteAddress].messageChunks);
+					clientIP[netSocket.remoteAddress].receiveCounter++;
+					console.log(clientIP[netSocket.remoteAddress].receiveCounter);
+					netSocket.write("ACK");
+				}
+			}
+			else {
+				clientIP[netSocket.remoteAddress].messageArray.push(data);
+				clientIP[netSocket.remoteAddress].receiveCounter++;
+				console.log(clientIP[netSocket.remoteAddress].receiveCounter);
+				if(clientIP[netSocket.remoteAddress].receiveCounter == clientIP[netSocket.remoteAddress].messageChunks){
+					// All packets have been received, combine the packets into original message
+					netSocket.write("FIN");
+					var originalMessage = Buffer.concat(clientIP[netSocket.remoteAddress].messageArray).toString();
+					console.log("All packets received!");
+					//processData here 
+					netSocket.write('Sending something as response here!');
+					clientIP[netSocket.remoteAddress].messageArray = [];
+					clientIP[netSocket.remoteAddress].receiveCounter = 0;
+				}
+				else {
+					netSocket.write("ACK");
+				}
+			}
+		});
+		// Add a 'close' event handler to this instance of socket
+		netSocket.on('close', function(data) {
+			console.log('CLOSED: ' + netSocket.remoteAddress +' '+ netSocket.remotePort);
+		});
+	}).listen(standbyPORT, standbyHost);
+}
+
+//====================================================================================
+//For experiment only, input must also specified Doc Number like 00,01,..
+//This section was made as to make it easier to execute pre-setup repititive experiment tasks
+function quickExecute () {
 	var selectedMethodArray = [selectedMethod.slice(0, -2), selectedMethod.slice(-2)];
 	var selectedDoc = selectedMethodArray[1];
 	if (selectedMethodArray[0] == "FindMinSingle") {
@@ -913,6 +1307,11 @@ if (selectedMethod) { //For experiment only, input must also specified Doc Numbe
 	else {
 		console.log("Method not matched...\nExit...");
 	}
+}
+//Pre-Main================================================================================================
+var pseudoSingle = false;
+if (selectedMethod) { 
+	quickExecute();
 }
 //end of experiment only code=====================================================================
 else {

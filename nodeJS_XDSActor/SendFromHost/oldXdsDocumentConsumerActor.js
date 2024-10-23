@@ -904,5 +904,7 @@ if (selectedMethod) { //For experiment only, input must also specified Doc Numbe
 }
 //end of experiment only code=====================================================================
 else {
+	HOST[multipleCaseCounter] = '192.168.1.100';
+	PORT[multipleCaseCounter] = 65510;
 	Main();
 }

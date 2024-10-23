@@ -1,0 +1,45 @@
+experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167
+
+experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72
+
+experimentUniqueId03-19503cce414173e8a27060de24a5ec0e
+
+experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b
+
+experimentUniqueId05-4e48537b89aaa1179f07f2abd9068cad
+
+experimentUniqueId06-ee7a37707e98dccbb511fc57e2132ba7
+
+experimentUniqueId07-403ba00121f30929ace67d9bdb45d21c
+
+experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3
+
+experimentUniqueId09-0d3dc803d30c149f56830e6dcc2bdf36
+
+experimentUniqueId10-7cab01cc7688efc8c7b400fbb6ee6ec1
+
+experimentUniqueId11-9af5f3badb2594250bc3378f2ff7e6f1
+
+experimentUniqueId12-e38975e5c52c649509df3f02ff4963ee
+
+=================================================================================
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167 14:05:2024 21:00:00 14:05:2024 23:00:0 exp
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72 14:05:2024 21:00:00 14:05:2024 23:00:0 exp
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId03-19503cce414173e8a27060de24a5ec0e 14:05:2024 21:00:00 14:05:2024 23:00:0 exp
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b 14:05:2024 21:00:00 14:05:2024 23:00:0 exp
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId05-4e48537b89aaa1179f07f2abd9068cad 14:05:2024 21:00:00 14:05:2024 23:00:0 exp
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId06-ee7a37707e98dccbb511fc57e2132ba7 14:05:2024 21:00:00 14:05:2024 23:00:0 exp
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId07-403ba00121f30929ace67d9bdb45d21c 14:05:2024 21:00:00 14:05:2024 23:00:0 exp
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3 14:05:2024 21:00:00 14:05:2024 23:00:0 exp
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId09-0d3dc803d30c149f56830e6dcc2bdf36 14:05:2024 21:00:00 14:05:2024 23:00:0 exp
+
+node manualLogReader.js 1 192.168.1.122 192.168.1.100 experimentUniqueId10-7cab01cc7688efc8c7b400fbb6ee6ec1 14:05:2024 21:00:00 14:05:2024 23:00:0 exp

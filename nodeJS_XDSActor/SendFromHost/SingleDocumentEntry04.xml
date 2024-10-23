@@ -191,7 +191,7 @@
                      <rim:LocalizedString value="XDSDocumentEntry.patientId"></rim:LocalizedString>
                   </rim:Name>
                </rim:ExternalIdentifier>
-               <rim:ExternalIdentifier identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab" value="1.2.42.05195861265360.30" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExternalIdentifier" id="id_12" registryObject="Document04">
+               <rim:ExternalIdentifier identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab" value="experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExternalIdentifier" id="id_12" registryObject="Document04">
                   <rim:Name>
                      <rim:LocalizedString value="XDSDocumentEntry.uniqueId"></rim:LocalizedString>
                   </rim:Name>

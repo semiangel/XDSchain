@@ -1306,7 +1306,7 @@ async function documentQuery (inputAttributes) {
 
 		console.log(util.inspect(responseJSON));
 
-		sendBackQueryResult(responseXML);
+		sendBackQueryResult(responseJSON);
 	}
 
 	function responseAsFailed () {
@@ -1324,7 +1324,7 @@ async function documentQuery (inputAttributes) {
 		}
 		console.log(util.inspect(responseJSON));
 
-		sendBackQueryResult(responseXML);
+		sendBackQueryResult(responseJSON);
 	}
 
 	let sK = await specifyRequestType(requestedJSON);

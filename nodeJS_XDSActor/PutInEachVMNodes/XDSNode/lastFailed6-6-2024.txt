@@ -1,0 +1,404 @@
+root@quorum:/home/pcep/IBFT-Network/Node0/XDSNode# node manualLogReader.js 1 122 100 01 03:06:2024 00:00:00 04:06:2024 00:00:00 advExp 100
+[
+  '1',          '122',
+  '100',        '01',
+  '03:06:2024', '00:00:00',
+  '04:06:2024', '00:00:00',
+  'advExp',     '100'
+]
+Advance experiment mode...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Accounts available on this node:
+0x288331f5b38f2BE22d802b90f1aD06A170E68Ac7
+------------------------------------------
+Deploying with account:0x288331f5b38f2BE22d802b90f1aD06A170E68Ac7
+Contract Address: 0xc5BCee3F8708C853Ac06e1DF17587271ED07709A
+Checking log...
+=====================================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:05:46 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 27364.111201ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:11:04 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 27850.602618ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:17:56 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 28466.302418ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:22:11 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 28870.743143ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:26:32 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 29285.585768ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:30:20 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 29691.285524ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:34:42 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 30106.740725ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:39:31 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 30533.102525ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:43:41 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 30938.237534ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:49:19 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 31344.070942ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:54:08 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 31761.303183ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Mon Jun 03 2024 10:57:48 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 32166.403757ms
+==============================
+No more log can be found...
+Finished...
+CONNECTED TO: 192.168.1.122:5656
+Total chunk count sent...1
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Connection ended
+Connection closed
+Accounts available on this node:
+0x288331f5b38f2BE22d802b90f1aD06A170E68Ac7
+------------------------------------------
+Deploying with account:0x288331f5b38f2BE22d802b90f1aD06A170E68Ac7
+Contract Address: 0xc5BCee3F8708C853Ac06e1DF17587271ED07709A
+Checking log...
+=====================================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:06:07 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 27242.471316ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:12:23 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 27891.368391ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:18:22 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 28336.563158ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:22:39 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 28742.665339ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:27:04 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 29147.121785ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:30:34 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 29551.832632999998ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:34:59 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 29959.94568ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:39:53 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 30364.787034ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:44:25 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 30780.433533ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:49:40 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 31209.996984ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:54:37 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 31615.144462ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Mon Jun 03 2024 10:58:17 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 32019.614018ms
+==============================
+No more log can be found...
+Finished...
+CONNECTED TO: 192.168.1.122:5656
+Total chunk count sent...1
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId03-19503cce414173e8a27060de24a5ec0e' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Accounts available on this node:
+0x288331f5b38f2BE22d802b90f1aD06A170E68Ac7
+------------------------------------------
+Deploying with account:0x288331f5b38f2BE22d802b90f1aD06A170E68Ac7
+Contract Address: 0xc5BCee3F8708C853Ac06e1DF17587271ED07709A
+Checking log...
+=====================================
+Connection ended
+Connection ended
+Connection closed
+Connection closed
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:06:53 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 9360.171511ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:14:22 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 9690.974142ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:18:48 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 9747.110606ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:23:57 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 9892.851789ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:27:56 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 10030.086928ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:31:16 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 10134.525773ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:35:48 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 10295.986583ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:40:15 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 10435.586052ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:45:59 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 10555.69864ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:50:30 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 10698.923465ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:55:13 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 10813.363278ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Mon Jun 03 2024 10:59:30 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 10956.648483ms
+==============================
+No more log can be found...
+Finished...
+CONNECTED TO: 192.168.1.122:5656
+Total chunk count sent...1
+No more log can be found...
+Finished...
+CONNECTED TO: 192.168.1.122:5656
+Total chunk count sent...1
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId05-4e48537b89aaa1179f07f2abd9068cad' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId06-ee7a37707e98dccbb511fc57e2132ba7' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId07-403ba00121f30929ace67d9bdb45d21c' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Connection ended
+Connection ended
+Connection ended
+Connection ended
+Connection closed
+Connection closed
+Connection closed
+Connection closed
+Accounts available on this node:
+0x288331f5b38f2BE22d802b90f1aD06A170E68Ac7
+------------------------------------------
+Deploying with account:0x288331f5b38f2BE22d802b90f1aD06A170E68Ac7
+Contract Address: 0xc5BCee3F8708C853Ac06e1DF17587271ED07709A
+Checking log...
+=====================================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:08:40 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 5685.911401ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:20:39 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 5922.999725ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:25:33 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 5993.243258ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:29:07 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 6072.129335ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:33:06 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 6134.972911ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:37:20 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 6215.322841ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:41:51 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 6293.2627059999995ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:48:08 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 6388.5957849999995ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:53:04 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 6491.183739ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 10:57:00 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 6560.979395ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Mon Jun 03 2024 11:04:27 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 6629.263193ms
+==============================
+No more log can be found...
+Finished...
+CONNECTED TO: 192.168.1.122:5656
+Total chunk count sent...1
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId09-0d3dc803d30c149f56830e6dcc2bdf36' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId10-7cab01cc7688efc8c7b400fbb6ee6ec1' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Record fully sent...
+Proceed...
+[
+  'Registering Log',
+  [ 'SrcIP', '192.168.1.122' ],
+  [ 'DstIP', '192.168.1.100' ],
+  [ 'DocID', 'experimentUniqueId03-19503cce414173e8a27060de24a5ec0e' ],
+  [ 'timeRange', '03:06:2024 00:00:00', '04:06:2024 00:00:00' ]
+]
+Connection ended
+Connection ended
+Connection ended
+Connection ended
+Connection ended
+Connection closed
+Connection closed
+Connection closed
+Connection closed
+Connection closed
+No more log can be found...
+Result not found...
+/home/pcep/IBFT-Network/Node0/XDSNode/manualLogReader.js:665
+            if (selectedLog.includes(stringSearchKW[j])) {
+                            ^
+
+TypeError: Cannot read property 'includes' of null
+    at checkLog (/home/pcep/IBFT-Network/Node0/XDSNode/manualLogReader.js:665:29)
+    at Object.callback (/home/pcep/IBFT-Network/Node0/XDSNode/manualLogReader.js:651:13)
+    at sendTxCallback (/home/pcep/IBFT-Network/Node0/XDSNode/node_modules/web3-core-method/lib/index.js:533:29)
+    at Object.<anonymous> (/home/pcep/IBFT-Network/Node0/XDSNode/node_modules/web3-core-requestmanager/lib/index.js:293:9)
+    at callback (/home/pcep/IBFT-Network/Node0/XDSNode/node_modules/web3-providers-ipc/lib/index.js:57:40)
+    at Array.forEach (<anonymous>)
+    at Socket.<anonymous> (/home/pcep/IBFT-Network/Node0/XDSNode/node_modules/web3-providers-ipc/lib/index.js:68:51)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at Pipe.onStreamRead (internal/stream_base_commons.js:188:23)

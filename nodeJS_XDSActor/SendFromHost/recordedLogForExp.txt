@@ -1,0 +1,54 @@
+=====================================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId01-780d23a4dd7b5514289a32b38bc6c167|Tue May 14 2024 21:42:47 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 38.229209ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId02-b27d9f1d8c2a2a3d11ee0269e4f9bb72|Tue May 14 2024 21:43:50 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 38.818512ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId03-19503cce414173e8a27060de24a5ec0e|Tue May 14 2024 21:44:42 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 39.38672ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId04-6206fea3cbcfe50c1fb0eb3da2e1b63b|Tue May 14 2024 21:45:03 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 40.965947ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId05-4e48537b89aaa1179f07f2abd9068cad|Tue May 14 2024 21:46:09 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 37.412557ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId06-ee7a37707e98dccbb511fc57e2132ba7|Tue May 14 2024 21:46:52 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 27.922784ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId07-403ba00121f30929ace67d9bdb45d21c|Tue May 14 2024 21:47:43 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 38.027931ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId08-14dd9ef9a2233f1c90571c4d131512c3|Tue May 14 2024 21:48:34 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 40.174266ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId09-0d3dc803d30c149f56830e6dcc2bdf36|Tue May 14 2024 21:49:13 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 38.90056ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId10-7cab01cc7688efc8c7b400fbb6ee6ec1|Tue May 14 2024 21:49:54 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 38.415619ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId11-9af5f3badb2594250bc3378f2ff7e6f1|Tue May 14 2024 21:50:30 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 39.665674ms
+==============================
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId12-e38975e5c52c649509df3f02ff4963ee|Tue May 14 2024 21:51:04 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 40.169302ms
+==============================
+No more log can be found...
+"Registering Log | from Document Repository: 192.168.1.122 | to Document Registry: 192.168.1.100 | Document ID: experimentUniqueId12-e38975e5c52c649509df3f02ff4963ee|Tue May 14 2024 21:51:04 GMT+0000 (Coordinated Universal Time)"
+==============================
+Execution time (hr): 50.053454ms
+==============================
